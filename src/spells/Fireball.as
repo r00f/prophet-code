@@ -1,27 +1,39 @@
 package spells {
+	import basics.Light;
 	import enemies.Enemy;
 	import basics.hitboxes.DamageBox;
+	import flash.display.MovieClip;
 	import flash.events.Event;
 	import utilities.Directions;
+	import utilities.interfaces.ILastFrameTrigger;
+	import utilities.LastFrameTrigger;
 	
 	/**
 	 * ...
 	 * @author Gabriel
 	 */
-	public class Fireball extends Spell {
+	public class Fireball extends Spell implements ILastFrameTrigger {
 		private var spellDamage:Number = 10;
 		private var enemiesHit:Object = new Object();
 		private var direction:String = Directions.LEFT;
 		private var speed;
 		
-		public function Fireball(direction:String, speed:Number = 8) {
+		public var explosion:LastFrameTrigger;
+		
+		public function Fireball(direction:String, x:Number, y:Number, speed:Number = 8) {
 			super();
+			this.x = x;
+			this.y = y;
 			this.direction = direction;
 			this.speed = speed;
-			this.gotoAndPlay(this.direction);
+			this.gotoAndStop(this.direction);
+			addEventListener(Event.ENTER_FRAME, move, false, 0, true);
 		}
 		
 		public function move(e:Event) {
+			if (this.rootRef == null) {
+				this.rootRef = root as Root;
+			}
 			var nextx:Number = this.x;
 			var nexty:Number = this.y;
 			if (this.direction == Directions.LEFT) {
@@ -35,10 +47,17 @@ package spells {
 			}
 			if (this.rootRef.collidesWithEnvironment(nextx, nexty)) {
 				this.gotoAndPlay("explode");
+				this.explosion.delegate = this;
 			} else {
 				this.x = nextx;
 				this.y = nexty;
 			}
+		
+		}
+		
+		public function lastFrameEnded(mv:MovieClip) {
+			removeEventListener(Event.ENTER_FRAME, move, false);
+			this.parent.removeChild(this);
 		}
 		
 		override public function damageAppliedToEnemy(box:DamageBox, enemy:Enemy) {
