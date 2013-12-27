@@ -24,7 +24,7 @@ package spells {
 		 * @param	box The box that triggered
 		 * @param	enemy the enemy that triggered the box
 		 */
-		function damageAppliedToEnemy(box:DamageBox, enemy:Enemy) {
+		public function damageAppliedToEnemy(box:DamageBox, enemy:Enemy) {
 		}
 		
 		/**
@@ -32,12 +32,12 @@ package spells {
 		 * @param	box The box that triggered
 		 * @param	enemy the player that triggered the box
 		 */
-		function damageAppliedToPlayer(box:DamageBox, player:Player) {
+		public function damageAppliedToPlayer(box:DamageBox, player:Player) {
 		}
 		
 		
 		private function eventLoop(e:Event) {
-			this.setDamageBoxDelegate();
+			this.setDamageBoxDelegate(this);
 		}
 	
 	}
