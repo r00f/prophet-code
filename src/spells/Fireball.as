@@ -40,7 +40,7 @@ package spells {
 			}
 		}
 		
-		override internal function damageAppliedToEnemy(box:DamageBox, enemy:Enemy) {
+		override public function damageAppliedToEnemy(box:DamageBox, enemy:Enemy) {
 			super.damageAppliedToEnemy(box, enemy);
 			if (!enemiesHit[enemy]) {
 				enemy.applyDamage(spellDamage);
