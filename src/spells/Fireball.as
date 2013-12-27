@@ -18,6 +18,7 @@ package spells {
 			super();
 			this.direction = direction;
 			this.speed = speed;
+			this.gotoAndPlay(this.direction);
 		}
 		
 		public function move(e:Event) {
