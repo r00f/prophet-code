@@ -36,6 +36,22 @@ package {
 			return Vector.<AttackBox>(this.getBoxesOfType(AttackBox));
 		}
 		
+		protected function setAttackBoxDelegate() {
+			var attackboxes:Vector.<AttackBoxes> = this.AttackBoxes;
+			for (var i:int = 0; i < attackboxes.length; i++) {
+				var box:AttackBox = attackboxes[i];
+				box.delegate = this;
+			}
+		}
+		
+		protected function setDamageBoxDelegate() {
+			var damageBoxes:Vector.<DamageBox> = this.DamageBoxes;
+			for (var i:int = 0; i < damageBoxes.length; i++) {
+				var box:DamageBox = damageBoxes[i];
+				box.delegate = this;
+			}
+		}
+		
 		private function getBoxesOfType(type:Class):Vector.<Hitbox> {
 			var results:Vector.<Hitbox> = new Vector.<Hitbox>();
 			for (var i:int = 0; i < this.numChildren; i++) {
