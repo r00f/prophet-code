@@ -1,0 +1,6 @@
+.settings
+obj/
+*.fla
+*.exe
+*.swf
+html-template/
