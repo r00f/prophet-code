@@ -7,6 +7,8 @@ package {
 	import flash.display.DisplayObject;
 	import flash.display.MovieClip;
 	import flash.events.Event;
+	import utilities.interfaces.IAttackTrigger;
+	import utilities.interfaces.IDamageTrigger;
 	
 	/**
 	 * ...
@@ -36,20 +38,16 @@ package {
 			return Vector.<AttackBox>(this.getBoxesOfType(AttackBox));
 		}
 		
-		protected function setAttackBoxDelegate() {
-			var attackboxes:Vector.<AttackBoxes> = this.AttackBoxes;
-			for (var i:int = 0; i < attackboxes.length; i++) {
-				var box:AttackBox = attackboxes[i];
-				box.delegate = this;
-			}
+		protected function setAttackBoxDelegate(delegate:IAttackTrigger) {
+			this.AttackBoxes.forEach(function(box:AttackBox) {
+				box.delegate = delegate;
+			});
 		}
 		
-		protected function setDamageBoxDelegate() {
-			var damageBoxes:Vector.<DamageBox> = this.DamageBoxes;
-			for (var i:int = 0; i < damageBoxes.length; i++) {
-				var box:DamageBox = damageBoxes[i];
-				box.delegate = this;
-			}
+		protected function setDamageBoxDelegate(delegate:IDamageTrigger) {
+			this.DamageBoxes.forEach(function(box:DamageBox) {
+				box.delegate = delegate;
+			});
 		}
 		
 		private function getBoxesOfType(type:Class):Vector.<Hitbox> {
