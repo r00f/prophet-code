@@ -1,7 +1,7 @@
 ﻿package {
 	
-	import basics.BloodSplatter;
 	import basics.Darkness;
+	import basics.entities.Entity;
 	import basics.hitboxes.CollisionBox;
 	import enemies.Baby;
 	import enemies.Enemy;
@@ -126,7 +126,6 @@
 		
 		public function loop(e:Event):void {
 			
-			//this.bloodSplat(Random.random(this.width), Random.random(this.height));
 			this.checkKeypresses();
 			healthbar.currentHealth = player.HealthPercentage;
 		}
@@ -160,13 +159,6 @@
 			} else {
 				_attackPressed = false;
 			}
-		}
-		
-		public function bloodSplat(x:Number, y:Number) {
-			var blood:BloodSplatter = new BloodSplatter();
-			blood.x = x;
-			blood.y = y;
-			stage.addChild(blood);
 		}
 		
 		public function collidesWithEnvironment(x_next:Number, y_next:Number) {

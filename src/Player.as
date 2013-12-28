@@ -1,5 +1,6 @@
 ﻿package {
 	
+	import basics.entities.HealthEntity;
 	import basics.hitboxes.BodyBox;
 	import basics.Light;
 	import enemies.Baby;
@@ -26,7 +27,7 @@
 		
 		public function Player() {
 			super();
-			bloodyRange = 100;
+			this.blood.yRange = 70;
 			this.rootRef = root as Root;
 			this.rootRef.player = this;
 			this.offsetx = this.x + 50;

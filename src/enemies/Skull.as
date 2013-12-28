@@ -1,6 +1,5 @@
 ﻿package enemies {
 	
-	import basics.BloodSplatter;
 	import basics.hitboxes.BodyBox;
 	import basics.hitboxes.AttackBox;
 	import basics.hitboxes.DamageBox;
@@ -38,8 +37,8 @@
 		
 		public function Skull() {
 			super();
-			bloodyRange = 50;
-			bloodyOffset = 50;
+			this.blood.yRange = 50;
+			this.blood.xRange = 50;
 			this.rootRef = this.root as Root;
 			Wait = Random.random(25);
 			FixPositionX = int(this.x);
