@@ -117,8 +117,8 @@
 			this.y = c.height / 2 + c.y;
 			
 			this.gotoAndPlay(this.Action + "_" + this.Direction);
-			this.light.scaleX = this.HealthPercentage;
-			this.light.scaleY = this.HealthPercentage;
+			this.light.scaleX = this.HealthPercentage + 0.4;
+			this.light.scaleY = this.HealthPercentage + 0.4;
 		}
 	}
 
