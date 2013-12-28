@@ -26,13 +26,11 @@
 		private var direction:String;
 		private var nextAction:String = "idle";
 		private var damageAmount:Number;
-		
 		public var AttackTriggerLeft:AttackBox;
 		public var AttackTriggerRight:AttackBox;
 		
 		private var FixPositionX;
 		private var FixPositionY;
-		
 		private var playerHit:Boolean = false;
 		
 		private var Wait;

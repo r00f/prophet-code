@@ -5,7 +5,7 @@ package {
 	import utilities.LastFrameTrigger;
 	import flash.events.Event;
 	import utilities.Actions;
-	
+	import utilities.Random;
 	/**
 	 * Implements health with heal and applyDamage functions.
 	 * - MaxHealth is only seen by subclasses
@@ -19,9 +19,13 @@ package {
 		public var death_animation:LastFrameTrigger;
 		public var despawnTime:Number = 20; // Seconds
 		private var deadTime:Date;
+		public var yRange:Number;
+		public var yOffset:Number;
+		private var splat:BloodSplatter = new BloodSplatter();
 		
 		public function HealthEntity() {
 			super();
+			
 			_currentHealth = maxHealth;
 		}
 		
@@ -59,6 +63,7 @@ package {
 		public function applyDamage(damage:Number) {
 			this.currentHealth = _currentHealth - damage;
 			this.addChild(new BloodSplatter());
+			splat.y -= Random.random(yRange)-yOffset;
 		}
 		
 		/**
