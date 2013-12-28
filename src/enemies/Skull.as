@@ -61,8 +61,7 @@
 		public function damageAppliedToEnemy(box:DamageBox, enemy:Enemy) {
 			if (enemy is Baby) {
 				enemy.applyDamage(1);
-			} else if (enemy is Skull) {
-			}
+			} 
 		}
 		
 		public function wait(e:Event) {
