@@ -25,7 +25,8 @@
 		public var offsety:Number;
 		
 		public function Player() {
-			super();			
+			super();
+			bloodyRange = 100;
 			this.rootRef = root as Root;
 			this.rootRef.player = this;
 			this.offsetx = this.x + 50;

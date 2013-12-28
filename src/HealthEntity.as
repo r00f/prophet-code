@@ -19,9 +19,12 @@ package {
 		public var death_animation:LastFrameTrigger;
 		public var despawnTime:Number = 20; // Seconds
 		private var deadTime:Date;
-		public var yRange:Number;
-		public var yOffset:Number;
-		private var splat:BloodSplatter = new BloodSplatter();
+		
+		public var bloodyRange:Number = 50;
+		public var bloodyOffset:Number = 0;
+		
+		public var bloodxRange:Number = 20;
+		public var bloodxOffset:Number = 10;
 		
 		public function HealthEntity() {
 			super();
@@ -62,8 +65,11 @@ package {
 		 */
 		public function applyDamage(damage:Number) {
 			this.currentHealth = _currentHealth - damage;
-			this.addChild(new BloodSplatter());
-			splat.y -= Random.random(yRange)-yOffset;
+			var blood:BloodSplatter = new BloodSplatter();
+			blood.y -= Random.random(bloodyRange) - bloodyOffset;
+			blood.x -= Random.random(bloodxRange) - bloodxOffset;
+			this.addChild(blood);
+			
 		}
 		
 		/**

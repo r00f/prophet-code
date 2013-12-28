@@ -38,8 +38,8 @@
 		
 		public function Skull() {
 			super();
-			yOffset = 50;
-			yRange = 50;
+			bloodyRange = 50;
+			bloodyOffset = 50;
 			this.rootRef = this.root as Root;
 			Wait = Random.random(25);
 			FixPositionX = int(this.x);

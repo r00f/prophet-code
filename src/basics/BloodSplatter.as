@@ -14,8 +14,8 @@
 		}
 		
 		private function setup():void {
-			this.scaleX = Random.random(4) - 2;
-			this.scaleY = Random.random(2);
+			this.scaleX = Random.random(3)-1.5;
+			this.scaleY = Random.random(1.5);
 			this.gotoAndPlay(1);
 		}
 		
