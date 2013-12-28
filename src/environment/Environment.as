@@ -1,4 +1,5 @@
 package environment {
+	import basics.entities.Entity;
 	import flash.display.MovieClip;
 	import utilities.*;
 	

@@ -1,4 +1,5 @@
 package spells {
+	import basics.entities.Entity;
 	import basics.hitboxes.DamageBox;
 	import enemies.Enemy;
 	import flash.events.Event;

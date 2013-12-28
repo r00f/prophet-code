@@ -1,4 +1,4 @@
-package {
+package basics.entities 	{
 	import basics.hitboxes.AttackBox;
 	import basics.hitboxes.CollisionBox;
 	import basics.hitboxes.DamageBox;

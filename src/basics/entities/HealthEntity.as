@@ -1,11 +1,10 @@
-package {
-	import basics.BloodSplatter;
+package basics.entities {
+	import basics.Blood.BloodConfig;
 	import flash.display.MovieClip;
-	import utilities.interfaces.ILastFrameTrigger;
-	import utilities.LastFrameTrigger;
 	import flash.events.Event;
 	import utilities.Actions;
-	import utilities.Random;
+	import utilities.interfaces.ILastFrameTrigger;
+	import utilities.LastFrameTrigger;
 	/**
 	 * Implements health with heal and applyDamage functions.
 	 * - MaxHealth is only seen by subclasses
@@ -20,15 +19,12 @@ package {
 		public var despawnTime:Number = 20; // Seconds
 		private var deadTime:Date;
 		
-		public var bloodyRange:Number = 50;
-		public var bloodyOffset:Number = 0;
 		
-		public var bloodxRange:Number = 20;
-		public var bloodxOffset:Number = 10;
+		public var blood:BloodConfig;
 		
 		public function HealthEntity() {
 			super();
-			
+			this.blood = new BloodConfig();
 			_currentHealth = maxHealth;
 		}
 		
@@ -65,11 +61,7 @@ package {
 		 */
 		public function applyDamage(damage:Number) {
 			this.currentHealth = _currentHealth - damage;
-			var blood:BloodSplatter = new BloodSplatter();
-			blood.y -= Random.random(bloodyRange) - bloodyOffset;
-			blood.x -= Random.random(bloodxRange) - bloodxOffset;
-			this.addChild(blood);
-			
+			this.addChild(blood.Splatter);
 		}
 		
 		/**

@@ -1,4 +1,5 @@
 package basics {
+	import basics.entities.Entity;
 	import flash.display.MovieClip;
 	import flash.events.Event;
 	import flash.display.BlendMode;
