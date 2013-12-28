@@ -63,9 +63,9 @@ package spells {
 		
 		override public function damageAppliedToEnemy(box:DamageBox, enemy:Enemy) {
 			super.damageAppliedToEnemy(box, enemy);
-			if (!enemiesHit[enemy]) {
+			if (!enemiesHit[enemy.name]) {
 				enemy.applyDamage(spellDamage);
-				enemiesHit[enemy] = true;
+				enemiesHit[enemy.name] = true;
 			}
 		}
 	
