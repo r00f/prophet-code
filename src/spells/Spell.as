@@ -17,6 +17,7 @@ package spells {
 		public function Spell() {
 			super();
 			this.rootRef = root as Root;
+			addEventListener(Event.ENTER_FRAME, eventLoop, false, 0, true);
 		}
 		
 		/**

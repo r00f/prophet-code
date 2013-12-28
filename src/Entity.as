@@ -39,14 +39,18 @@ package {
 		}
 		
 		protected function setAttackBoxDelegate(delegate:IAttackTrigger) {
-			this.AttackBoxes.forEach(function(box:AttackBox) {
-				box.delegate = delegate;
+			this.AttackBoxes.forEach(function(box:AttackBox, idx, test) {
+				if (box.root != null) {
+					box.delegate = delegate;
+				}
 			});
 		}
 		
 		protected function setDamageBoxDelegate(delegate:IDamageTrigger) {
-			this.DamageBoxes.forEach(function(box:DamageBox) {
-				box.delegate = delegate;
+			this.DamageBoxes.forEach(function(box:DamageBox, idx, test) {
+				if (box.root != null) {
+					box.delegate = delegate;
+				}
 			});
 		}
 		

@@ -13,8 +13,8 @@ package spells {
 	 * @author Gabriel
 	 */
 	public class Fireball extends Spell implements ILastFrameTrigger {
-		private var spellDamage:Number = 10;
-		private var enemiesHit:Object = new Object();
+		private var spellDamage:Number = 50;
+		private var enemiesHit:Object;
 		private var direction:String = Directions.LEFT;
 		private var speed;
 		
@@ -27,6 +27,7 @@ package spells {
 			this.direction = direction;
 			this.speed = speed;
 			this.gotoAndStop(this.direction);
+			this.enemiesHit = new Object();
 			addEventListener(Event.ENTER_FRAME, move, false, 0, true);
 		}
 		
