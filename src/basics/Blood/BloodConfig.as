@@ -11,10 +11,6 @@ package basics.Blood {
 		public var yOffset = 0;
 		public var yRange = 50;
 		
-		public function BloodConfig() {
-			
-		}
-		
 		/**
 		 * Returns a BloodSplatter configured with the current values of this config.
 		 */
