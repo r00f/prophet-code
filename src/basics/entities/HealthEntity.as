@@ -63,11 +63,7 @@ package basics.entities {
 		 */
 		public function applyDamage(damage:Number) {
 			this.currentHealth = _currentHealth - damage;
-			var blood:BloodSplatter = new BloodSplatter();
-			blood.y -= Random.random(this.blood.yRange) - this.blood.yOffset;
-			blood.x -= Random.random(this.blood.xRange) - this.blood.xOffset;
-			this.addChild(blood);
-			
+			this.addChild(blood.Splatter);
 		}
 		
 		/**
