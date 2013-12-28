@@ -7,9 +7,10 @@
 	import flash.events.Event;
 	import utilities.*;
 	import utilities.interfaces.IAttackTrigger;
+	import utilities.interfaces.IDamageTrigger;
 	import utilities.interfaces.ILastFrameTrigger;
 	
-	public class Skull extends Enemy {
+	public class Skull extends Enemy implements IDamageTrigger {
 		
 		public static var blabla = "String";
 		
@@ -21,9 +22,13 @@
 		private var xspeed:Number;
 		private var yspeed:Number;
 		private var direction:String;
+		private var damageAmount:Number;
+		public var damage_box:DamageBox;
 		
 		public var AttackTriggerLeft:AttackBox;
 		public var AttackTriggerRight:AttackBox;
+		
+		//private var playerHit:Boolean = false;
 		
 		private var FixPositionX;
 		private var FixPositionY;
@@ -37,11 +42,28 @@
 			FixPositionX = int(this.x);
 			FixPositionY = int(this.y);
 			this.speed = Random.random(6) + 2;
+			this.damageAmount = 5;
 			xspeed = this.speed;
 			yspeed = 0;
 			this.direction = Directions.RIGHT;
 			addEventListener(Event.ENTER_FRAME, wait, false, 0, true);
 			addEventListener(Event.ENTER_FRAME, checkIfDead, false, 0, true);
+			addEventListener(Event.ENTER_FRAME, setDamageDelegate, false, 0, true);
+		}
+		
+		public function damageAppliedToPlayer(box:DamageBox, player:Player) {
+			//if (!this.playerHit) {
+				player.applyDamage(this.damageAmount);
+				//playerHit = true;
+		
+		}
+		
+		public function damageAppliedToEnemy(box:DamageBox, enemy:Enemy) {
+			if (enemy is Baby) {
+				enemy.applyDamage(1);
+			} else if (enemy is Skull) {
+				enemy.heal(10);
+			}
 		}
 		
 		public function wait(e:Event) {
@@ -62,6 +84,12 @@
 				removeEventListener(Event.ENTER_FRAME, walk, false);
 				removeEventListener(Event.ENTER_FRAME, wait, false);
 			}
+		}
+		
+		public function setDamageDelegate(e:Event) {
+			if (damage_box != null)
+			damage_box.delegate = this;
+			removeEventListener(Event.ENTER_FRAME, setDamageDelegate, false);
 		}
 		
 		public function walk(e:Event):void {
@@ -94,7 +122,7 @@
 				this.y += yspeed;
 			}
 			
-			this.gotoAndStop("skull_walk_"+  this.direction);
+			this.gotoAndStop("skull_walk_" + this.direction);
 		
 		}
 	}
