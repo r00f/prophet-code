@@ -6,6 +6,7 @@
 	import flash.display.MovieClip;
 	import flash.events.Event;
 	import flash.geom.Rectangle;
+	import spells.Fireball;
 	import utilities.*;
 	
 	/**
@@ -75,10 +76,21 @@
 				removeEventListener(Event.ENTER_FRAME, checkIfDead, false);
 			}
 		}
+		private var cooldown = 20;
+		
+		private function shootFireball() {
+			this.rootRef.addChild(new Fireball(this._direction, x,y-20));
+		}
 		
 		public function loop(e:Event):void {
 			var xchange = 0;
 			var ychange = 0;
+			if (this.rootRef.keyPresses.isDown(KeyCodes.Control) && cooldown <= 0) {
+				this.shootFireball();
+				cooldown = 20;
+			}
+			cooldown--;
+			
 			if (this.rootRef.leftPressed) {
 				xchange -= speed;
 			} else if (this.rootRef.rightPressed) {
@@ -105,8 +117,8 @@
 			this.y = c.height / 2 + c.y;
 			
 			this.gotoAndPlay(this.Action + "_" + this.Direction);
-			this.light.scaleX = this.HealthPercentage;
-			this.light.scaleY = this.HealthPercentage;
+			this.light.scaleX = this.HealthPercentage + 0.4;
+			this.light.scaleY = this.HealthPercentage + 0.4;
 		}
 	}
 

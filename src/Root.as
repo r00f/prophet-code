@@ -10,6 +10,7 @@
 	import environment.nature.Tree;
 	import environment.wall.segments.BaseSegment;
 	import environment.wall.segments.HorizontalDoor;
+	import flash.display.DisplayObject;
 	import flash.display.MovieClip;
 	import flash.events.Event;
 	import flash.geom.Rectangle;
@@ -44,7 +45,7 @@
 		
 		public function Root() {
 			super();
-			this.scrollRect = new Rectangle(this.player.x - scrollRectWidth / 2, this.player.y - scrollRectHeight / 2, scrollRectWidth,scrollRectHeight);
+			this.scrollRect = new Rectangle(this.player.x - scrollRectWidth / 2, this.player.y - scrollRectHeight / 2, scrollRectWidth, scrollRectHeight);
 			healthbar = new HealthBar(100, 100, 0.5, 0.5);
 			stage.addChild(healthbar);
 			keyPresses = new KeyObject(this.stage);
@@ -54,26 +55,49 @@
 		
 		}
 		
-		function sort(e:Event) {
-			/* Swap Sort xD TODO */
-			timesToSort--;
-			for (var i = 0; i < this.numChildren; i++) {
-				var childClip:MovieClip = getChildAt(i) as MovieClip;
-				if (childClip is Environment) { //TODO: Loop through all?
-					for (var j = 0; j < this.numChildren; j++) {
-						var childClip2:MovieClip = getChildAt(j) as MovieClip;
-						if (childClip2 is Environment ) { //TODO: Loop through all?
-							if (childClip == childClip2)
-								continue;
-							if (childClip.y < childClip2.y && getChildIndex(childClip) > getChildIndex(childClip2) || childClip.y > childClip2.y && getChildIndex(childClip) < getChildIndex(childClip2)) {
-								setChildIndex(childClip, getChildIndex(childClip2))
-							}
-						}
+		public function sort(e:Event) {
+			
+			//prepare an array
+			var sortArray:Array = [];
+			;
+			//put the children into an array
+			for (var i:int = 0; i < this.numChildren; i++) {
+				sortArray[i] = this.getChildAt(i);
+			}
+			//get a sorting function ready
+			function customSort(childClip:DisplayObject, childClip2:DisplayObject):int {
+				if (childClip is Entity && childClip2 is Entity) {
+					var door:HorizontalDoor;
+					if (childClip is HorizontalDoor && childClip2 is Player) {
+						 door = childClip as HorizontalDoor;
+						return (door.isDoorOpen && door.y + 25 > player.y) ? 1 : -1;
+					} else if (childClip is Player && childClip2 is HorizontalDoor) {
+						door = childClip2 as HorizontalDoor;
+						return (door.isDoorOpen && door.y + 25 > player.y) ?  -1 : 1;
 					}
+					if (childClip.y < childClip2.y) {
+						return -1;
+					} else if (childClip.y > childClip2.y) {
+						return 1;
+					} else
+						return 0;
+				} else {
+					if (childClip is Entity)
+						return 1;
+					else if (childClip2 is Entity)
+						return -1;
+					else
+						return 0;
 				}
 			}
-			if (timesToSort == 0)
-				removeEventListener(Event.ENTER_FRAME, sort, false);
+			
+			//sort the array by y value low -> high
+			sortArray.sort(customSort);
+			//loop through the array resetting indexes
+			for (i = 0; i < sortArray.length; i++) {
+				this.setChildIndex(sortArray[i], i);
+			}
+			this.addChild(this.darkness);
 		}
 		
 		var wait = 10;
@@ -105,41 +129,6 @@
 			//this.bloodSplat(Random.random(this.width), Random.random(this.height));
 			this.checkKeypresses();
 			healthbar.currentHealth = player.HealthPercentage;
-			
-			for (var i = 0; i < this.numChildren; i++) {
-				var childClip:MovieClip = getChildAt(i) as MovieClip;
-				if (childClip is Environment || childClip is Enemy) {
-					if (shouldSwapWithPlayer(childClip, 0)) {
-						setChildIndex(childClip, getChildIndex(player))
-					}
-				} else if (childClip is BaseSegment) {
-					var wall:BaseSegment = childClip as BaseSegment;
-					var offsetDoor:Number = 35;
-					var offsetElse:Number = 10;
-					if (wall.isDoor && (wall as HorizontalDoor).isDoorOpen) {
-						if (Math.abs(this.player.x - wall.x) < 25) {
-							if (shouldSwapWithPlayer(wall, offsetDoor)) {
-								//swapChildren(wall, player);
-								setChildIndex(wall, getChildIndex(player))
-							}
-						} else {
-							if (shouldSwapWithPlayer(wall, offsetElse)) {
-								//swapChildren(wall, player);
-								setChildIndex(wall, getChildIndex(player))
-							}
-						}
-					} else if (shouldSwapWithPlayer(wall, offsetElse)) {
-						
-						setChildIndex(wall, getChildIndex(player))
-							//swapChildren(wall, player);
-					}
-				}
-			}
-		
-		}
-		
-		private function shouldSwapWithPlayer(wall:MovieClip, offset:Number):Boolean {
-			return (this.player.y - offset) < wall.y && getChildIndex(this.player) > getChildIndex(wall) || (this.player.y - offset) > wall.y && getChildIndex(this.player) < getChildIndex(wall)
 		}
 		
 		public function checkKeypresses():void {

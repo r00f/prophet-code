@@ -7,6 +7,8 @@ package {
 	import flash.display.DisplayObject;
 	import flash.display.MovieClip;
 	import flash.events.Event;
+	import utilities.interfaces.IAttackTrigger;
+	import utilities.interfaces.IDamageTrigger;
 	
 	/**
 	 * ...
@@ -34,6 +36,22 @@ package {
 		
 		public function get AttackBoxes():Vector.<AttackBox> {
 			return Vector.<AttackBox>(this.getBoxesOfType(AttackBox));
+		}
+		
+		protected function setAttackBoxDelegate(delegate:IAttackTrigger) {
+			this.AttackBoxes.forEach(function(box:AttackBox, idx, test) {
+				if (box.root != null) {
+					box.delegate = delegate;
+				}
+			});
+		}
+		
+		protected function setDamageBoxDelegate(delegate:IDamageTrigger) {
+			this.DamageBoxes.forEach(function(box:DamageBox, idx, test) {
+				if (box.root != null) {
+					box.delegate = delegate;
+				}
+			});
 		}
 		
 		private function getBoxesOfType(type:Class):Vector.<Hitbox> {
