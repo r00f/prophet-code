@@ -11,7 +11,9 @@ package basics.Blood
 		public var yOffset = 0;
 		public var yRange = 50;
 		
-		
+		/**
+		 * Returns a BloodSplatter configured with the current values of this config.
+		 */
 		public function get Splatter():BloodSplatter {
 			var blood:BloodSplatter = new BloodSplatter();
 			blood.y -= Random.random(this.blood.yRange) - this.blood.yOffset;

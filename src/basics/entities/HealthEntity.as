@@ -1,12 +1,10 @@
 package basics.entities {
 	import basics.Blood.BloodConfig;
-	import basics.Blood.BloodSplatter;
 	import flash.display.MovieClip;
-	import utilities.interfaces.ILastFrameTrigger;
-	import utilities.LastFrameTrigger;
 	import flash.events.Event;
 	import utilities.Actions;
-	import utilities.Random;
+	import utilities.interfaces.ILastFrameTrigger;
+	import utilities.LastFrameTrigger;
 	/**
 	 * Implements health with heal and applyDamage functions.
 	 * - MaxHealth is only seen by subclasses
