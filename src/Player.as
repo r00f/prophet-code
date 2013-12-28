@@ -1,8 +1,8 @@
 ﻿package {
 	
+	import basics.entities.HealthEntity;
 	import basics.hitboxes.BodyBox;
 	import basics.Light;
-	import enemies.Baby;
 	import flash.display.MovieClip;
 	import flash.events.Event;
 	import flash.geom.Rectangle;
