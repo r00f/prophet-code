@@ -66,14 +66,13 @@
 			}
 			//get a sorting function ready
 			function customSort(childClip:DisplayObject, childClip2:DisplayObject):int {
-				function doorLowerThanPlayer(door:HorizontalDoor) {
-					return door.isDoorOpen && door.y + 25 > player.y
-				}
 				if (childClip is Entity && childClip2 is Entity) {
 					if (childClip is HorizontalDoor && childClip2 is Player) {
-						return (doorLowerThanPlayer(childClip as HorizontalDoor)) ? 1 : -1;
+						var door:HorizontalDoor = childClip as HorizontalDoor;
+						return (door.isDoorOpen && door.y + 25 > player.y) ? 1 : -1;
 					} else if (childClip is Player && childClip2 is HorizontalDoor) {
-						return (doorLowerThanPlayer(childClip2 as HorizontalDoor)) ? -1 : 1;
+						var door:HorizontalDoor = childClip2 as HorizontalDoor;
+						return (door.isDoorOpen && door.y + 25 > player.y) ?  -1 : 1;
 					}
 					if (childClip.y < childClip2.y) {
 						return -1;
