@@ -77,8 +77,9 @@
 			}
 		}
 		private var cooldown = 20;
+		
 		private function shootFireball() {
-			this.rootRef.addChild(new Fireball(this._direction, x,y));
+			this.rootRef.addChild(new Fireball(this._direction, x,y-20));
 		}
 		
 		public function loop(e:Event):void {
