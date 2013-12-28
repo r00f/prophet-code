@@ -1,6 +1,6 @@
 package basics.entities {
 	import basics.Blood.BloodConfig;
-	import basics.BloodSplatter;
+	import basics.Blood.BloodSplatter;
 	import flash.display.MovieClip;
 	import utilities.interfaces.ILastFrameTrigger;
 	import utilities.LastFrameTrigger;
