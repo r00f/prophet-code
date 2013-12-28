@@ -62,7 +62,6 @@
 			if (enemy is Baby) {
 				enemy.applyDamage(1);
 			} else if (enemy is Skull) {
-				enemy.heal(10);
 			}
 		}
 		

@@ -1,4 +1,5 @@
 package {
+	import basics.BloodSplatter;
 	import flash.display.MovieClip;
 	import utilities.interfaces.ILastFrameTrigger;
 	import utilities.LastFrameTrigger;
@@ -57,6 +58,7 @@ package {
 		 */
 		public function applyDamage(damage:Number) {
 			this.currentHealth = _currentHealth - damage;
+			this.addChild(new BloodSplatter());
 		}
 		
 		/**
