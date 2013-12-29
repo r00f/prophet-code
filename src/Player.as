@@ -38,22 +38,25 @@
 			return this.Lights[0];
 		}
 		
-		public function get Direction():String {
+		private function updateDirection():void {
+			var old_direction:Number= this.direction.current;
+			this.direction.current = 0;
 			
 			if (this.rootRef.upPressed) {
-				direction = Directions.UP;
-			}
-			if (this.rootRef.downPressed) {
-				direction = Directions.DOWN;
-			}
-			if (this.rootRef.leftPressed) {
-				direction = Directions.LEFT;
-			}
-			if (this.rootRef.rightPressed) {
-				direction = Directions.RIGHT;
+				direction.current += Directions._up;
+			} else if (this.rootRef.downPressed) {
+				direction.current += Directions._down;
 			}
 			
-			return this.direction.toString();
+			if (this.rootRef.leftPressed) {
+				direction.current += Directions._left;
+			} else if (this.rootRef.rightPressed) {
+				direction.current += Directions._down;
+			}
+			
+			if (direction.current == 0) {
+				this.direction.current = old_direction;
+			}
 		}
 		
 		public function get Action():String {
@@ -83,6 +86,7 @@
 		}
 		
 		public function loop(e:Event):void {
+			this.updateDirection();
 			var xchange = 0;
 			var ychange = 0;
 			if (this.rootRef.keyPresses.isDown(KeyCodes.Control) && cooldown <= 0) {
@@ -116,7 +120,7 @@
 			this.x = c.width / 2 + c.x;
 			this.y = c.height / 2 + c.y;
 			
-			this.gotoAndPlay(this.Action + Utilities.ANIMATION_SEPERATOR + this.Direction);
+			this.gotoAndPlay(this.Action + Utilities.ANIMATION_SEPERATOR + this.direction);
 			this.light.scaleX = this.HealthPercentage + 0.4;
 			this.light.scaleY = this.HealthPercentage + 0.4;
 		}
