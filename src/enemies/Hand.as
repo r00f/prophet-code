@@ -74,7 +74,7 @@
 			} else if  (box == AttackTriggerDown) {
 				direction = Directions.DOWN;				
 			}
-			this.gotoAndStop(Actions.HIT+Utilities.ANIMATION_SEPERATOR + direction.toString);
+			this.gotoAndStop(Actions.HIT+Utilities.ANIMATION_SEPERATOR + direction);
 		}
 	}
 

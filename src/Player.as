@@ -53,7 +53,7 @@
 				direction = Directions.RIGHT;
 			}
 			
-			return this.direction.toString;
+			return this.direction.toString();
 		}
 		
 		public function get Action():String {
@@ -69,7 +69,7 @@
 		public function checkIfDead(e:Event) {
 			
 			if (this.HealthPercentage == 0) {
-				this.gotoAndStop(Actions.DEATH + Utilities.ANIMATION_SEPERATOR + this.direction.toString);
+				this.gotoAndStop(Actions.DEATH + Utilities.ANIMATION_SEPERATOR + this.direction);
 				super.death_animation.delegate = this;
 				this.blood.yRange = 36;
 				removeEventListener(Event.ENTER_FRAME, loop, false);

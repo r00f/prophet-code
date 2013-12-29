@@ -70,7 +70,7 @@ package utilities {
 			return (this.current & _right) != 0;
 		}
 		
-		public function get toString() {
+		public function toString():String {
 			var dirs:Object = decompose();
 			
 			var string:String = "";

@@ -25,7 +25,7 @@ package spells {
 			this.y = y;
 			this.direction = direction;
 			this.speed = speed;
-			this.gotoAndStop(this.direction.toString);
+			this.gotoAndStop(this.direction);
 			this.enemiesHit = new Object();
 			addEventListener(Event.ENTER_FRAME, move, false, 0, true);
 		}
