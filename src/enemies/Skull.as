@@ -70,7 +70,7 @@
 			if (this.HealthPercentage == 0) {
 				xspeed = 0;
 				yspeed = 0;
-				this.gotoAndStop(Actions.DEATH + "_" + this.direction.toString);
+				this.gotoAndStop(Actions.DEATH + Utilities.ANIMATION_SEPERATOR + this.direction.toString);
 				super.death_animation.delegate = this;
 				removeEventListener(Event.ENTER_FRAME, walk, false);
 				removeEventListener(Event.ENTER_FRAME, wait, false);
@@ -85,7 +85,7 @@
 		
 		override public function walk(e:Event):void {
 			super.walk(e);
-			this.gotoAndStop("skull_walk_" + this.direction.toString);
+			this.gotoAndStop("skull"+Utilities.ANIMATION_SEPERATOR+Actions.WALK+Utilities.ANIMATION_SEPERATOR + this.direction.toString);
 		}
 	}
 }

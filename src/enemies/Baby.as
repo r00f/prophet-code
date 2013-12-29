@@ -76,8 +76,7 @@
 				removeEventListener(Event.ENTER_FRAME, walk, false);
 				return;
 			}
-			this.nextAction = "baby_" + Actions.WALK + "_";
-			this.gotoAndStop(this.nextAction + this.direction.toString);
+			this.gotoAndStop("baby"+Utilities.ANIMATION_SEPERATOR + Actions.WALK +Utilities.ANIMATION_SEPERATOR + this.direction.toString);
 		}
 		
 		private function setAttackTriggerDelegate() {
@@ -100,7 +99,7 @@
 		public function attackBoxTriggeredByPlayer(box:AttackBox) {
 			xspeed = 0;
 			yspeed = 0;
-			this.gotoAndStop(Actions.DEATH + "_" + this.direction.toString);
+			this.gotoAndStop(Actions.DEATH + Utilities.ANIMATION_SEPERATOR + this.direction.toString);
 			this.death_animation.delegate = this;
 			
 			addEventListener(Event.ENTER_FRAME, setDamageDelegate, false, 0, true);

@@ -69,7 +69,7 @@
 		public function checkIfDead(e:Event) {
 			
 			if (this.HealthPercentage == 0) {
-				this.gotoAndStop(Actions.DEATH + "_" + this.direction);
+				this.gotoAndStop(Actions.DEATH + Utilities.ANIMATION_SEPERATOR + this.direction);
 				super.death_animation.delegate = this;
 				this.blood.yRange = 36;
 				removeEventListener(Event.ENTER_FRAME, loop, false);
@@ -116,7 +116,7 @@
 			this.x = c.width / 2 + c.x;
 			this.y = c.height / 2 + c.y;
 			
-			this.gotoAndPlay(this.Action + "_" + this.Direction);
+			this.gotoAndPlay(this.Action + Utilities.ANIMATION_SEPERATOR + this.Direction);
 			this.light.scaleX = this.HealthPercentage + 0.4;
 			this.light.scaleY = this.HealthPercentage + 0.4;
 		}
