@@ -25,7 +25,7 @@ package spells {
 			this.y = y;
 			this.direction = direction;
 			this.speed = speed;
-			this.gotoAndStop(this.direction);
+			this.gotoAndStop(this.direction.toString);
 			this.enemiesHit = new Object();
 			addEventListener(Event.ENTER_FRAME, move, false, 0, true);
 		}
@@ -36,13 +36,13 @@ package spells {
 			}
 			var nextx:Number = this.x;
 			var nexty:Number = this.y;
-			if (this.direction == Directions.LEFT) {
+			if (this.direction.isLeft) {
 				nextx -= this.speed;
-			} else if (this.direction == Directions.RIGHT) {
+			} else if (this.direction.isRight) {
 				nextx += this.speed;
-			} else if (this.direction == Directions.UP) {
+			} else if (this.direction.isUp) {
 				nexty -= this.speed;
-			} else if (this.direction == Directions.DOWN) {
+			} else if (this.direction.isDown) {
 				nexty += this.speed;
 			}
 			if (this.rootRef.collidesWithEnvironment(nextx, nexty)) {
