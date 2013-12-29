@@ -21,7 +21,7 @@
 		private var direction:Directions;
 		
 		public var offsetx:Number;
-		public var offsety:Number;
+		public var offsety:  Number;
 		
 		public function Player() {
 			super();
@@ -69,7 +69,7 @@
 		public function checkIfDead(e:Event) {
 			
 			if (this.HealthPercentage == 0) {
-				this.gotoAndStop(Actions.DEATH + Utilities.ANIMATION_SEPERATOR + this.direction);
+				this.gotoAndStop(Actions.DEATH + Utilities.ANIMATION_SEPERATOR + this.direction.toString);
 				super.death_animation.delegate = this;
 				this.blood.yRange = 36;
 				removeEventListener(Event.ENTER_FRAME, loop, false);
