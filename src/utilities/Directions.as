@@ -43,6 +43,7 @@ package utilities {
 		private static const strUP:String = "up";
 		private static const strDOWN:String = "down";
 		
+		public static const _none:Number = 0;
 		public static const _up:Number = 1;
 		public static const _down:Number = 2;
 		public static const _left:Number = 4;
@@ -50,7 +51,7 @@ package utilities {
 		
 		public var current:Number;
 		
-		public function Directions(current:Number = 0) {
+		public function Directions(current:Number = _none) {
 			this.current = current;
 		}
 		
@@ -70,27 +71,23 @@ package utilities {
 			return (this.current & _right) != 0;
 		}
 		
-		public function toString():String {
-			var dirs:Object = decompose();
-			
-			var string:String = "";
-			if (dirs[Directions.strLEFT] != 0) {
-				string += Directions.strLEFT;
-			} else if (dirs[Directions.strRIGHT] != 0) {
-				string += Directions.strRIGHT;
+		public function toString():String {			
+			var horizontal:String = "";
+			if (this.isLeft()) {
+				horizontal += Directions.strLEFT;
+			} else if (this.isRight()) {
+				horizontal += Directions.strRIGHT;
 			}
-			if (dirs[Directions.strUP] != 0) {
-				if (string != "") {
-					string += Utilities.ANIMATION_SEPERATOR;
-				}
-				string += Directions.strUP;
-			} else if (dirs[Directions.strDOWN] != 0) {
-				if (string != "") {
-					string += Utilities.ANIMATION_SEPERATOR
-				}
-				string += Directions.strDOWN;
+			var vertical:String = "";
+			if (this.isUp()) {
+				vertical += Directions.strUP;
+			} else if (this.isDown()) {
+				vertical += Directions.strDOWN;
 			}
-			return string;
+			if (vertical != "") {
+				horizontal += Utilities.ANIMATION_SEPERATOR
+			}
+			return horizontal + vertical
 		}
 		
 		public function opposite():Directions {
@@ -103,27 +100,17 @@ package utilities {
 		 * Reverses the direction
 		 */
 		public function reverse():void {
-			var dirs:Object = decompose();
 			this.current = 0;
-			if (dirs[Directions.strLEFT] != 0) {
+			if (this.isLeft()) {
 				this.current |= Directions._right;
-			} else if (dirs[Directions.strRIGHT] != 0) {
+			} else if (this.isRight()) {
 				this.current |= Directions._left;
 			}
-			if (dirs[Directions.strUP] != 0) {
+			if (this.isUp()) {
 				this.current |= Directions._down;
-			} else if (dirs[Directions.strDOWN] != 0) {
+			} else if (isDown()) {
 				this.current |= Directions._up
 			}
-		}
-		
-		private function decompose():Object {
-			var returnObject = new Object();
-			returnObject[Directions.strLEFT] = this.current & Directions._left;
-			returnObject[Directions.strRIGHT] = this.current & Directions._right;
-			returnObject[Directions.strUP] = this.current & Directions._up;
-			returnObject[Directions.strDOWN] = this.current & Directions._down;
-			return returnObject;
 		}
 	}
 }
