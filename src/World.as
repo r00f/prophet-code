@@ -26,8 +26,8 @@ package {
 		
 		public function get Enemies():Vector.<Enemy> {
 			var resultVector:Vector.<Enemy> = new Vector.<Enemy>();
-			for (var i:int = 0; i < this.world.numChildren; i++) {
-				var child:DisplayObject = this.world.getChildAt(i);
+			for (var i:int = 0; i < this.numChildren; i++) {
+				var child:DisplayObject = this.getChildAt(i);
 				if (child is Enemy) {
 					resultVector.push(child as Enemy)
 				}
