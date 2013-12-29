@@ -76,11 +76,11 @@
 		public function loop(e:Event):void {
 			this.checkKeypresses();
 			healthbar.currentHealth = player.HealthPercentage;
-			scale();
+			scaleAndSetPlayerPosition();
 		}
 		
 		
-		public function scale() {
+		public function scaleAndSetPlayerPosition() {
 			if (keyPresses.isDown(KeyCodes.PageUp)) {
 				this.world.scaleX += (this.world.scaleX / 10);
 				this.world.scaleY += (this.world.scaleY / 10);
@@ -88,6 +88,8 @@
 				this.world.scaleX -= (this.world.scaleX / 10);
 				this.world.scaleY -= (this.world.scaleY / 10);
 			}
+			var c:Rectangle = this.scrollRect;
+			this.scrollRect = new Rectangle((this.player.x*this.world.scaleX) - c.width/2, this.player.y*this.world.scaleY - c.height/2, c.width, c.height);
 		}
 		
 		public function checkKeypresses():void {

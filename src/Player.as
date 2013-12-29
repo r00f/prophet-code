@@ -104,19 +104,26 @@
 			} else if (this.rootRef.downPressed) {
 				ychange += speed;
 			}
-			
-			var c:Rectangle = this.rootRef.scrollRect;
 			if (!this.rootRef.collidesWithEnvironment(this.x + xchange, this.y + ychange)) {
-				this.rootRef.scrollRect = new Rectangle(c.x += xchange, c.y += ychange, c.width, c.height);
+			this.x += xchange;
+			this.y += ychange;
 			} else if (!this.rootRef.collidesWithEnvironment(this.x, this.y + ychange)) {
-				this.rootRef.scrollRect = new Rectangle(c.x, c.y += ychange, c.width, c.height);
-				
+				this.x += xchange;
 			} else if (!this.rootRef.collidesWithEnvironment(this.x + xchange, this.y)) {
-				this.rootRef.scrollRect = new Rectangle(c.x += xchange, c.y, c.width, c.height);
+				this.x += xchange;
 			}
-			c = this.rootRef.scrollRect;
-			this.x = c.width / 2 + c.x;
-			this.y = c.height / 2 + c.y;
+			//var c:Rectangle = this.rootRef.scrollRect;
+			//if (!this.rootRef.collidesWithEnvironment(this.x + xchange, this.y + ychange)) {
+				//this.rootRef.scrollRect = new Rectangle(c.x += xchange, c.y += ychange, c.width, c.height);
+			//} else if (!this.rootRef.collidesWithEnvironment(this.x, this.y + ychange)) {
+				//this.rootRef.scrollRect = new Rectangle(c.x, c.y += ychange, c.width, c.height);
+				//
+			//} else if (!this.rootRef.collidesWithEnvironment(this.x + xchange, this.y)) {
+				//this.rootRef.scrollRect = new Rectangle(c.x += xchange, c.y, c.width, c.height);
+			//}
+			//c = this.rootRef.scrollRect;
+			//this.x = c.width / 2 + c.x;
+			//this.y = c.height / 2 + c.y;
 			
 			this.gotoAndPlay(this.Action + "_" + this.Direction);
 			this.light.scaleX = this.HealthPercentage + 0.4;
