@@ -40,7 +40,7 @@
 		
 		private function updateDirection():void {
 			var old_direction:Number= this.direction.current;
-			this.direction.current = 0;
+			this.direction.current = Directions._none;
 			
 			if (this.rootRef.upPressed) {
 				direction.current += Directions._up;
@@ -54,7 +54,7 @@
 				direction.current += Directions._right;
 			}
 			
-			if (direction.current == 0) {
+			if (direction.current == Directions._none) {
 				this.direction.current = old_direction;
 			}
 		}
