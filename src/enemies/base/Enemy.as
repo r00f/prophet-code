@@ -1,4 +1,4 @@
-package enemies {
+package enemies.base {
 	import basics.entities.HealthEntity;
 	import basics.hitboxes.BodyBox;
 	import flash.display.MovieClip;
