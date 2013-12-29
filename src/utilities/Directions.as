@@ -73,15 +73,15 @@ package utilities {
 		
 		public function toString():String {			
 			var horizontal:String = "";
-			if (this.isLeft()) {
+			if (this.isLeft) {
 				horizontal += Directions.strLEFT;
-			} else if (this.isRight()) {
+			} else if (this.isRight) {
 				horizontal += Directions.strRIGHT;
 			}
 			var vertical:String = "";
-			if (this.isUp()) {
+			if (this.isUp) {
 				vertical += Directions.strUP;
-			} else if (this.isDown()) {
+			} else if (this.isDown) {
 				vertical += Directions.strDOWN;
 			}
 			if (vertical != "") {
@@ -101,14 +101,14 @@ package utilities {
 		 */
 		public function reverse():void {
 			this.current = 0;
-			if (this.isLeft()) {
+			if (this.isLeft) {
 				this.current |= Directions._right;
-			} else if (this.isRight()) {
+			} else if (this.isRight) {
 				this.current |= Directions._left;
 			}
-			if (this.isUp()) {
+			if (this.isUp) {
 				this.current |= Directions._down;
-			} else if (isDown()) {
+			} else if (isDown) {
 				this.current |= Directions._up
 			}
 		}
