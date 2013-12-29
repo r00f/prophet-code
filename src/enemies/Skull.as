@@ -3,6 +3,7 @@
 	import basics.hitboxes.BodyBox;
 	import basics.hitboxes.AttackBox;
 	import basics.hitboxes.DamageBox;
+	import enemies.base.Enemy;
 	import flash.display.MovieClip;
 	import flash.events.Event;
 	import utilities.*;

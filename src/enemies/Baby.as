@@ -4,6 +4,8 @@
 	import basics.hitboxes.AttackBox;
 	import basics.hitboxes.DamageBox;
 	import basics.Light;
+	import enemies.base.Enemy;
+	import enemies.base.Mover;
 	import flash.display.MovieClip;
 	import flash.events.Event;
 	import utilities.*;
@@ -15,15 +17,13 @@
 	 * Controls the baby animation.
 	 * Implements IAttackTrigger to let the attackbox trigger the attack into the correct direction.
 	 */
-	public class Baby extends Enemy implements IAttackTrigger, IDamageTrigger {
-		private var HorizontalLimit = 100;
-		private var VerticalLimit = 50;
+	public class Baby extends Mover implements IAttackTrigger, IDamageTrigger {
+
 		
 		private var rootRef:Root;
 		private var speed:Number;
 		private var xspeed:Number;
 		private var yspeed:Number;
-		private var direction:String;
 		private var nextAction:String = "idle";
 		private var damageAmount:Number;
 		public var AttackTriggerLeft:AttackBox;
@@ -75,8 +75,9 @@
 			
 		}
 		
-		public function walk(e:Event):void {
-			this.setAttackTriggerDelegate()
+		override public function walk(e:Event):void {
+			super.walk(e);
+			this.setAttackBoxDelegate(this);
 			
 			if (this.HealthPercentage == 0) {
 				this.attackBoxTriggeredByPlayer(null);
@@ -84,56 +85,26 @@
 				removeEventListener(Event.ENTER_FRAME, walk, false);
 				return;
 			}
-			
-			if (this.x < (FixPositionX - HorizontalLimit)) {
-				xspeed = this.speed;
-				this.direction = Directions.RIGHT;
-			}
-			if (this.x > (FixPositionX + HorizontalLimit)) {
-				
-				xspeed = -this.speed;
-				this.direction = Directions.LEFT;
-			}
-			
-			if (this.y > (FixPositionY + VerticalLimit)) {
-				yspeed = -this.speed;
-				this.direction = Directions.UP;
-			}
-			
-			if (this.y < (FixPositionY - VerticalLimit)) {
-				yspeed = this.speed;
-				this.direction = Directions.DOWN;
-			}
-			
-			if ((xspeed != 0 || yspeed != 0)) {
-				if (this.rootRef.collidesWithEnvironment(this.x + xspeed, this.y + yspeed) || this.rootRef.collidesWithEnvironment(this.x + xspeed + this.width * 2 / 3, this.y + yspeed)) {
-					xspeed = -xspeed;
-					this.direction = Directions.oppositeOf(this.direction);
-				}
-				this.nextAction = "baby_" + Actions.WALK + "_";
-				this.x += xspeed;
-				this.y += yspeed;
-			}
-			
+			this.nextAction = "baby_" + Actions.WALK + "_";
 			this.gotoAndStop(this.nextAction + this.direction);
 		}
 		
-		private function setAttackTriggerDelegate() {
-			if (this.AttackTriggerRight && this.AttackTriggerRight.delegate != this)
-				this.AttackTriggerRight.delegate = this;
-			if (this.AttackTriggerLeft && this.AttackTriggerLeft.delegate != this)
-				this.AttackTriggerLeft.delegate = this;
-		}
+		//private function setAttackTriggerDelegate() {
+			//if (this.AttackTriggerRight && this.AttackTriggerRight.delegate != this)
+				//this.AttackTriggerRight.delegate = this;
+			//if (this.AttackTriggerLeft && this.AttackTriggerLeft.delegate != this)
+				//this.AttackTriggerLeft.delegate = this;
+		//}
 		
-		public function setDamageDelegate(e:Event) {
-			if (death_animation != null) {
-				var attackTrigger:AttackAnimationTrigger = death_animation as AttackAnimationTrigger;
-				if (attackTrigger.damage_box != null) {
-					attackTrigger.damage_box.delegate = this;
-					removeEventListener(Event.ENTER_FRAME, setDamageDelegate, false);
-				}
-			}
-		}
+		//public function setDamageDelegate(e:Event) {
+			//if (death_animation != null) {
+				//var attackTrigger:AttackAnimationTrigger = death_animation as AttackAnimationTrigger;
+				//if (attackTrigger.damage_box != null) {
+					//attackTrigger.damage_box.delegate = this;
+					//removeEventListener(Event.ENTER_FRAME, setDamageDelegate, false);
+				//}
+			//}
+		//}
 		
 		public function attackBoxTriggeredByPlayer(box:AttackBox) {
 			xspeed = 0;

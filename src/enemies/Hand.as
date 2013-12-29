@@ -2,6 +2,7 @@
 	
 	import basics.hitboxes.BodyBox;
 	import basics.hitboxes.AttackBox;
+	import enemies.base.Enemy;
 	import flash.display.MovieClip;
 	import flash.events.Event;
 	import utilities.Directions;
@@ -66,7 +67,7 @@
 		}
 		
 		public function attackBoxTriggeredByPlayer(box:AttackBox) {
-			var direction:String;
+			var direction:Directions = new Directions();
 			if (box == AttackTriggerLeft) {
 				direction = Directions.LEFT;
 			} else if  (box == AttackTriggerRight) {
@@ -76,7 +77,7 @@
 			} else if  (box == AttackTriggerDown) {
 				direction = Directions.DOWN;				
 			}
-			this.gotoAndStop(Actions.HIT+"_" + direction);
+			this.gotoAndStop(Actions.HIT+"_" + direction.toString);
 		}
 	}
 
