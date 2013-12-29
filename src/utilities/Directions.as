@@ -42,6 +42,7 @@ package utilities {
 		private static const strRIGHT:String = "right";
 		private static const strUP:String = "up";
 		private static const strDOWN:String = "down";
+		private static const strNONE:String = "none";
 		
 		public static const _none:Number = 0;
 		public static const _up:Number = 1;
@@ -84,7 +85,7 @@ package utilities {
 			} else if (this.isDown) {
 				vertical += Directions.strDOWN;
 			}
-			if (vertical != "") {
+			if (horizontal != "" && vertical != "") {
 				horizontal += Utilities.ANIMATION_SEPERATOR
 			}
 			return horizontal + vertical
@@ -100,16 +101,19 @@ package utilities {
 		 * Reverses the direction
 		 */
 		public function reverse():void {
-			this.current = 0;
+			var newDirection:Number = 0;
 			if (this.isLeft) {
-				this.current |= Directions._right;
+				newDirection += Directions._right;
 			} else if (this.isRight) {
-				this.current |= Directions._left;
+				newDirection += Directions._left;
 			}
 			if (this.isUp) {
-				this.current |= Directions._down;
+				newDirection += Directions._down;
 			} else if (isDown) {
-				this.current |= Directions._up
+				newDirection += Directions._up
+			}
+			if (newDirection != _none) {
+				this.current = newDirection;
 			}
 		}
 	}
