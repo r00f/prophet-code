@@ -17,8 +17,11 @@ package basics.entities 	{
 	public class Entity extends MovieClip {
 		private var lights:Vector.<Light> = new Vector.<Light>();
 		
+		protected var rootRef:Root;
+		
 		public function Entity() {
 			super();
+			this.rootRef = root as Root;
 			addEventListener(Event.ENTER_FRAME, moveLightToDarkness, false, 0, true);
 		}
 		
