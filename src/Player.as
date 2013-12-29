@@ -51,7 +51,7 @@
 			if (this.rootRef.leftPressed) {
 				direction.current += Directions._left;
 			} else if (this.rootRef.rightPressed) {
-				direction.current += Directions._down;
+				direction.current += Directions._right;
 			}
 			
 			if (direction.current == 0) {
@@ -87,6 +87,8 @@
 		
 		public function loop(e:Event):void {
 			this.updateDirection();
+			
+			trace("direction: " + this.direction+"");
 			var xchange = 0;
 			var ychange = 0;
 			if (this.rootRef.keyPresses.isDown(KeyCodes.Control) && cooldown <= 0) {
@@ -95,15 +97,15 @@
 			}
 			cooldown--;
 			
-			if (this.rootRef.leftPressed) {
+			if (this.direction.isLeft) {
 				xchange -= speed;
-			} else if (this.rootRef.rightPressed) {
+			} else if (this.direction.isRight) {
 				xchange += speed;
 			}
 			
-			if (this.rootRef.upPressed) {
+			if (this.direction.isUp) {
 				ychange -= speed;
-			} else if (this.rootRef.downPressed) {
+			} else if (this.direction.isDown) {
 				ychange += speed;
 			}
 			
@@ -119,7 +121,6 @@
 			c = this.rootRef.scrollRect;
 			this.x = c.width / 2 + c.x;
 			this.y = c.height / 2 + c.y;
-			
 			this.gotoAndPlay(this.Action + Utilities.ANIMATION_SEPERATOR + this.direction);
 			this.light.scaleX = this.HealthPercentage + 0.4;
 			this.light.scaleY = this.HealthPercentage + 0.4;
