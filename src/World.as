@@ -2,6 +2,7 @@ package {
 	import basics.Darkness;
 	import basics.entities.Entity;
 	import basics.hitboxes.CollisionBox;
+	import enemies.Enemy;
 	import environment.Environment;
 	import environment.wall.segments.HorizontalDoor;
 	import flash.display.DisplayObject;

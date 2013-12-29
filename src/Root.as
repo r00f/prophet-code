@@ -76,6 +76,18 @@
 		public function loop(e:Event):void {
 			this.checkKeypresses();
 			healthbar.currentHealth = player.HealthPercentage;
+			scale();
+		}
+		
+		
+		public function scale() {
+			if (keyPresses.isDown(KeyCodes.PageUp)) {
+				this.world.scaleX += (this.world.scaleX / 10);
+				this.world.scaleY += (this.world.scaleY / 10);
+			} else if (keyPresses.isDown(KeyCodes.PageDown)) {
+				this.world.scaleX -= (this.world.scaleX / 10);
+				this.world.scaleY -= (this.world.scaleY / 10);
+			}
 		}
 		
 		public function checkKeypresses():void {
