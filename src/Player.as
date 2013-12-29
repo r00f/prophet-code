@@ -40,6 +40,7 @@
 		
 		private function updateDirection():void {
 			if (this.rootRef.movementPressed()) {
+				direction.current = Directions._none;
 				if (this.rootRef.upPressed) {
 					direction.current += Directions._up;
 				} else if (this.rootRef.downPressed) {
