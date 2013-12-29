@@ -39,23 +39,18 @@
 		}
 		
 		private function updateDirection():void {
-			var old_direction:Number= this.direction.current;
-			this.direction.current = Directions._none;
-			
-			if (this.rootRef.upPressed) {
-				direction.current += Directions._up;
-			} else if (this.rootRef.downPressed) {
-				direction.current += Directions._down;
-			}
-			
-			if (this.rootRef.leftPressed) {
-				direction.current += Directions._left;
-			} else if (this.rootRef.rightPressed) {
-				direction.current += Directions._right;
-			}
-			
-			if (direction.current == Directions._none) {
-				this.direction.current = old_direction;
+			if (this.rootRef.movementPressed()) {
+				if (this.rootRef.upPressed) {
+					direction.current += Directions._up;
+				} else if (this.rootRef.downPressed) {
+					direction.current += Directions._down;
+				}
+				
+				if (this.rootRef.leftPressed) {
+					direction.current += Directions._left;
+				} else if (this.rootRef.rightPressed) {
+					direction.current += Directions._right;
+				}
 			}
 		}
 		
