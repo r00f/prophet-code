@@ -87,8 +87,6 @@
 		
 		public function loop(e:Event):void {
 			this.updateDirection();
-			
-			trace("direction: " + this.direction+"");
 			var xchange = 0;
 			var ychange = 0;
 			if (this.rootRef.keyPresses.isDown(KeyCodes.Control) && cooldown <= 0) {
