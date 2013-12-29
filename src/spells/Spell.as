@@ -13,11 +13,8 @@ package spells {
 		
 		protected var manaCost:Number;
 		
-		protected var rootRef:Root;
-		
 		public function Spell() {
 			super();
-			this.rootRef = root as Root;
 			addEventListener(Event.ENTER_FRAME, eventLoop, false, 0, true);
 		}
 		

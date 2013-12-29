@@ -30,13 +30,10 @@
 		public var hit_right_animation:LastFrameTrigger;
 		public var hit_up_animation:LastFrameTrigger;
 		public var hit_down_animation:LastFrameTrigger;
-			
-		private var rootRef:Root;
 		
 		
 		public function Hand() {
 			super();
-			this.rootRef = this.root as Root;
 			addEventListener(Event.ENTER_FRAME, setDelegateIfNotSet, false, 0, true);	
 			this.gotoAndStop(Actions.INTRO);
 			this.intro_animation.delegate = this;
