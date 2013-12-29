@@ -42,7 +42,6 @@
 		}
 		
 		public function damageAppliedToPlayer(box:DamageBox, player:Player) {
-			trace("baby dmg");
 			if (!this.playerHit) {
 				player.applyDamage(this.damageAmount);
 				playerHit = true;
