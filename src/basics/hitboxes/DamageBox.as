@@ -25,7 +25,7 @@
 		}
 		
 		public function checkForEnemies(e:Event) {
-			if (this.delegate != null) {
+			if (this.delegate != null && root != null) {
 				if (this.rootRef == null) {
 					this.rootRef = root as Root;
 				}
