@@ -56,6 +56,10 @@ package utilities {
 			this.current = current;
 		}
 		
+		public function get copy() {
+			return new Directions(this.current);
+		}
+		
 		public function get isUp() {
 			return (this.current & _up) != 0;
 		}

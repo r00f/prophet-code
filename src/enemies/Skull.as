@@ -74,9 +74,11 @@
 		}
 		
 		public function setDamageDelegate(e:Event) {
-			if (damage_box != null)
-			damage_box.delegate = this;
-			removeEventListener(Event.ENTER_FRAME, setDamageDelegate, false);
+			this.setDamageBoxDelegate(this);
+			if (damage_box != null) {
+				damage_box.delegate = this;
+				removeEventListener(Event.ENTER_FRAME, setDamageDelegate, false);
+			}
 		}
 		
 		override public function walk(e:Event):void {
