@@ -121,6 +121,10 @@
 			return _attackPressed;
 		}
 		
+		public function movementPressed():Boolean {
+			return _downPressed || _upPressed || _leftPressed || _rightPressed;
+		}
+		
 		public function loop(e:Event):void {
 			
 			this.checkKeypresses();

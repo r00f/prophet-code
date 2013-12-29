@@ -96,17 +96,18 @@
 				cooldown = 20;
 			}
 			cooldown--;
-			
-			if (this.direction.isLeft) {
-				xchange -= speed;
-			} else if (this.direction.isRight) {
-				xchange += speed;
-			}
-			
-			if (this.direction.isUp) {
-				ychange -= speed;
-			} else if (this.direction.isDown) {
-				ychange += speed;
+			if (this.rootRef.movementPressed()) {
+				if (this.direction.isLeft) {
+					xchange -= speed;
+				} else if (this.direction.isRight) {
+					xchange += speed;
+				}
+				
+				if (this.direction.isUp) {
+					ychange -= speed;
+				} else if (this.direction.isDown) {
+					ychange += speed;
+				}
 			}
 			
 			var c:Rectangle = this.rootRef.scrollRect;
