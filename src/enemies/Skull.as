@@ -87,12 +87,11 @@
 		}
 		
 		public function setDamageDelegate(e:Event) {
-			if (damage_box != null)
-			damage_box.delegate = this;
-			removeEventListener(Event.ENTER_FRAME, setDamageDelegate, false);
+			this.setDamageBoxDelegate(this);
 		}
 		
 		public function walk(e:Event):void {
+			
 			if (this.x < (FixPositionX - HorizontalLimit)) {
 				xspeed = this.speed;
 				this.direction = Directions.RIGHT;
