@@ -17,7 +17,7 @@
 		}
 		
 		public function checkForPlayer(e:Event) {
-			if (this.delegate != null) {
+			if (this.delegate != null && this.rootRef != null) {
 				if (this.hitTestObject(super.rootRef.player.body_hit)) {
 					this.delegate.damageAppliedToPlayer(this, super.rootRef.player);
 				}
@@ -25,10 +25,7 @@
 		}
 		
 		public function checkForEnemies(e:Event) {
-			if (this.delegate != null) {
-				if (this.rootRef == null) {
-					this.rootRef = root as Root;
-				}
+			if (this.delegate != null && this.rootRef != null) {
 				var enemylist:Vector.<Enemy> = rootRef.Enemies;
 				for (var i:int = 0; i < enemylist.length; i++) {
 					var enemy:Enemy = enemylist[i];
