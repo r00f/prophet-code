@@ -59,7 +59,7 @@ package utilities {
 		}
 		
 		public function get isDown() {
-			return (this.current & _right) != 0;
+			return (this.current & _down) != 0;
 		}
 		
 		public function get isLeft() {

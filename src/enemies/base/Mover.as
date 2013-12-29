@@ -29,34 +29,34 @@ package enemies.base
 			
 		}
 		public function walk(e:Event):void {			
-			if (this.x < (FixPositionX - HorizontalLimit)) {
-				xspeed = this.speed;
-				this.direction = Directions.RIGHT;
+			var nextx:Number = this.x;
+			var nexty:Number = this.y;
+			if (this.direction.isLeft) {
+				nextx -= this.speed;
+			} else if (this.direction.isRight) {
+				nextx += this.speed;
 			}
-			if (this.x > (FixPositionX + HorizontalLimit)) {
-				
-				xspeed = -this.speed;
-				this.direction = Directions.LEFT;
+			if (this.direction.isUp) {
+				nexty -= this.speed;
+			} else if (this.direction.isDown) {
+				nexty += this.speed;
 			}
-			
-			if (this.y > (FixPositionY + VerticalLimit)) {
-				yspeed = -this.speed;
-				this.direction = Directions.UP;
+			if (this.outsideAnyLimit(nextx, nexty) || this.rootRef.collidesWithEnvironment(this.x + xspeed, this.y + yspeed) || this.rootRef.collidesWithEnvironment(this.x + xspeed + this.width * 2 / 3, this.y + yspeed)) {
+				xspeed = -xspeed;
+				yspeed = -yspeed;
+				this.direction.reverse();
+			} else {
+				this.x = nextx;
+				this.y = nexty;
 			}
-			
-			if (this.y < (FixPositionY - VerticalLimit)) {
-				yspeed = this.speed;
-				this.direction = Directions.DOWN;
 			}
-			
-			if ((xspeed != 0 || yspeed != 0)) {
-				if (this.rootRef.collidesWithEnvironment(this.x + xspeed, this.y + yspeed) || this.rootRef.collidesWithEnvironment(this.x + xspeed + this.width * 2 / 3, this.y + yspeed)) {
-					xspeed = -xspeed;
-					this.direction.reverse();
-				}
-				this.x += xspeed;
-				this.y += yspeed;
-			}
+		
+		private function outsideAnyLimit(x:Number, y:Number) {
+			return this.outsideLimit(x,FixPositionX, HorizontalLimit) || this.outsideLimit(y,FixPositionY, VerticalLimit);
+		}
+		
+		private function outsideLimit(value:Number, fix:Number, limit:Number) {
+			return value < (fix - limit) ||  value > (fix + limit);
 		}
 	}
 

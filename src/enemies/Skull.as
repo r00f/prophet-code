@@ -18,11 +18,7 @@
 		
 		public var AttackTriggerLeft:AttackBox;
 		public var AttackTriggerRight:AttackBox;
-		
-		//private var playerHit:Boolean = false;
-		
-		private var FixPositionX;
-		private var FixPositionY;
+
 		
 		private var Wait;
 		
