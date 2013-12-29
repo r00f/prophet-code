@@ -65,14 +65,14 @@ package utilities {
 		}
 		
 		public function get isLeft() {
-				return (this.current & _left) != 0;
+			return (this.current & _left) != 0;
 		}
 		
 		public function get isRight() {
 			return (this.current & _right) != 0;
 		}
 		
-		public function toString():String {			
+		public function toString():String {
 			var horizontal:String = "";
 			if (this.isLeft) {
 				horizontal += Directions.strLEFT;
@@ -101,7 +101,7 @@ package utilities {
 		 * Reverses the direction
 		 */
 		public function reverse():void {
-			var newDirection:Number = 0;
+			var newDirection:Number = _none;
 			if (this.isLeft) {
 				newDirection += Directions._right;
 			} else if (this.isRight) {
