@@ -4,6 +4,7 @@
 	import basics.hitboxes.AttackBox;
 	import basics.hitboxes.DamageBox;
 	import enemies.base.Enemy;
+	import enemies.base.Mover;
 	import flash.display.MovieClip;
 	import flash.events.Event;
 	import utilities.*;
@@ -11,18 +12,7 @@
 	import utilities.interfaces.IDamageTrigger;
 	import utilities.interfaces.ILastFrameTrigger;
 	
-	public class Skull extends Enemy implements IDamageTrigger {
-		
-		public static var blabla = "String";
-		
-		private var HorizontalLimit = 100;
-		private var VerticalLimit = 50;
-		
-		private var rootRef:Root;
-		private var speed:Number;
-		private var xspeed:Number;
-		private var yspeed:Number;
-		private var direction:String;
+	public class Skull extends Mover implements IDamageTrigger {		
 		private var damageAmount:Number;
 		public var damage_box:DamageBox;
 		
@@ -40,7 +30,6 @@
 			super();
 			this.blood.yRange = 50;
 			this.blood.xRange = 50;
-			this.rootRef = this.root as Root;
 			Wait = Random.random(25);
 			FixPositionX = int(this.x);
 			FixPositionY = int(this.y);
@@ -74,13 +63,14 @@
 				removeEventListener(Event.ENTER_FRAME, wait, false)
 				addEventListener(Event.ENTER_FRAME, walk, false, 0, true);
 			}
-		}
+		}                                                                                                                          
+		
 		
 		public function checkIfDead(e:Event) {
 			if (this.HealthPercentage == 0) {
 				xspeed = 0;
 				yspeed = 0;
-				this.gotoAndStop(Actions.DEATH + "_" + this.direction);
+				this.gotoAndStop(Actions.DEATH + "_" + this.direction.toString);
 				super.death_animation.delegate = this;
 				removeEventListener(Event.ENTER_FRAME, walk, false);
 				removeEventListener(Event.ENTER_FRAME, wait, false);
@@ -88,43 +78,14 @@
 		}
 		
 		public function setDamageDelegate(e:Event) {
-			if (damage_box != null)
+			if (damage_box != null)
 			damage_box.delegate = this;
 			removeEventListener(Event.ENTER_FRAME, setDamageDelegate, false);
 		}
 		
-		public function walk(e:Event):void {
-			if (this.x < (FixPositionX - HorizontalLimit)) {
-				xspeed = this.speed;
-				this.direction = Directions.RIGHT;
-			}
-			if (this.x > (FixPositionX + HorizontalLimit)) {
-				
-				xspeed = -this.speed;
-				this.direction = Directions.LEFT;
-			}
-			
-			if (this.y > (FixPositionY + VerticalLimit)) {
-				yspeed = -this.speed;
-				this.direction = Directions.UP;
-			}
-			
-			if (this.y < (FixPositionY - VerticalLimit)) {
-				yspeed = this.speed;
-				this.direction = Directions.DOWN;
-			}
-			
-			if ((xspeed != 0 || yspeed != 0)) {
-				if (this.rootRef.collidesWithEnvironment(this.x + xspeed, this.y + yspeed) || this.rootRef.collidesWithEnvironment(this.x + xspeed + this.width * 2 / 3, this.y + yspeed)) {
-					xspeed = -xspeed;
-					this.direction = Directions.oppositeOf(this.direction);
-				}
-				this.x += xspeed;
-				this.y += yspeed;
-			}
-			
-			this.gotoAndStop("skull_walk_" + this.direction);
-		
+		override public function walk(e:Event):void {
+			super.walk(e);
+			this.gotoAndStop("skull_walk_" + this.direction.toString);
 		}
 	}
 }
