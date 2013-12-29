@@ -15,11 +15,10 @@
 	public class Player extends HealthEntity {
 		
 		private var speed:Number = 5;
-		private var rootRef:Root;
 		public var animations:MovieClip;
 		public var feet_hit:BodyBox;
 		public var body_hit:BodyBox;
-		private var _direction;
+		private var direction:Directions;
 		
 		public var offsetx:Number;
 		public var offsety:Number;
@@ -27,11 +26,10 @@
 		public function Player() {
 			super();
 			this.blood.yRange = 70;
-			this.rootRef = root as Root;
 			this.rootRef.player = this;
 			this.offsetx = this.x + 50;
 			this.offsety = this.y + 80;
-			_direction = Directions.DOWN;
+			this.direction = Directions.DOWN;
 			addEventListener(Event.ENTER_FRAME, loop, false, 0, true);
 			addEventListener(Event.ENTER_FRAME, checkIfDead, false, 0, true);		
 		}
@@ -43,19 +41,19 @@
 		public function get Direction():String {
 			
 			if (this.rootRef.upPressed) {
-				_direction = Directions.UP;
+				direction = Directions.UP;
 			}
 			if (this.rootRef.downPressed) {
-				_direction = Directions.DOWN;
+				direction = Directions.DOWN;
 			}
 			if (this.rootRef.leftPressed) {
-				_direction = Directions.LEFT;
+				direction = Directions.LEFT;
 			}
 			if (this.rootRef.rightPressed) {
-				_direction = Directions.RIGHT;
+				direction = Directions.RIGHT;
 			}
 			
-			return _direction;
+			return this.direction.toString;
 		}
 		
 		public function get Action():String {
@@ -71,7 +69,7 @@
 		public function checkIfDead(e:Event) {
 			
 			if (this.HealthPercentage == 0) {
-				this.gotoAndStop(Actions.DEATH + "_" + this._direction);
+				this.gotoAndStop(Actions.DEATH + "_" + this.direction);
 				super.death_animation.delegate = this;
 				this.blood.yRange = 36;
 				removeEventListener(Event.ENTER_FRAME, loop, false);
@@ -81,7 +79,7 @@
 		private var cooldown = 20;
 		
 		private function shootFireball() {
-			this.rootRef.addChild(new Fireball(this._direction, x,y-20));
+			this.rootRef.addChild(new Fireball(this.direction, x,y-20));
 		}
 		
 		public function loop(e:Event):void {

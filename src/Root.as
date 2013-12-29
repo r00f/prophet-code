@@ -4,7 +4,7 @@
 	import basics.entities.Entity;
 	import basics.hitboxes.CollisionBox;
 	import enemies.Baby;
-	import enemies.Enemy;
+	import enemies.base.Enemy;
 	import enemies.Skull;
 	import environment.Environment;
 	import environment.nature.Tree;
@@ -90,10 +90,7 @@
 						return 0;
 				}
 			}
-			
-			//sort the array by y value low -> high
 			sortArray.sort(customSort);
-			//loop through the array resetting indexes
 			for (i = 0; i < sortArray.length; i++) {
 				this.setChildIndex(sortArray[i], i);
 			}
