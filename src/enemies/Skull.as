@@ -59,8 +59,7 @@
 				removeEventListener(Event.ENTER_FRAME, wait, false)
 				addEventListener(Event.ENTER_FRAME, walk, false, 0, true);
 			}
-		}                                                                                                                          
-		
+		}
 		
 		public function checkIfDead(e:Event) {
 			if (this.HealthPercentage == 0) {

@@ -80,20 +80,11 @@
 		}
 		
 		private function setAttackTriggerDelegate() {
-			if (this.AttackTriggerRight && this.AttackTriggerRight.delegate != this)
-				this.AttackTriggerRight.delegate = this;
-			if (this.AttackTriggerLeft && this.AttackTriggerLeft.delegate != this)
-				this.AttackTriggerLeft.delegate = this;
+			this.setAttackBoxDelegate(this);
 		}
 		
 		public function setDamageDelegate(e:Event) {
-			if (death_animation != null) {
-				var attackTrigger:AttackAnimationTrigger = death_animation as AttackAnimationTrigger;
-				if (attackTrigger.damage_box != null) {
-					attackTrigger.damage_box.delegate = this;
-					removeEventListener(Event.ENTER_FRAME, setDamageDelegate, false);
-				}
-			}
+			this.setDamageBoxDelegate(this);
 		}
 		
 		public function attackBoxTriggeredByPlayer(box:AttackBox) {

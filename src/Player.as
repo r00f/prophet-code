@@ -18,10 +18,10 @@
 		public var animations:MovieClip;
 		public var feet_hit:BodyBox;
 		public var body_hit:BodyBox;
-		private var direction:Directions;
+		private var _direction;
 		
 		public var offsetx:Number;
-		public var offsety:  Number;
+		public var offsety:Number;
 		
 		public function Player() {
 			super();
@@ -29,7 +29,7 @@
 			this.rootRef.player = this;
 			this.offsetx = this.x + 50;
 			this.offsety = this.y + 80;
-			this.direction = Directions.DOWN;
+			_direction = Directions.DOWN;
 			addEventListener(Event.ENTER_FRAME, loop, false, 0, true);
 			addEventListener(Event.ENTER_FRAME, checkIfDead, false, 0, true);		
 		}
@@ -78,7 +78,7 @@
 		private var cooldown = 20;
 		
 		private function shootFireball() {
-			this.rootRef.addChild(new Fireball(this.direction.copy, x,y-20));
+			this.rootRef.world.addChild(new Fireball(this.direction.copy, x,y-20));
 		}
 		
 		public function loop(e:Event):void {
@@ -104,18 +104,14 @@
 				}
 			}
 			
-			var c:Rectangle = this.rootRef.scrollRect;
-			if (!this.rootRef.collidesWithEnvironment(this.x + xchange, this.y + ychange)) {
-				this.rootRef.scrollRect = new Rectangle(c.x += xchange, c.y += ychange, c.width, c.height);
+		if (!this.rootRef.collidesWithEnvironment(this.x + xchange, this.y + ychange)) {
+				this.x += xchange;
+				this.y += ychange;
 			} else if (!this.rootRef.collidesWithEnvironment(this.x, this.y + ychange)) {
-				this.rootRef.scrollRect = new Rectangle(c.x, c.y += ychange, c.width, c.height);
-				
+				this.x += xchange;
 			} else if (!this.rootRef.collidesWithEnvironment(this.x + xchange, this.y)) {
-				this.rootRef.scrollRect = new Rectangle(c.x += xchange, c.y, c.width, c.height);
+				this.x += xchange;
 			}
-			c = this.rootRef.scrollRect;
-			this.x = c.width / 2 + c.x;
-			this.y = c.height / 2 + c.y;
 			this.gotoAndPlay(this.Action + Utilities.ANIMATION_SEPERATOR + this.direction);
 			this.light.scaleX = this.HealthPercentage + 0.4;
 			this.light.scaleY = this.HealthPercentage + 0.4;
