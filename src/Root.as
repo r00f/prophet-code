@@ -1,15 +1,7 @@
 ﻿package {
 	
 	import basics.Darkness;
-	import basics.entities.Entity;
-	import basics.hitboxes.CollisionBox;
-	import enemies.Baby;
 	import enemies.Enemy;
-	import enemies.Skull;
-	import environment.Environment;
-	import environment.nature.Tree;
-	import environment.wall.segments.BaseSegment;
-	import environment.wall.segments.HorizontalDoor;
 	import flash.display.DisplayObject;
 	import flash.display.MovieClip;
 	import flash.events.Event;
@@ -41,6 +33,8 @@
 		
 		public var darkness:Darkness;
 		
+		public var world:World;
+		
 		private var timesToSort:Number = 3;
 		
 		public function Root() {
@@ -49,58 +43,13 @@
 			healthbar = new HealthBar(100, 100, 0.5, 0.5);
 			stage.addChild(healthbar);
 			keyPresses = new KeyObject(this.stage);
-			addEventListener(Event.ENTER_FRAME, loop, false, 0, true);
-			
-			addEventListener(Event.ENTER_FRAME, sort, false, 0, true);
-		
+			this.darkness = this.world.darkness;
+			addEventListener(Event.ENTER_FRAME, loop, false, 0, true);		
 		}
-		
-		public function sort(e:Event) {
-			
-			//prepare an array
-			var sortArray:Array = [];
-			;
-			//put the children into an array
-			for (var i:int = 0; i < this.numChildren; i++) {
-				sortArray[i] = this.getChildAt(i);
-			}
-			//get a sorting function ready
-			function customSort(childClip:DisplayObject, childClip2:DisplayObject):int {
-				if (childClip is Entity && childClip2 is Entity) {
-					var door:HorizontalDoor;
-					if (childClip is HorizontalDoor && childClip2 is Player) {
-						 door = childClip as HorizontalDoor;
-						return (door.isDoorOpen && door.y + 25 > player.y) ? 1 : -1;
-					} else if (childClip is Player && childClip2 is HorizontalDoor) {
-						door = childClip2 as HorizontalDoor;
-						return (door.isDoorOpen && door.y + 25 > player.y) ?  -1 : 1;
-					}
-					if (childClip.y < childClip2.y) {
-						return -1;
-					} else if (childClip.y > childClip2.y) {
-						return 1;
-					} else
-						return 0;
-				} else {
-					if (childClip is Entity)
-						return 1;
-					else if (childClip2 is Entity)
-						return -1;
-					else
-						return 0;
-				}
-			}
-			
-			//sort the array by y value low -> high
-			sortArray.sort(customSort);
-			//loop through the array resetting indexes
-			for (i = 0; i < sortArray.length; i++) {
-				this.setChildIndex(sortArray[i], i);
-			}
-			this.addChild(this.darkness);
+
+		public function get Enemies() :Vector.<Enemy>{
+			return this.world.Enemies;
 		}
-		
-		var wait = 10;
 		
 		// Keys
 		
@@ -125,9 +74,22 @@
 		}
 		
 		public function loop(e:Event):void {
-			
 			this.checkKeypresses();
 			healthbar.currentHealth = player.HealthPercentage;
+			scaleAndSetPlayerPosition();
+		}
+		
+		
+		public function scaleAndSetPlayerPosition() {
+			if (keyPresses.isDown(KeyCodes.PageUp)) {
+				this.world.scaleX += (this.world.scaleX / 10);
+				this.world.scaleY += (this.world.scaleY / 10);
+			} else if (keyPresses.isDown(KeyCodes.PageDown)) {
+				this.world.scaleX -= (this.world.scaleX / 10);
+				this.world.scaleY -= (this.world.scaleY / 10);
+			}
+			var c:Rectangle = this.scrollRect;
+			this.scrollRect = new Rectangle((this.player.x*this.world.scaleX) - c.width/2, this.player.y*this.world.scaleY - c.height/2, c.width, c.height);
 		}
 		
 		public function checkKeypresses():void {
@@ -161,20 +123,8 @@
 			}
 		}
 		
-		public function collidesWithEnvironment(x_next:Number, y_next:Number) {
-			for (var i = 0; i < this.numChildren; i++) {
-				var childClip:MovieClip = getChildAt(i) as MovieClip;
-				if (childClip is Environment) {
-					var env:Environment = childClip as Environment;
-					for each (var hitbox:CollisionBox in env.CollisionBoxes) {
-						if (hitbox.hitTestPoint(x_next, y_next, false)) {
-							return true;
-						}
-					}
-				}
-			}
-			return false;
-		
+		public function collidesWithEnvironment(x_next:Number, y_next:Number):Boolean {
+			return this.world.collidesWithEnvironment(x_next, y_next);
 		}
 		
 		private var areHitboxesVisible = false;

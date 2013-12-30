@@ -27,37 +27,38 @@ package basics.entities 	{
 		}
 		
 		public function get CollisionBoxes():Vector.<CollisionBox> {
-			return Vector.<CollisionBox>(this.getBoxesOfType(CollisionBox));
+			return Vector.<CollisionBox>(this.getBoxesOfTypeInClip(CollisionBox,this));
 		}
 		
 		public function get DamageBoxes():Vector.<DamageBox> {
-			return Vector.<DamageBox>(this.getBoxesOfType(DamageBox));
+			return Vector.<DamageBox>(this.getBoxesOfTypeInClip(DamageBox,this));
 		}
 		
 		public function get AttackBoxes():Vector.<AttackBox> {
-			return Vector.<AttackBox>(this.getBoxesOfType(AttackBox));
+			return Vector.<AttackBox>(this.getBoxesOfTypeInClip(AttackBox,this));
 		}
 		
 		protected function setAttackBoxDelegate(delegate:IAttackTrigger) {
 			this.AttackBoxes.forEach(function(box:AttackBox, idx, test) {
-				if (box.root != null) {
 					box.delegate = delegate;
-				}
 			});
 		}
 		
 		protected function setDamageBoxDelegate(delegate:IDamageTrigger) {
-			this.DamageBoxes.forEach(function(box:DamageBox, idx, test) {
-				if (box.root != null) {
-					box.delegate = delegate;
-				}
+			this.DamageBoxes.forEach(function(box:DamageBox, idx, mv) {
+				box.delegate = delegate;
 			});
 		}
 		
-		private function getBoxesOfType(type:Class):Vector.<Hitbox> {
+		private function getBoxesOfTypeInClip(type:Class, movieClip:MovieClip):Vector.<Hitbox> {
 			var results:Vector.<Hitbox> = new Vector.<Hitbox>();
-			for (var i:int = 0; i < this.numChildren; i++) {
-				var obj:DisplayObject = getChildAt(i);
+			for (var i:int = 0; i < movieClip.numChildren; i++) {
+				var obj:DisplayObject = movieClip.getChildAt(i);
+				if (obj is MovieClip) {
+					 this.getBoxesOfTypeInClip(type, obj as MovieClip).forEach(function(box:Hitbox, idx, mv) {
+						 results.push(box);
+					 });
+				}
 				if (obj is type) {
 					results.push(obj);
 				}

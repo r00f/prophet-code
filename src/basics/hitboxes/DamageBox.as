@@ -17,7 +17,7 @@
 		}
 		
 		public function checkForPlayer(e:Event) {
-			if (this.delegate != null) {
+			if (this.delegate != null && this.rootRef != null) {
 				if (this.hitTestObject(super.rootRef.player.body_hit)) {
 					this.delegate.damageAppliedToPlayer(this, super.rootRef.player);
 				}
@@ -25,17 +25,12 @@
 		}
 		
 		public function checkForEnemies(e:Event) {
-			if (this.delegate != null) {
-				if (this.rootRef == null) {
-					this.rootRef = root as Root;
-				}
-				for (var i:int = 0; i < this.rootRef.numChildren; i++) {
-					var child:DisplayObject = super.rootRef.getChildAt(i);
-					if (child is Enemy) {
-						var enemy:Enemy = child as Enemy;
-						if (this.hitTestObject(enemy)) {
-							this.delegate.damageAppliedToEnemy(this, enemy);
-						}
+			if (this.delegate != null && this.rootRef != null) {
+				var enemylist:Vector.<Enemy> = rootRef.Enemies;
+				for (var i:int = 0; i < enemylist.length; i++) {
+					var enemy:Enemy = enemylist[i];
+					if (this.hitTestObject(enemy)) {
+						this.delegate.damageAppliedToEnemy(this, enemy);
 					}
 				}
 			}
