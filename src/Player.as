@@ -36,7 +36,12 @@
 		}
 		
 		public function get light():Light {
-			return this.Lights[0];
+			var ls = this.Lights;
+			if (ls.length == 0) {
+				return null;
+			} else {
+				return ls[0];
+			}
 		}
 		
 		private function updateDirection():void {
@@ -114,8 +119,10 @@
 				this.x += xchange;
 			}
 			this.gotoAndPlay(this.Action + Utilities.ANIMATION_SEPERATOR + this.direction);
-			this.light.scaleX = this.HealthPercentage + 0.4;
-			this.light.scaleY = this.HealthPercentage + 0.4;
+			if (this.light != null) {
+				this.light.scaleX = this.HealthPercentage + 0.4;
+				this.light.scaleY = this.HealthPercentage + 0.4;
+			}
 		}
 	}
 
