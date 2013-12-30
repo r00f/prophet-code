@@ -5,6 +5,7 @@
 	import basics.Light;
 	import flash.display.MovieClip;
 	import flash.events.Event;
+	import flash.geom.Rectangle;
 	import spells.Fireball;
 	import utilities.*;
 	
@@ -14,11 +15,11 @@
 	public class Player extends HealthEntity {
 		
 		private var speed:Number = 5;
-		private var rootRef:Root;
 		public var animations:MovieClip;
 		public var feet_hit:BodyBox;
-		public var body_hit:BodyBox;
-		private var _direction;
+		public var body_hit:BodyBox;		
+		private var direction:Directions;
+
 		
 		public var offsetx:Number;
 		public var offsety:Number;
@@ -26,35 +27,33 @@
 		public function Player() {
 			super();
 			this.blood.yRange = 70;
-			this.rootRef = root as Root;
 			this.rootRef.player = this;
 			this.offsetx = this.x + 50;
 			this.offsety = this.y + 80;
-			_direction = Directions.DOWN;
+			this.direction = Directions.DOWN;
 			addEventListener(Event.ENTER_FRAME, loop, false, 0, true);
-			addEventListener(Event.ENTER_FRAME, checkIfDead, false, 0, true);
+			addEventListener(Event.ENTER_FRAME, checkIfDead, false, 0, true);		
 		}
 		
 		public function get light():Light {
 			return this.Lights[0];
 		}
 		
-		public function get Direction():String {
-			
-			if (this.rootRef.upPressed) {
-				_direction = Directions.UP;
+		private function updateDirection():void {
+			if (this.rootRef.movementPressed()) {
+				direction.current = Directions._none;
+				if (this.rootRef.upPressed) {
+					direction.current += Directions._up;
+				} else if (this.rootRef.downPressed) {
+					direction.current += Directions._down;
+				}
+				
+				if (this.rootRef.leftPressed) {
+					direction.current += Directions._left;
+				} else if (this.rootRef.rightPressed) {
+					direction.current += Directions._right;
+				}
 			}
-			if (this.rootRef.downPressed) {
-				_direction = Directions.DOWN;
-			}
-			if (this.rootRef.leftPressed) {
-				_direction = Directions.LEFT;
-			}
-			if (this.rootRef.rightPressed) {
-				_direction = Directions.RIGHT;
-			}
-			
-			return _direction;
 		}
 		
 		public function get Action():String {
@@ -70,7 +69,7 @@
 		public function checkIfDead(e:Event) {
 			
 			if (this.HealthPercentage == 0) {
-				this.gotoAndStop(Actions.DEATH + "_" + this._direction);
+				this.gotoAndStop(Actions.DEATH + Utilities.ANIMATION_SEPERATOR + this.direction);
 				super.death_animation.delegate = this;
 				this.blood.yRange = 36;
 				removeEventListener(Event.ENTER_FRAME, loop, false);
@@ -80,10 +79,11 @@
 		private var cooldown = 20;
 		
 		private function shootFireball() {
-			this.rootRef.world.addChild(new Fireball(this._direction, x, y - 20));
+			this.rootRef.world.addChild(new Fireball(this.direction.copy, x,y-20));
 		}
 		
 		public function loop(e:Event):void {
+			this.updateDirection();
 			var xchange = 0;
 			var ychange = 0;
 			if (this.rootRef.keyPresses.isDown(KeyCodes.Control) && cooldown <= 0) {
@@ -91,20 +91,21 @@
 				cooldown = 20;
 			}
 			cooldown--;
-			
-			if (this.rootRef.leftPressed) {
-				xchange -= speed;
-			} else if (this.rootRef.rightPressed) {
-				xchange += speed;
+			if (this.rootRef.movementPressed()) {
+				if (this.direction.isLeft) {
+					xchange -= speed;
+				} else if (this.direction.isRight) {
+					xchange += speed;
+				}
+				
+				if (this.direction.isUp) {
+					ychange -= speed;
+				} else if (this.direction.isDown) {
+					ychange += speed;
+				}
 			}
 			
-			if (this.rootRef.upPressed) {
-				ychange -= speed;
-			} else if (this.rootRef.downPressed) {
-				ychange += speed;
-			}
-			
-			if (!this.rootRef.collidesWithEnvironment(this.x + xchange, this.y + ychange)) {
+		if (!this.rootRef.collidesWithEnvironment(this.x + xchange, this.y + ychange)) {
 				this.x += xchange;
 				this.y += ychange;
 			} else if (!this.rootRef.collidesWithEnvironment(this.x, this.y + ychange)) {
@@ -112,8 +113,7 @@
 			} else if (!this.rootRef.collidesWithEnvironment(this.x + xchange, this.y)) {
 				this.x += xchange;
 			}
-			
-			this.gotoAndPlay(this.Action + "_" + this.Direction);
+			this.gotoAndPlay(this.Action + Utilities.ANIMATION_SEPERATOR + this.direction);
 			this.light.scaleX = this.HealthPercentage + 0.4;
 			this.light.scaleY = this.HealthPercentage + 0.4;
 		}

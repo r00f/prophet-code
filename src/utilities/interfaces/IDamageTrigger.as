@@ -1,6 +1,6 @@
 package utilities.interfaces {
 	import basics.hitboxes.DamageBox;
-	import enemies.Enemy;
+	import enemies.base.Enemy;
 	
 	/**
 	 * ...

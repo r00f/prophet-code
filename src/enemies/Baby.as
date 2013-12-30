@@ -4,6 +4,8 @@
 	import basics.hitboxes.AttackBox;
 	import basics.hitboxes.DamageBox;
 	import basics.Light;
+	import enemies.base.Enemy;
+	import enemies.base.Mover;
 	import flash.display.MovieClip;
 	import flash.events.Event;
 	import utilities.*;
@@ -15,32 +17,21 @@
 	 * Controls the baby animation.
 	 * Implements IAttackTrigger to let the attackbox trigger the attack into the correct direction.
 	 */
-	public class Baby extends Enemy implements IAttackTrigger, IDamageTrigger {
-		private var HorizontalLimit = 100;
-		private var VerticalLimit = 50;
-		
-		private var rootRef:Root;
-		private var speed:Number;
-		private var xspeed:Number;
-		private var yspeed:Number;
-		private var direction:String;
+	public class Baby extends Mover implements IAttackTrigger, IDamageTrigger {
 		private var nextAction:String = "idle";
 		private var damageAmount:Number;
 		public var AttackTriggerLeft:AttackBox;
 		public var AttackTriggerRight:AttackBox;
 		
-		private var FixPositionX;
-		private var FixPositionY;
+
 		private var playerHit:Boolean = false;
 		
 		private var Wait;
 		
 		public function Baby() {
 			super();
-			this.rootRef = this.root as Root;
 			Wait = Random.random(25);
-			FixPositionX = int(this.x);
-			FixPositionY = int(this.y);
+
 			this.speed = Random.random(6) + 2;
 			this.damageAmount = 1/this.speed * 100;
 			xspeed = this.speed;
@@ -75,8 +66,9 @@
 			
 		}
 		
-		public function walk(e:Event):void {
-			this.setAttackTriggerDelegate()
+		override public function walk(e:Event):void {
+			super.walk(e);
+			this.setAttackBoxDelegate(this);
 			
 			if (this.HealthPercentage == 0) {
 				this.attackBoxTriggeredByPlayer(null);
@@ -84,38 +76,7 @@
 				removeEventListener(Event.ENTER_FRAME, walk, false);
 				return;
 			}
-			
-			if (this.x < (FixPositionX - HorizontalLimit)) {
-				xspeed = this.speed;
-				this.direction = Directions.RIGHT;
-			}
-			if (this.x > (FixPositionX + HorizontalLimit)) {
-				
-				xspeed = -this.speed;
-				this.direction = Directions.LEFT;
-			}
-			
-			if (this.y > (FixPositionY + VerticalLimit)) {
-				yspeed = -this.speed;
-				this.direction = Directions.UP;
-			}
-			
-			if (this.y < (FixPositionY - VerticalLimit)) {
-				yspeed = this.speed;
-				this.direction = Directions.DOWN;
-			}
-			
-			if ((xspeed != 0 || yspeed != 0)) {
-				if (this.rootRef.collidesWithEnvironment(this.x + xspeed, this.y + yspeed) || this.rootRef.collidesWithEnvironment(this.x + xspeed + this.width * 2 / 3, this.y + yspeed)) {
-					xspeed = -xspeed;
-					this.direction = Directions.oppositeOf(this.direction);
-				}
-				this.nextAction = "baby_" + Actions.WALK + "_";
-				this.x += xspeed;
-				this.y += yspeed;
-			}
-			
-			this.gotoAndStop(this.nextAction + this.direction);
+			this.gotoAndStop("baby"+Utilities.ANIMATION_SEPERATOR + Actions.WALK +Utilities.ANIMATION_SEPERATOR + this.direction);
 		}
 		
 		private function setAttackTriggerDelegate() {
@@ -129,7 +90,7 @@
 		public function attackBoxTriggeredByPlayer(box:AttackBox) {
 			xspeed = 0;
 			yspeed = 0;
-			this.gotoAndStop(Actions.DEATH + "_" + this.direction);
+			this.gotoAndStop(Actions.DEATH + Utilities.ANIMATION_SEPERATOR + this.direction);
 			this.death_animation.delegate = this;
 			
 			addEventListener(Event.ENTER_FRAME, setDamageDelegate, false, 0, true);

@@ -1,7 +1,7 @@
 ﻿package {
 	
 	import basics.Darkness;
-	import enemies.Enemy;
+	import enemies.base.Enemy;
 	import flash.display.DisplayObject;
 	import flash.display.MovieClip;
 	import flash.events.Event;
@@ -73,7 +73,12 @@
 			return _attackPressed;
 		}
 		
+		public function movementPressed():Boolean {
+			return _downPressed || _upPressed || _leftPressed || _rightPressed;
+		}
+		
 		public function loop(e:Event):void {
+			
 			this.checkKeypresses();
 			healthbar.currentHealth = player.HealthPercentage;
 			scaleAndSetPlayerPosition();

@@ -14,6 +14,8 @@ package utilities {
 		
 		}
 		
+		public static const ANIMATION_SEPERATOR = "_";
+		
 		public static function setAttackBoxDelegate(box:AttackBox, clip:IAttackTrigger) {
 			if (box != null && box.delegate != clip) {
 				box.delegate = clip;

@@ -1,7 +1,7 @@
 package spells {
 	import basics.entities.Entity;
 	import basics.hitboxes.DamageBox;
-	import enemies.Enemy;
+	import enemies.base.Enemy;
 	import flash.events.Event;
 	import utilities.interfaces.IDamageTrigger;
 	
@@ -13,11 +13,8 @@ package spells {
 		
 		protected var manaCost:Number;
 		
-		protected var rootRef:Root;
-		
 		public function Spell() {
 			super();
-			this.rootRef = root as Root;
 			addEventListener(Event.ENTER_FRAME, eventLoop, false, 0, true);
 		}
 		

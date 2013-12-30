@@ -1,7 +1,6 @@
 package spells {
-	import basics.Light;
-	import enemies.Enemy;
 	import basics.hitboxes.DamageBox;
+	import enemies.base.Enemy;
 	import flash.display.MovieClip;
 	import flash.events.Event;
 	import utilities.Directions;
@@ -15,12 +14,12 @@ package spells {
 	public class Fireball extends Spell implements ILastFrameTrigger {
 		private var spellDamage:Number = 50;
 		private var enemiesHit:Object;
-		private var direction:String = Directions.LEFT;
+		private var direction:Directions = Directions.LEFT;
 		private var speed;
 		
 		public var explosion:LastFrameTrigger;
 		
-		public function Fireball(direction:String, x:Number, y:Number, speed:Number = 8) {
+		public function Fireball(direction:Directions, x:Number, y:Number, speed:Number = 8) {
 			super();
 			this.x = x;
 			this.y = y;
@@ -37,13 +36,13 @@ package spells {
 			}
 			var nextx:Number = this.x;
 			var nexty:Number = this.y;
-			if (this.direction == Directions.LEFT) {
+			if (this.direction.isLeft) {
 				nextx -= this.speed;
-			} else if (this.direction == Directions.RIGHT) {
+			} else if (this.direction.isRight) {
 				nextx += this.speed;
-			} else if (this.direction == Directions.UP) {
+			} else if (this.direction.isUp) {
 				nexty -= this.speed;
-			} else if (this.direction == Directions.DOWN) {
+			} else if (this.direction.isDown) {
 				nexty += this.speed;
 			}
 			if (this.rootRef.collidesWithEnvironment(nextx, nexty)) {
