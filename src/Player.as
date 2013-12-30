@@ -17,8 +17,9 @@
 		private var speed:Number = 5;
 		public var animations:MovieClip;
 		public var feet_hit:BodyBox;
-		public var body_hit:BodyBox;
-		private var _direction;
+		public var body_hit:BodyBox;		
+		private var direction:Directions;
+
 		
 		public var offsetx:Number;
 		public var offsety:Number;
@@ -29,7 +30,7 @@
 			this.rootRef.player = this;
 			this.offsetx = this.x + 50;
 			this.offsety = this.y + 80;
-			_direction = Directions.DOWN;
+			this.direction = Directions.DOWN;
 			addEventListener(Event.ENTER_FRAME, loop, false, 0, true);
 			addEventListener(Event.ENTER_FRAME, checkIfDead, false, 0, true);		
 		}

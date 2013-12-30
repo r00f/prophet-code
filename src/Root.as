@@ -1,7 +1,7 @@
 ﻿package {
 	
 	import basics.Darkness;
-	import enemies.Enemy;
+	import enemies.base.Enemy;
 	import flash.display.DisplayObject;
 	import flash.display.MovieClip;
 	import flash.events.Event;
