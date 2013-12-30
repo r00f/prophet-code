@@ -1,0 +1,3 @@
+http://stackoverflow.com/questions/8380789/what-are-the-major-performance-hitters-in-as3-aside-from-rendering-vectors
+
+http://help.adobe.com/en_US/as3/mobile/flashplatform_optimizing_content.pdf#G6.1188538
