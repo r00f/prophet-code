@@ -1,5 +1,6 @@
 ﻿package {
 	
+	import basics.BasicInfo;
 	import basics.Darkness;
 	import enemies.base.Enemy;
 	import flash.display.DisplayObject;
@@ -45,6 +46,7 @@
 			keyPresses = new KeyObject(this.stage);
 			this.darkness = this.world.darkness;
 			addEventListener(Event.ENTER_FRAME, loop, false, 0, true);		
+			stage.addChild(new BasicInfo());
 		}
 
 		public function get Enemies() :Vector.<Enemy>{
