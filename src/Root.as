@@ -1,5 +1,6 @@
 ﻿package {
 	
+	import flash.display.StageDisplayState;
 	import flash.display.StageScaleMode;
 	import flash.display.StageQuality;
 	import basics.BasicInfo;
@@ -42,6 +43,8 @@
 		
 		public function Root() {
 			super();
+			stage.displayState = StageDisplayState.FULL_SCREEN;
+			stage.quality = StageQuality.MEDIUM;
 			stage.scaleMode = StageScaleMode.NO_SCALE;
 			StageQuality.LOW;
 			if (player != null) {

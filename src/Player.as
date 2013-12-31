@@ -14,7 +14,7 @@
 	 */
 	public class Player extends HealthEntity {
 		
-		private var speed:Number = 5;
+		private var speed:Number = int(200/24);
 		public var animations:MovieClip;
 		public var feet_hit:BodyBox;
 		public var body_hit:BodyBox;		
