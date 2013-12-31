@@ -40,7 +40,8 @@ package spells {
 				nextx -= this.speed;
 			} else if (this.direction.isRight) {
 				nextx += this.speed;
-			} else if (this.direction.isUp) {
+			}
+			if (this.direction.isUp) {
 				nexty -= this.speed;
 			} else if (this.direction.isDown) {
 				nexty += this.speed;
