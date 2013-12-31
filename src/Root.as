@@ -1,5 +1,7 @@
 ﻿package {
 	
+	import flash.display.StageScaleMode;
+	import flash.display.StageQuality;
 	import basics.BasicInfo;
 	import basics.Darkness;
 	import enemies.base.Enemy;
@@ -11,7 +13,7 @@
 	import utilities.*;
 	import vendor.KeyObject;
 	
-	[SWF(width="600",height="400")] // Override document window size with SWF Metadata Tags [SWF(width='400', height='300', backgroundColor='#ffffff', frameRate='30')]
+	[SWF(width="1920",height="1080")] // Override document window size with SWF Metadata Tags [SWF(width='400', height='300', backgroundColor='#ffffff', frameRate='30')]
 	
 	/**
 	 * This is the document class of the project. It also serves as a coordinator between player, enemies and environment.
@@ -27,8 +29,8 @@
 		private var _downPressed:Boolean = false; //...down key pressed
 		private var _attackPressed:Boolean = false; //...down key pressed
 		
-		public var scrollRectWidth:Number = 600;
-		public var scrollRectHeight:Number = 400;
+		public var scrollRectWidth:Number = 1920;
+		public var scrollRectHeight:Number = 1080;
 		
 		public var player:Player;
 		
@@ -40,6 +42,8 @@
 		
 		public function Root() {
 			super();
+			stage.scaleMode = StageScaleMode.NO_SCALE;
+			StageQuality.LOW;
 			this.scrollRect = new Rectangle(this.player.x - scrollRectWidth / 2, this.player.y - scrollRectHeight / 2, scrollRectWidth, scrollRectHeight);
 			healthbar = new HealthBar(100, 100, 0.5, 0.5);
 			stage.addChild(healthbar);
