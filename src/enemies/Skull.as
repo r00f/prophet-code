@@ -33,6 +33,7 @@
 			this.damageAmount = 5;
 			xspeed = this.speed;
 			yspeed = 0;
+			this.VerticalLimit = 120;
 			this.direction = Directions.RIGHT;
 			addEventListener(Event.ENTER_FRAME, wait, false, 0, true);
 			addEventListener(Event.ENTER_FRAME, checkIfDead, false, 0, true);
@@ -79,9 +80,16 @@
 				removeEventListener(Event.ENTER_FRAME, setDamageDelegate, false);
 			}
 		}
-		
+		private var yCurveOffset = 0;
+		private var frameChange = 5;
+		private var maxYCurve = 50;
 		override public function walk(e:Event):void {
 			super.walk(e);
+			if (Math.abs(yCurveOffset) > maxYCurve) {
+				frameChange = -frameChange;
+			}
+			yCurveOffset += frameChange;
+			this.y += frameChange;
 			this.gotoAndStop("skull"+Utilities.ANIMATION_SEPERATOR+Actions.WALK+Utilities.ANIMATION_SEPERATOR + this.direction);
 		}
 	}

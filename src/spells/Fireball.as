@@ -76,7 +76,6 @@ package spells {
 			var ydiff:Number = Math.abs(nexty - this.starty);
 			var distance_squaredx = Math.pow(xdiff, 2);
 			var distance_squaredy = Math.pow(ydiff, 2);
-			trace(xdiff);
 			if (ydiff > this.maxDistancePixel || xdiff > this.maxDistancePixel || distance_squaredx + distance_squaredy > maxDistanceSquared) {
 				return true;
 			}
