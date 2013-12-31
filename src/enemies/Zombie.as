@@ -13,41 +13,41 @@ package enemies
 	public class Zombie extends Mover 
 	{
 		private var nearLimit = 20;
-		private var directions:Directions;
 		public function Zombie() 
 		{
 			super();
-			this.directions = new Directions();
 			// Do not just reverse direction
 			this.FixPositionX = 0;
 			this.FixPositionY = 0;
+			this.speed = 4;
 			this.HorizontalLimit = Number.MAX_VALUE;
 			this.VerticalLimit = Number.MAX_VALUE;
-			
+			addEventListener(Event.ENTER_FRAME, walk, false, 0, true);
+			this.gotoAndPlay("idle");
 		}
 		
 		private function updateDirection():void {
 			var xdiff = this.x - this.rootRef.player.x;
 			var ydiff = this.y - this.rootRef.player.y;
+			this.direction.current = Directions._none;
 			if (xdiff > nearLimit) {
-				this.directions.current += Directions._left;
+				this.direction.current += Directions._left;
 			} else if (xdiff < -nearLimit) {
-				directions.current += Directions._right;
+				this.direction.current += Directions._right;
 			}
 			
 			if (ydiff > nearLimit) {
-				directions.current += Directions._up;
+				this.direction.current += Directions._up;
 			} else if (ydiff < -nearLimit) {
-				directions.current += Directions._down;
+				this.direction.current += Directions._down;
 			}
+			
 		}
 		
 		override public function walk(e:Event):void 
 		{
-			trace("walking");
 			this.updateDirection();
 			super.walk(e);
-			this.gotoAndPlay("idle" + Utilities.ANIMATION_SEPERATOR + this.direction);
 		}
 		
 		
