@@ -19,7 +19,7 @@ package enemies
 			// Do not just reverse direction
 			this.FixPositionX = 0;
 			this.FixPositionY = 0;
-			this.speed = 4;
+			this.speed = 2.5;
 			this.HorizontalLimit = Number.MAX_VALUE;
 			this.VerticalLimit = Number.MAX_VALUE;
 			addEventListener(Event.ENTER_FRAME, walk, false, 0, true);
