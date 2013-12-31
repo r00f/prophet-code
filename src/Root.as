@@ -44,7 +44,9 @@
 			super();
 			stage.scaleMode = StageScaleMode.NO_SCALE;
 			StageQuality.LOW;
-			this.scrollRect = new Rectangle(this.player.x - scrollRectWidth / 2, this.player.y - scrollRectHeight / 2, scrollRectWidth, scrollRectHeight);
+			if (player != null) {
+				this.scrollRect = new Rectangle(this.player.x - scrollRectWidth / 2, this.player.y - scrollRectHeight / 2, scrollRectWidth, scrollRectHeight);
+			}
 			healthbar = new HealthBar(100, 100, 0.5, 0.5);
 			stage.addChild(healthbar);
 			keyPresses = new KeyObject(this.stage);
@@ -86,8 +88,10 @@
 		public function loop(e:Event):void {
 			
 			this.checkKeypresses();
-			healthbar.currentHealth = player.HealthPercentage;
-			scaleAndSetPlayerPosition();
+			if (player != null) {
+				healthbar.currentHealth = player.HealthPercentage;
+				scaleAndSetPlayerPosition();
+			}
 		}
 		
 		
