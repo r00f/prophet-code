@@ -1,6 +1,7 @@
 ﻿package enemies {
 	
 	import basics.hitboxes.BodyBox;
+	import basics.hitboxes.DamageBox;
 	import basics.hitboxes.AttackBox;
 	import enemies.base.Enemy;
 	import flash.display.MovieClip;
@@ -18,12 +19,14 @@
 	 * Controls the hand.
 	 * Impelments IAttackTrigger to trigger the correct attacks (left/right/up/down).
 	 */
-	public class Hand extends Enemy implements IAttackTrigger {
+	public class Hand extends Enemy implements IAttackTrigger, IDamageTrigger {
 		
 		public var AttackTriggerLeft:AttackBox;
 		public var AttackTriggerRight:AttackBox;
 		public var AttackTriggerUp:AttackBox;
 		public var AttackTriggerDown:AttackBox;
+		
+		private var damageAmount:int;
 		
 		public var intro_animation:LastFrameTrigger;
 		public var hit_left_animation:LastFrameTrigger;
@@ -34,11 +37,23 @@
 		
 		public function Hand() {
 			super();
+			this.damageAmount = 2;
 			addEventListener(Event.ENTER_FRAME, setDelegateIfNotSet, false, 0, true);	
 			this.gotoAndStop(Actions.INTRO);
 			this.intro_animation.delegate = this;
 		}
 		
+		public function damageAppliedToPlayer(box:DamageBox, player:Player) {
+			player.applyDamage(this.damageAmount);
+		}
+		
+		public function damageAppliedToEnemy(box:DamageBox, enemy:Enemy) {
+			if (enemy is Baby) {
+				enemy.applyDamage(1);
+			} else if (enemy is Skull) {
+				enemy.heal(10);
+			}
+		}
 		
 		public function setDelegateIfNotSet(e:Event) {
 			if (this.rootRef.keyPresses.isDown(KeyCodes.J)) {
@@ -63,6 +78,10 @@
 			}
 		}
 		
+		public function setDamageDelegate(e:Event) {
+			this.setDamageBoxDelegate(this);
+		}
+		
 		public function attackBoxTriggeredByPlayer(box:AttackBox) {
 			var direction:Directions = new Directions();
 			if (box == AttackTriggerLeft) {
@@ -74,7 +93,8 @@
 			} else if  (box == AttackTriggerDown) {
 				direction = Directions.DOWN;				
 			}
-			this.gotoAndStop(Actions.HIT+Utilities.ANIMATION_SEPERATOR + direction);
+			this.gotoAndStop(Actions.HIT + Utilities.ANIMATION_SEPERATOR + direction);
+			addEventListener(Event.ENTER_FRAME, setDamageDelegate, false, 0, true);
 		}
 	}
 

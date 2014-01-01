@@ -26,7 +26,7 @@
 		
 		public function Player() {
 			super();
-			this.blood.yRange = 70;
+			this.blood.yRange = 180;
 			this.rootRef.player = this;
 			this.offsetx = this.x + 50;
 			this.offsety = this.y + 80;
@@ -76,7 +76,7 @@
 			if (this.HealthPercentage == 0) {
 				this.gotoAndStop(Actions.DEATH + Utilities.ANIMATION_SEPERATOR + this.direction);
 				super.death_animation.delegate = this;
-				this.blood.yRange = 36;
+				this.blood.yRange = 100;
 				removeEventListener(Event.ENTER_FRAME, loop, false);
 				removeEventListener(Event.ENTER_FRAME, checkIfDead, false);
 			}

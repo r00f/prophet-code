@@ -14,7 +14,7 @@
 	
 	public class Skull extends Mover implements IDamageTrigger {		
 		private var damageAmount:Number;
-		public var damage_box:DamageBox;
+		public var damage_box:DamageBox;  
 		
 		public var AttackTriggerLeft:AttackBox;
 		public var AttackTriggerRight:AttackBox;
@@ -25,6 +25,7 @@
 		public function Skull() {
 			super();
 			this.blood.yRange = 50;
+			this.blood.yOffset = -100;
 			this.blood.xRange = 50;
 			Wait = Random.random(25);
 			FixPositionX = int(this.x);
@@ -67,6 +68,7 @@
 				xspeed = 0;
 				yspeed = 0;
 				this.gotoAndStop(Actions.DEATH + Utilities.ANIMATION_SEPERATOR + this.direction);
+				this.blood.yOffset = 0;
 				super.death_animation.delegate = this;
 				removeEventListener(Event.ENTER_FRAME, walk, false);
 				removeEventListener(Event.ENTER_FRAME, wait, false);
@@ -82,7 +84,7 @@
 		}
 		private var yCurveOffset = 0;
 		private var frameChange = 5;
-		private var maxYCurve = 50;
+		private var maxYCurve = 20;
 		override public function walk(e:Event):void {
 			super.walk(e);
 			if (Math.abs(yCurveOffset) > maxYCurve) {
