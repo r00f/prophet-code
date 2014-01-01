@@ -33,7 +33,7 @@
 			Wait = Random.random(25);
 			this.blood.xRange = 100;
 			this.speed = Random.random(6) + 2;
-			this.damageAmount = 1/this.speed * 100;
+			this.damageAmount = 1 / this.speed * 100;
 			xspeed = this.speed;
 			yspeed = 0;
 			this.direction = Directions.RIGHT;
@@ -63,20 +63,18 @@
 				removeEventListener(Event.ENTER_FRAME, wait, false)
 				addEventListener(Event.ENTER_FRAME, walk, false, 0, true);
 			}
-			
+		
+		}
+		
+		override protected function die():void {
+			this.attackBoxTriggeredByPlayer(null);
+			removeEventListener(Event.ENTER_FRAME, walk, false);
 		}
 		
 		override public function walk(e:Event):void {
 			super.walk(e);
 			this.setAttackBoxDelegate(this);
-			
-			if (this.HealthPercentage == 0) {
-				this.attackBoxTriggeredByPlayer(null);
-				
-				removeEventListener(Event.ENTER_FRAME, walk, false);
-				return;
-			}
-			this.gotoAndStop("baby"+Utilities.ANIMATION_SEPERATOR + Actions.WALK +Utilities.ANIMATION_SEPERATOR + this.direction);
+			this.gotoAndStop("baby" + Utilities.ANIMATION_SEPERATOR + Actions.WALK + Utilities.ANIMATION_SEPERATOR + this.direction);
 		}
 		
 		private function setAttackTriggerDelegate() {

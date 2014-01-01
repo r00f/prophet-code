@@ -72,11 +72,16 @@ package basics.entities {
 			this.currentHealth = _currentHealth + amount;
 		}
 		
+		protected function die():void {
+			
+		}
+		
 		private function set currentHealth(value:Number):void {
 			if (value > this.maxHealth) {
 				value = this.maxHealth;
-			} else if (value < 0) {
+			} else if (value <= 0) {
 				value = 0;
+				this.die();
 			}
 			_currentHealth = value;
 		}
