@@ -41,6 +41,8 @@
 		
 		private var timesToSort:Number = 3;
 		
+		private var easing:Number = 20;
+		
 		public function Root() {
 			super();
 			stage.displayState = StageDisplayState.FULL_SCREEN;
@@ -107,7 +109,14 @@
 				this.world.scaleY -= (this.world.scaleY / 10);
 			}
 			var c:Rectangle = this.scrollRect;
-			this.scrollRect = new Rectangle((this.player.x*this.world.scaleX) - c.width/2, this.player.y*this.world.scaleY - c.height/2, c.width, c.height);
+			var nextX:int = (this.player.x * this.world.scaleX) - c.width / 2;
+			var nextY:int = (this.player.y * this.world.scaleY) - c.height / 2;
+			
+			var xdiff = nextX - this.scrollRect.x; 
+			var ydiff = nextY - this.scrollRect.y;
+			var eased_xdiff:int =(xdiff* 1/this.easing);
+			var eased_ydiff:int = (ydiff * 1/this.easing);
+			this.scrollRect = new Rectangle( this.scrollRect.x + real_xdiff ,  this.scrollRect.y + real_ydiff, c.width, c.height);
 		}
 		
 		public function checkKeypresses():void {
