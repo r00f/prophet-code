@@ -7,8 +7,10 @@ package utilities.interfaces {
 	 * @author Gabriel
 	 */
 	public interface IDamageTrigger {
-		function damageAppliedToEnemy(box:DamageBox, enemy:Enemy);
-		function damageAppliedToPlayer(box:DamageBox, player:Player);
+		function damageAppliedToEnemy(box:DamageBox, enemy:Enemy):void;
+		function damageAppliedToPlayer(box:DamageBox, player:Player):void;
+		
+		function damagePlayerHitbox(box:DamageBox):String;
 	}
 
 }

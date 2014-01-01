@@ -1,6 +1,7 @@
 package spells {
 	import basics.entities.Entity;
 	import basics.hitboxes.DamageBox;
+	import basics.hitboxes.InteractionBox;
 	import enemies.base.Enemy;
 	import flash.events.Event;
 	import utilities.interfaces.IDamageTrigger;
@@ -23,7 +24,7 @@ package spells {
 		 * @param	box The box that triggered
 		 * @param	enemy the enemy that triggered the box
 		 */
-		public function damageAppliedToEnemy(box:DamageBox, enemy:Enemy) {
+		public function damageAppliedToEnemy(box:DamageBox, enemy:Enemy):void {
 		}
 		
 		/**
@@ -31,7 +32,11 @@ package spells {
 		 * @param	box The box that triggered
 		 * @param	enemy the player that triggered the box
 		 */
-		public function damageAppliedToPlayer(box:DamageBox, player:Player) {
+		public function damageAppliedToPlayer(box:DamageBox, player:Player):void {
+		}
+		
+		public function damagePlayerHitbox(box:DamageBox):String {
+			return "body_hit";
 		}
 		
 		

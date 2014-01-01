@@ -41,14 +41,14 @@
 			addEventListener(Event.ENTER_FRAME, setDamageDelegate, false, 0, true);
 		}
 		
-		public function damageAppliedToPlayer(box:DamageBox, player:Player) {
+		override public function damageAppliedToPlayer(box:DamageBox, player:Player):void {
 			//if (!this.playerHit) {
 				player.applyDamage(this.damageAmount);
 				//playerHit = true;
 		
 		}
 		
-		public function damageAppliedToEnemy(box:DamageBox, enemy:Enemy) {
+		override public function damageAppliedToEnemy(box:DamageBox, enemy:Enemy):void {
 			if (enemy is Baby) {
 				enemy.applyDamage(1);
 			} 

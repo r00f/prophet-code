@@ -87,7 +87,7 @@ package spells {
 			this.parent.removeChild(this);
 		}
 		
-		override public function damageAppliedToEnemy(box:DamageBox, enemy:Enemy) {
+		override public function damageAppliedToEnemy(box:DamageBox, enemy:Enemy):void {
 			super.damageAppliedToEnemy(box, enemy);
 			if (!enemiesHit[enemy.name]) {
 				enemy.applyDamage(spellDamage);

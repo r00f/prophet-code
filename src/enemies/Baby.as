@@ -17,7 +17,7 @@
 	 * Controls the baby animation.
 	 * Implements IAttackTrigger to let the attackbox trigger the attack into the correct direction.
 	 */
-	public class Baby extends Mover implements IAttackTrigger, IDamageTrigger {
+	public class Baby extends Mover implements IAttackTrigger {
 		private var nextAction:String = "idle";
 		private var damageAmount:int;
 		public var AttackTriggerLeft:AttackBox;
@@ -41,14 +41,14 @@
 			this.despawnTime = 1;
 		}
 		
-		public function damageAppliedToPlayer(box:DamageBox, player:Player) {
+		override public function damageAppliedToPlayer(box:DamageBox, player:Player):void {
 			if (!this.playerHit) {
 				player.applyDamage(this.damageAmount);
 				playerHit = true;
 			}
 		}
 		
-		public function damageAppliedToEnemy(box:DamageBox, enemy:Enemy) {
+		override public function damageAppliedToEnemy(box:DamageBox, enemy:Enemy):void {
 			if (enemy is Baby) {
 				enemy.applyDamage(1);
 			} else if (enemy is Skull) {

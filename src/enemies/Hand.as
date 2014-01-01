@@ -9,7 +9,6 @@
 	import utilities.Directions;
 	import utilities.Actions;
 	import utilities.interfaces.ILastFrameTrigger;
-	import utilities.interfaces.IDamageTrigger;
 	import utilities.LastFrameTrigger;
 	import utilities.Utilities;
 	import utilities.KeyCodes;
@@ -19,7 +18,7 @@
 	 * Controls the hand.
 	 * Impelments IAttackTrigger to trigger the correct attacks (left/right/up/down).
 	 */
-	public class Hand extends Enemy implements IAttackTrigger, IDamageTrigger {
+	public class Hand extends Enemy implements IAttackTrigger {
 		
 		public var AttackTriggerLeft:AttackBox;
 		public var AttackTriggerRight:AttackBox;
@@ -43,16 +42,19 @@
 			this.intro_animation.delegate = this;
 		}
 		
-		public function damageAppliedToPlayer(box:DamageBox, player:Player) {
+		override public function damageAppliedToPlayer(box:DamageBox, player:Player):void {
 			player.applyDamage(this.damageAmount);
 		}
 		
-		public function damageAppliedToEnemy(box:DamageBox, enemy:Enemy) {
+		override public function damageAppliedToEnemy(box:DamageBox, enemy:Enemy):void {
 			if (enemy is Baby) {
 				enemy.applyDamage(1);
 			} else if (enemy is Skull) {
 				enemy.heal(10);
 			}
+		}
+		override public function damagePlayerHitbox(box:DamageBox):String  {
+			return "feet_hit";
 		}
 		
 		public function setDelegateIfNotSet(e:Event) {
@@ -81,7 +83,6 @@
 		public function setDamageDelegate(e:Event) {
 			this.setDamageBoxDelegate(this);
 		}
-		
 		public function attackBoxTriggeredByPlayer(box:AttackBox) {
 			var direction:Directions = new Directions();
 			if (box == AttackTriggerLeft) {
