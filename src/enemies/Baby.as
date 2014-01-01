@@ -19,7 +19,7 @@
 	 */
 	public class Baby extends Mover implements IAttackTrigger, IDamageTrigger {
 		private var nextAction:String = "idle";
-		private var damageAmount:Number;
+		private var damageAmount:int;
 		public var AttackTriggerLeft:AttackBox;
 		public var AttackTriggerRight:AttackBox;
 		
@@ -31,7 +31,7 @@
 		public function Baby() {
 			super();
 			Wait = Random.random(25);
-
+			this.blood.xRange = 100;
 			this.speed = Random.random(6) + 2;
 			this.damageAmount = 1/this.speed * 100;
 			xspeed = this.speed;
