@@ -33,7 +33,7 @@ package spells {
 			this.x = x;
 			this.y = y;
 			this.direction = direction;
-			this.speed = speed;
+			this.speed = 350/24;
 			this.gotoAndStop(this.direction);
 			this.enemiesHit = new Object();
 			
