@@ -36,7 +36,7 @@ package spells {
 		}
 		
 		public function damagePlayerHitbox(box:DamageBox):String {
-			return "body_hit";
+			return Player.HITBOX_BODY;
 		}
 		
 		

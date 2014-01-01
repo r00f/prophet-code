@@ -14,6 +14,9 @@
 	 */
 	public class Player extends HealthEntity {
 		
+		public static var HITBOX_BODY:String = "body_hit";
+		public static var HITBOX_FEET:String = "feet_hit";
+		
 		private var speed:Number = int(200/24);
 		public var animations:MovieClip;
 		public var feet_hit:BodyBox;

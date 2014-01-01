@@ -54,7 +54,7 @@
 			}
 		}
 		override public function damagePlayerHitbox(box:DamageBox):String  {
-			return "feet_hit";
+			return Player.HITBOX_FEET;
 		}
 		
 		public function setDelegateIfNotSet(e:Event) {
