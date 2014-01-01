@@ -116,7 +116,7 @@
 			var ydiff = nextY - this.scrollRect.y;
 			var eased_xdiff:int =(xdiff* 1/this.easing);
 			var eased_ydiff:int = (ydiff * 1/this.easing);
-			this.scrollRect = new Rectangle( this.scrollRect.x + real_xdiff ,  this.scrollRect.y + real_ydiff, c.width, c.height);
+			this.scrollRect = new Rectangle( this.scrollRect.x + eased_xdiff ,  this.scrollRect.y + eased_ydiff, c.width, c.height);
 		}
 		
 		public function checkKeypresses():void {
