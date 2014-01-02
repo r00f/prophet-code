@@ -21,7 +21,9 @@ package enemies.spawners {
 		public function SkullSpawner() {
 			super();
 			this.spawnRect = spawn_area.getRect(this.root)
+			
 			addEventListener(Event.EXIT_FRAME, wait, false, 0, true);
+			addEventListener(Event.ENTER_FRAME, debugLoop, false, 0, true);
 		}
 		
 		public function wait(e:Event) {
@@ -38,7 +40,6 @@ package enemies.spawners {
 				spawnEnemyAtPosition(new Point(spawnRect.x + Math.random() * spawnRect.width, spawnRect.y + Math.random() * spawnRect.height));
 			}
 			removeEventListener(Event.EXIT_FRAME, loop);
-		
 		}
 		
 		private function spawnEnemyAtPosition(pos:Point) {
@@ -48,7 +49,15 @@ package enemies.spawners {
 				this.rootRef.addEntity(skull);
 			}
 		}
-	
+			public function debugLoop(e:Event) {
+			setVisibility();
+		}
+		
+				private function setVisibility() {
+			if (this.rootRef != null) {
+				this.alpha = rootRef.shouldHitboxBeVisible ? 1 : 0;
+			}
+		}
 	}
 
 }
