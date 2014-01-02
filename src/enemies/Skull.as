@@ -23,8 +23,9 @@
 		
 		private var Wait;
 		
-		public function Skull() {
+		public function Skull(root:Root) {
 			super();
+			this.rootRef = root;
 			this.blood.yRange = 50;
 			this.blood.yOffset = -100;
 			this.blood.xRange = 50;
@@ -50,6 +51,11 @@
 			if (enemy is Baby) {
 				enemy.applyDamage(1);
 			} 
+		}
+		
+		override public function set point(p:Point):void {
+			super.point = p;
+			this.fixedPoint = p;
 		}
 		
 		public function wait(e:Event) {

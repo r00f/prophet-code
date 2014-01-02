@@ -65,6 +65,11 @@
 			return this.world.Enemies;
 		}
 		
+		
+		public function addEnemy(enemy:Enemy) {
+			this.world.addChild(enemy);
+		}
+		
 		// Keys
 		
 		public function get downPressed():Boolean {
