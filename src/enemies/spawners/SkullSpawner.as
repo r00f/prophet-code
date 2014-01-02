@@ -16,12 +16,15 @@ package enemies.spawners {
 		
 		private var spawnRect:Rectangle;
 		
+		
+		[Inspectable(defaultValue=5)]
+		public var spawn:Number = 5;
+		
 		private var Wait = 2 * 24;
 		
 		public function SkullSpawner() {
 			super();
 			this.spawnRect = spawn_area.getRect(this.root)
-			
 			addEventListener(Event.EXIT_FRAME, wait, false, 0, true);
 			addEventListener(Event.ENTER_FRAME, debugLoop, false, 0, true);
 		}
@@ -36,7 +39,7 @@ package enemies.spawners {
 		}
 		
 		public function loop(e:Event) {
-			for (var i:int = 0; i < 5; i++) {
+			for (var i:int = 0; i < spawn; i++) {
 				spawnEnemyAtPosition(new Point(spawnRect.x + Math.random() * spawnRect.width, spawnRect.y + Math.random() * spawnRect.height));
 			}
 			removeEventListener(Event.EXIT_FRAME, loop);
