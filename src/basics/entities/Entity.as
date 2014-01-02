@@ -10,6 +10,8 @@ package basics.entities 	{
 	import flash.geom.Point;
 	import utilities.interfaces.IAttackTrigger;
 	import utilities.interfaces.IDamageTrigger;
+	import utilities.interfaces.ILastFrameTrigger;
+	import utilities.LastFrameTrigger;
 	
 	/**
 	 * ...
@@ -63,6 +65,12 @@ package basics.entities 	{
 			});
 		}
 		
+		protected function setLastFrameTriggerDelegate(delegate:ILastFrameTrigger) {
+			this.LastFrameTriggers.forEach(function(clip:LastFrameTrigger, idx, test) {
+					clip.delegate = delegate;
+			});
+		}
+		
 		private function getBoxesOfTypeInClip(type:Class, movieClip:MovieClip):Vector.<Hitbox> {
 			var results:Vector.<Hitbox> = new Vector.<Hitbox>();
 			for (var i:int = 0; i < movieClip.numChildren; i++) {
@@ -73,6 +81,17 @@ package basics.entities 	{
 					 });
 				}
 				if (obj is type) {
+					results.push(obj);
+				}
+			}
+			return results;
+		}
+		
+		private function get LastFrameTriggers():Vector.<LastFrameTrigger> {
+			var results:Vector.<LastFrameTrigger> = new Vector.<LastFrameTrigger>();
+			for (var i:int = 0; i < this.numChildren; i++) {
+				var obj:DisplayObject = this.getChildAt(i);
+				if (obj is LastFrameTrigger) {
 					results.push(obj);
 				}
 			}
