@@ -16,7 +16,7 @@ package enemies.spawners {
 		
 		private var spawnRect:Rectangle;
 		
-		private var Wait = 150;
+		private var Wait = 2*24;
 		
 		public function SkullSpawner() {
 			super();
@@ -32,7 +32,6 @@ package enemies.spawners {
 				removeEventListener(Event.ENTER_FRAME, wait, false)
 				addEventListener(Event.ENTER_FRAME, loop, false, 0, true);
 			}
-			trace("waiting");
 		}
 		
 		public function loop(e:Event) {
