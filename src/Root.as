@@ -67,8 +67,8 @@
 		}
 		
 		
-		public function addEnemy(enemy:Enemy) {
-			this.world.addChild(enemy);
+		public function addEntity(entity:Entity) {
+			this.world.addChild(entity);
 			this.world.addChild(world.darkness);
 		}
 		
