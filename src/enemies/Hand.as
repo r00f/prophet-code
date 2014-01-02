@@ -80,6 +80,12 @@
 			}
 		}
 		
+		override protected function die():void 
+		{
+			super.die();
+			this.gotoAndStop(Actions.DEATH);
+		}
+		
 		public function setDamageDelegate(e:Event) {
 			this.setDamageBoxDelegate(this);
 		}
