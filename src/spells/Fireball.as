@@ -1,9 +1,7 @@
 package spells {
 	import basics.hitboxes.DamageBox;
 	import enemies.base.Enemy;
-	import fl.transitions.PixelDissolve;
 	import flash.display.MovieClip;
-	import flash.display.NativeMenuItem;
 	import flash.events.Event;
 	import flash.geom.Point;
 	import utilities.Directions;

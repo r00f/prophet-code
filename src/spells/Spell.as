@@ -1,7 +1,6 @@
 package spells {
 	import basics.entities.Entity;
 	import basics.hitboxes.DamageBox;
-	import basics.hitboxes.InteractionBox;
 	import enemies.base.Enemy;
 	import flash.events.Event;
 	import utilities.interfaces.IDamageTrigger;
