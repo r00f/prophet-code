@@ -101,7 +101,7 @@
 				fireballOffset.y = 0;
 			}
 			
-			this.rootRef.world.addChild(new Fireball(this.direction.copy, x + fireballOffset.x, y + fireballOffset.y));
+			this.rootRef.world.addChild(new Fireball(this.direction.copy, this.point.add(fireballOffset) ));
 		}
 		
 		public function loop(e:Event):void {
