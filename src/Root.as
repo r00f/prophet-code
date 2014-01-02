@@ -9,6 +9,7 @@
 	import flash.display.DisplayObject;
 	import flash.display.MovieClip;
 	import flash.events.Event;
+	import flash.geom.Point;
 	import flash.geom.Rectangle;
 	import interfaces.HealthBar;
 	import utilities.*;
@@ -150,8 +151,8 @@
 			}
 		}
 		
-		public function collidesWithEnvironment(x_next:Number, y_next:Number):Boolean {
-			return this.world.collidesWithEnvironment(x_next, y_next);
+		public function collidesWithEnvironment(next:Point):Boolean {
+			return this.world.collidesWithEnvironment(next);
 		}
 		
 		private var areHitboxesVisible = false;

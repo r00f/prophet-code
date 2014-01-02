@@ -8,6 +8,7 @@ package {
 	import flash.display.DisplayObject;
 	import flash.display.MovieClip;
 	import flash.events.Event;
+	import flash.geom.Point;
 	
 	/**
 	 * ...
@@ -80,13 +81,13 @@ package {
 			this.addChild(this.darkness);
 		}
 		
-		public function collidesWithEnvironment(x_next:Number, y_next:Number):Boolean {
+		public function collidesWithEnvironment(next:Point):Boolean {
 			for (var i = 0; i < this.numChildren; i++) {
 				var childClip:MovieClip = getChildAt(i) as MovieClip;
 				if (childClip is Environment) {
 					var env:Environment = childClip as Environment;
 					for each (var hitbox:CollisionBox in env.CollisionBoxes) {
-						if (hitbox.hitTestPoint(x_next, y_next, false)) {
+						if (hitbox.hitTestPoint(next.x, next.y, false)) {
 							return true;
 						}
 					}
