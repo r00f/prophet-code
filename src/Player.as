@@ -90,15 +90,15 @@
 			var xFireballOffset:int;
 				
 			if (this.direction.isLeft) {
-					xFireballOffset = 50;
+					xFireballOffset = 80;
 				} else if (this.direction.isRight) {
-					xFireballOffset = -50;
+					xFireballOffset = -80;
 				}
 				
 				if (this.direction.isUp) {
 					yFireballOffset = 100;
 				} else if (this.direction.isDown) {
-					yFireballOffset = -yFireballOffset;
+					yFireballOffset = 0;
 				}
 				
 			this.rootRef.world.addChild(new Fireball(this.direction.copy, x - xFireballOffset, y - yFireballOffset));
