@@ -9,6 +9,7 @@
 	import flash.display.DisplayObject;
 	import flash.display.MovieClip;
 	import flash.events.Event;
+	import flash.geom.Point;
 	import flash.geom.Rectangle;
 	import interfaces.HealthBar;
 	import utilities.*;
@@ -52,7 +53,7 @@
 			if (player != null) {
 				this.scrollRect = new Rectangle(this.player.x - scrollRectWidth / 2, this.player.y - scrollRectHeight / 2, scrollRectWidth, scrollRectHeight);
 			}
-			healthbar = new HealthBar(300, 1000, 1, 1);
+			healthbar = new HealthBar(new Point(300, 1000), new Point(1, 1));
 			stage.addChild(healthbar);
 			keyPresses = new KeyObject(this.stage);
 			this.darkness = this.world.darkness;
@@ -86,7 +87,7 @@
 			return _attackPressed;
 		}
 		
-		public function movementPressed():Boolean {
+		public function get movementPressed():Boolean {
 			return _downPressed || _upPressed || _leftPressed || _rightPressed;
 		}
 		
@@ -150,8 +151,8 @@
 			}
 		}
 		
-		public function collidesWithEnvironment(x_next:Number, y_next:Number):Boolean {
-			return this.world.collidesWithEnvironment(x_next, y_next);
+		public function collidesWithEnvironment(next:Point):Boolean {
+			return this.world.collidesWithEnvironment(next);
 		}
 		
 		private var areHitboxesVisible = false;

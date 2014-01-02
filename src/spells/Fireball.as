@@ -3,6 +3,7 @@ package spells {
 	import enemies.base.Enemy;
 	import flash.display.MovieClip;
 	import flash.events.Event;
+	import flash.geom.Point;
 	import utilities.Directions;
 	import utilities.interfaces.ILastFrameTrigger;
 	import utilities.LastFrameTrigger;
@@ -18,27 +19,24 @@ package spells {
 		
 		private var enemiesHit:Object;
 		private var direction:Directions = Directions.LEFT;
-		private var speed;
-		
-		private var startx:int;
-		private var starty:int;
+		private var speed:Number;
+
+		private var start:Point;
 		
 		private var maxDistanceSquared:int;
 		private var maxDistancePixel:int;
 		
 		public var explosion:LastFrameTrigger;
 		
-		public function Fireball(direction:Directions, x:Number, y:Number, speed:Number = 8) {
+		public function Fireball(direction:Directions, pos:Point, speed:Number = 350/24) {
 			super();
-			this.x = x;
-			this.y = y;
+			this.point = pos;
 			this.direction = direction;
-			this.speed = 350/24;
+			this.speed = speed;
 			this.gotoAndStop(this.direction);
 			this.enemiesHit = new Object();
 			
-			this.startx = x;
-			this.starty = y;
+			this.start = this.point;
 			
 			maxDistancePixel = this.moveDistance * 100;
 			maxDistanceSquared = Math.pow(maxDistancePixel, 2);
@@ -49,34 +47,30 @@ package spells {
 			if (this.rootRef == null) {
 				this.rootRef = root as Root;
 			}
-			var nextx:Number = this.x;
-			var nexty:Number = this.y;
+			var next:Point = this.point;
 			if (this.direction.isLeft) {
-				nextx -= this.speed;
+				next.x -= this.speed;
 			} else if (this.direction.isRight) {
-				nextx += this.speed;
+				next.x += this.speed;
 			}
 			if (this.direction.isUp) {
-				nexty -= this.speed;
+				next.y -= this.speed;
 			} else if (this.direction.isDown) {
-				nexty += this.speed;
+				next.y += this.speed;
 			}
-			if (this.rootRef.collidesWithEnvironment(nextx, nexty) || travelledTooFar(nextx, nexty) ) {
+			if (this.rootRef.collidesWithEnvironment(next) || travelledTooFar(next) ) {
 				this.gotoAndPlay("explode");
 				this.explosion.delegate = this;
 			} else {
-				this.x = nextx;
-				this.y = nexty;
+				this.point = next;
 			}
 		
 		}
 		
-		public function travelledTooFar(nextx, nexty) {
-			var xdiff:Number = Math.abs(nextx - this.startx);
-			var ydiff:Number = Math.abs(nexty - this.starty);
-			var distance_squaredx = Math.pow(xdiff, 2);
-			var distance_squaredy = Math.pow(ydiff, 2);
-			if (ydiff > this.maxDistancePixel || xdiff > this.maxDistancePixel || distance_squaredx + distance_squaredy > maxDistanceSquared) {
+		public function travelledTooFar(next:Point) {
+			var diff:Point = new Point( Math.abs(next.x - this.start.x), Math.abs(next.y - this.start.y));
+			var dist_squared:Point = new Point( Math.pow(diff.x, 2), Math.pow(diff.y, 2) );
+			if (diff.x > this.maxDistancePixel || diff.y > this.maxDistancePixel || dist_squared.x + dist_squared.y > maxDistanceSquared) {
 				return true;
 			}
 			return false;

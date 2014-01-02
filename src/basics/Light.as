@@ -3,6 +3,7 @@ package basics {
 	import flash.display.MovieClip;
 	import flash.events.Event;
 	import flash.display.BlendMode;
+	import flash.geom.Point;
 	
 	/**
 	 * ...
@@ -10,17 +11,14 @@ package basics {
 	 */
 	public class Light extends MovieClip {
 		
-		private var _entity:Entity;
-		
-		private var intrinsic_x_offset;
-		private var intrinsic_y_offset;
+		private var _entity:Entity;		
+		private var intrinsic_offset:Point;
 		
 		public function Light(entity:Entity = null) {
 			super();
 			this.visible = false;
 			this.entity = entity;
-			this.intrinsic_x_offset = x;
-			this.intrinsic_y_offset = y;
+			this.intrinsic_offset = new Point(x, y);
 			this.blendMode = BlendMode.ALPHA;
 		}
 		
@@ -33,8 +31,8 @@ package basics {
 		
 		public function trackEntity(e:Event) {
 			if (parent != null) {
-				this.x = _entity.x - this.parent.x + this.intrinsic_x_offset;
-				this.y = _entity.y - this.parent.y + this.intrinsic_y_offset;
+				this.x = _entity.x - this.parent.x + this.intrinsic_offset.x;
+				this.y = _entity.y - this.parent.y + this.intrinsic_offset.y;
 				this.visible = true;
 			}
 		}

@@ -8,7 +8,6 @@
 	 * @author Gabriel
 	 */
 	public class BaseSegment extends Environment {
-		public var hitbox1:CollisionBox;
 		public function BaseSegment() {
 			super();
 		}

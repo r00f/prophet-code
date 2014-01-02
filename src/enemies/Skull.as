@@ -7,6 +7,7 @@
 	import enemies.base.Mover;
 	import flash.display.MovieClip;
 	import flash.events.Event;
+	import flash.geom.Point;
 	import utilities.*;
 	import utilities.interfaces.IAttackTrigger;
 	import utilities.interfaces.IDamageTrigger;
@@ -28,13 +29,10 @@
 			this.blood.yOffset = -100;
 			this.blood.xRange = 50;
 			Wait = Random.random(25);
-			FixPositionX = int(this.x);
-			FixPositionY = int(this.y);
-			this.speed = Random.random(6) + 2;
 			this.damageAmount = 5;
-			xspeed = this.speed;
-			yspeed = 0;
-			this.VerticalLimit = 120;
+			speed.x= Random.random(6) + 2;
+			speed.y = 0;
+			this.limit.y = 120;
 			this.direction = Directions.RIGHT;
 			addEventListener(Event.ENTER_FRAME, wait, false, 0, true);
 			addEventListener(Event.ENTER_FRAME, checkIfDead, false, 0, true);
@@ -65,9 +63,8 @@
 		
 		public function checkIfDead(e:Event) {
 			if (this.HealthPercentage == 0) {
-				xspeed = 0;
-				yspeed = 0;
-				this.gotoAndStop(Actions.DEATH + Utilities.ANIMATION_SEPERATOR + this.direction);
+				speed = new Point();
+				this.gotoAndStop(Actions.DEATH + Strings.ANIMATION_SEPERATOR + this.direction);
 				this.blood.yOffset = 0;
 				super.death_animation.delegate = this;
 				removeEventListener(Event.ENTER_FRAME, walk, false);
@@ -92,7 +89,7 @@
 			}
 			yCurveOffset += frameChange;
 			this.y += frameChange;
-			this.gotoAndStop("skull"+Utilities.ANIMATION_SEPERATOR+Actions.WALK+Utilities.ANIMATION_SEPERATOR + this.direction);
+			this.gotoAndStop("skull"+Strings.ANIMATION_SEPERATOR+Actions.WALK+Strings.ANIMATION_SEPERATOR + this.direction);
 		}
 	}
 }
