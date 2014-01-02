@@ -30,12 +30,11 @@ package spells {
 		
 		public var explosion:LastFrameTrigger;
 		
-		public function Fireball(direction:Directions, x:Number, y:Number, speed:Number = 8) {
+		public function Fireball(direction:Directions, x:Number, y:Number, speed:Number = 350/24) {
 			super();
 			this.x = x;
 			this.y = y;
 			this.direction = direction;
-			this.speed = 350/24;
 			this.gotoAndStop(this.direction);
 			this.enemiesHit = new Object();
 			
