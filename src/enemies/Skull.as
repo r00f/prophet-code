@@ -21,6 +21,7 @@
 		
 		public var AttackTriggerLeft:AttackBox;
 		public var AttackTriggerRight:AttackBox;
+		public var walk_animation:MovieClip;
 
 		
 		private var Wait;
@@ -33,7 +34,7 @@
 			Wait = Random.random(25);
 			speed.x= Random.random(6) + 2;
 			speed.y = 0;
-			this.limit.y = 120;
+			this.limit.y = 145;
 			this.direction = Directions.RIGHT;
 			addEventListener(Event.ENTER_FRAME, wait, false, 0, true);
 			addEventListener(Event.ENTER_FRAME, checkIfDead, false, 0, true);
@@ -56,7 +57,9 @@
 		public function wait(e:Event) {
 			if (Wait > 0) {
 				Wait--;
+				this.walk_animation.stop();
 			} else {
+				this.walk_animation.play();
 				removeEventListener(Event.ENTER_FRAME, wait, false)
 				addEventListener(Event.ENTER_FRAME, walk, false, 0, true);
 			}
