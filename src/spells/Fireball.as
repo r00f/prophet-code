@@ -34,13 +34,13 @@ package spells {
 			this.direction = direction;
 			this.speed = speed*100/24;
 			this.spellDamage = damage;
+			this.gotoAndStop(this.direction);
 		}
 		
 		override public function init(e:Event) 
 		{
 			super.init(e);
 			if (this.rootRef != null) {
-				this.gotoAndStop(this.direction);
 				this.enemiesHit = new Object();
 				
 				this.start = this.point;
