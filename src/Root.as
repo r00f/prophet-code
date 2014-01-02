@@ -84,8 +84,8 @@
 			world.parent.removeChild(world);
 			this.world = new Level2();
 			this.addChild(world);
+			this.player = null;
 			addEventListener(Event.ENTER_FRAME, init, false, 0, true);
-			trace(this.player);
 		}
 		
 		// Keys
