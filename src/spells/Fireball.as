@@ -13,7 +13,7 @@ package spells {
 	 * @author Gabriel
 	 */
 	public class Fireball extends Spell implements ILastFrameTrigger {
-		private var spellDamage:Number = 50;
+		private var spellDamage:Number;
 		private var moveDistance:Number = 7.6; // in pseudo-meters, 1 pixel = 1cm, must be > 0
 		
 		
@@ -28,11 +28,12 @@ package spells {
 		
 		public var explosion:LastFrameTrigger;
 		
-		public function Fireball(direction:Directions, pos:Point, speed:Number = 350/24) {
+		public function Fireball(direction:Directions, pos:Point,damage:Number = 50, speed:Number = 3.5) {
 			super();
 			this.point = pos;
 			this.direction = direction;
-			this.speed = speed;
+			this.speed = speed*100/24;
+			this.spellDamage = damage;
 			this.gotoAndStop(this.direction);
 			this.enemiesHit = new Object();
 			

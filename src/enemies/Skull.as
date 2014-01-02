@@ -14,6 +14,8 @@
 	import utilities.interfaces.ILastFrameTrigger;
 	
 	public class Skull extends Mover implements IDamageTrigger {		
+		
+		[Inspectable(defaultValue=5, name="Base Damage", type="Number", variable="damageAmount")]
 		private var damageAmount:Number;
 		public var damage_box:DamageBox;  
 		
@@ -29,7 +31,6 @@
 			this.blood.yOffset = -100;
 			this.blood.xRange = 50;
 			Wait = Random.random(25);
-			this.damageAmount = 5;
 			speed.x= Random.random(6) + 2;
 			speed.y = 0;
 			this.limit.y = 120;
