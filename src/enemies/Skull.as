@@ -29,6 +29,12 @@
 		public function Skull(root:Root) {
 			super();
 			this.rootRef = root;
+		}
+		
+		
+		override public function init(e:Event) 
+		{
+			super.init(e);
 			this.blood.yRange = 50;
 			this.blood.yOffset = -100;
 			this.blood.xRange = 50;

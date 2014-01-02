@@ -50,16 +50,23 @@
 			stage.displayState = StageDisplayState.FULL_SCREEN;
 			stage.quality = StageQuality.MEDIUM;
 			stage.scaleMode = StageScaleMode.NO_SCALE;
-			StageQuality.LOW;
-			if (player != null) {
-				this.scrollRect = new Rectangle(this.player.x - scrollRectWidth / 2, this.player.y - scrollRectHeight / 2, scrollRectWidth, scrollRectHeight);
-			}
+			
 			healthbar = new HealthBar(new Point(300, 1000), new Point(1, 1));
 			stage.addChild(healthbar);
 			keyPresses = new KeyObject(this.stage);
-			this.darkness = this.world.darkness;
-			addEventListener(Event.ENTER_FRAME, loop, false, 0, true);		
 			stage.addChild(new BasicInfo());
+			addEventListener(Event.ENTER_FRAME, init, false, 0, true);
+		}
+		
+		public function init(e:Event) {
+			if (this.world != null) {
+				this.darkness = this.world.darkness;
+			}
+			if (this.player != null) {
+				this.scrollRect = new Rectangle(this.player.x - scrollRectWidth / 2, this.player.y - scrollRectHeight / 2, scrollRectWidth, scrollRectHeight);
+				addEventListener(Event.ENTER_FRAME, loop, false, 0, true);
+				removeEventListener(Event.ENTER_FRAME, init, false);
+			}
 		}
 
 		public function get Enemies() :Vector.<Enemy>{
@@ -72,13 +79,26 @@
 			this.world.addChild(world.darkness);
 		}
 		
-		
+		private function removeAllChildren(obj:MovieClip) {
+			for (var i:int = 0; i < obj.numChildren; i++) 
+			{
+				var boj:DisplayObject = world.getChildAt(i);
+				//if (boj is MovieClip) {
+					//this.removeAllChildren(boj as MovieClip);
+				//}
+				obj.removeChild(boj);
+			}
+		}
 		
 		public function changeWorldTo(name:String) {
 			//world.parent.removeChild(world);
+			
+			this.removeAllChildren(world);
 			this.world = null;
+			this.player = null;
 			this.world = new Level2();
 			this.addChild(world);
+			addEventListener(Event.ENTER_FRAME, init, false, 0, true);
 			trace(this.player);
 		}
 		

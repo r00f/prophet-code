@@ -42,7 +42,7 @@
 		
 		
 		override public function init(e:Event) {
-			super(e);
+			super.init(e);
 			if (this.rootRef != null) {
 				this.blood.yRange = 180;
 				this.rootRef.player = this;

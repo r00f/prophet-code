@@ -30,16 +30,16 @@ package spells {
 		
 		public function Fireball(direction:Directions, pos:Point,damage:Number = 50, speed:Number = 3.5) {
 			super();
+			this.point = pos;
+			this.direction = direction;
+			this.speed = speed*100/24;
+			this.spellDamage = damage;
 		}
 		
 		override public function init(e:Event) 
 		{
 			super.init(e);
 			if (this.rootRef != null) {
-				this.point = pos;
-				this.direction = direction;
-				this.speed = speed*100/24;
-				this.spellDamage = damage;
 				this.gotoAndStop(this.direction);
 				this.enemiesHit = new Object();
 				
