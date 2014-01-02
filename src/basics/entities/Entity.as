@@ -30,6 +30,11 @@ package basics.entities 	{
 			return new Point(this.x, this.y);
 		}
 		
+		protected function set point(p:Point):void {
+			this.x = p.x;
+			this.y = p.y;
+		}
+		
 		protected function get Lights():Vector.<Light> {
 			return lights;
 		}

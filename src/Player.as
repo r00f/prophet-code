@@ -106,8 +106,7 @@
 		
 		public function loop(e:Event):void {
 			this.updateDirection();
-			var xchange = 0;
-			var ychange = 0;
+			var change:Point = new Point();
 			if (this.rootRef.keyPresses.isDown(KeyCodes.Control) && cooldown <= 0) {
 				this.shootFireball();
 				cooldown = 20;
@@ -115,25 +114,25 @@
 			cooldown--;
 			if (this.rootRef.movementPressed()) {
 				if (this.direction.isLeft) {
-					xchange -= speed;
+					change.x -= speed;
 				} else if (this.direction.isRight) {
-					xchange += speed;
+					change.x += speed;
 				}
 				
 				if (this.direction.isUp) {
-					ychange -= speed;
+					change.y -= speed;
 				} else if (this.direction.isDown) {
-					ychange += speed;
+					change.y += speed;
 				}
 			}
 			
-			if (!this.rootRef.collidesWithEnvironment(this.x + xchange, this.y + ychange)) {
-				this.x += xchange;
-				this.y += ychange;
-			} else if (!this.rootRef.collidesWithEnvironment(this.x, this.y + ychange)) {
-				this.x += xchange;
-			} else if (!this.rootRef.collidesWithEnvironment(this.x + xchange, this.y)) {
-				this.x += xchange;
+			var next:Point =this.point.add(change);
+			if (!this.rootRef.collidesWithEnvironment(next)) {
+				this.point = next;
+			} else if (!this.rootRef.collidesWithEnvironment(new Point(this.x, next.y))) {
+				this.y = next.y
+			} else if (!this.rootRef.collidesWithEnvironment(new Point(next.x, this.y))) {
+				this.x = next.x;
 			}
 			this.gotoAndPlay(this.Action + Utilities.ANIMATION_SEPERATOR + this.direction);
 			if (this.light != null) {
