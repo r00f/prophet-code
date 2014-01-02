@@ -2,12 +2,9 @@ package enemies.base {
 	import basics.entities.HealthEntity;
 	import basics.hitboxes.BodyBox;
 	import basics.hitboxes.DamageBox;
-	import fl.motion.MatrixTransformer;
-	import flash.display.MovieClip;
 	import flash.events.Event;
-	import utilities.Utilities;
-	import utilities.KeyCodes;
 	import utilities.interfaces.IDamageTrigger;
+	import utilities.KeyCodes;
 	
 	/**
 	 * Enemy Superclass which implements despawn-time for all enemies with a required animation named death_animation

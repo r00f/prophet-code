@@ -1,18 +1,14 @@
 ﻿package enemies {
 	
-	import basics.hitboxes.BodyBox;
-	import basics.hitboxes.DamageBox;
 	import basics.hitboxes.AttackBox;
+	import basics.hitboxes.DamageBox;
 	import enemies.base.Enemy;
 	import flash.display.MovieClip;
 	import flash.events.Event;
-	import utilities.Directions;
 	import utilities.Actions;
-	import utilities.interfaces.ILastFrameTrigger;
-	import utilities.LastFrameTrigger;
-	import utilities.Utilities;
-	import utilities.KeyCodes;
+	import utilities.Directions;
 	import utilities.interfaces.IAttackTrigger;
+	import utilities.Strings;
 	
 	/**
 	 * Controls the hand.
@@ -40,6 +36,7 @@
 		override protected function die():void {
 			super.die();
 			this.gotoAndStop(Actions.DEATH);
+			this.setLastFrameTriggerDelegate(this);
 		}
 		
 		/** IDamageBoxTrigger **/
@@ -89,9 +86,9 @@
 			} else if (box == AttackTriggerDown) {
 				direction = Directions.DOWN;
 			}
-			this.gotoAndStop(Actions.HIT + Utilities.ANIMATION_SEPERATOR + direction);
-			addEventListener(Event.ENTER_FRAME, setDamageDelegate, false, 0, true);
+			this.gotoAndStop(Actions.HIT + Strings.ANIMATION_SEPERATOR + direction);
 			this.setLastFrameTriggerDelegate(this);
+			addEventListener(Event.ENTER_FRAME, setDamageDelegate, false, 0, true);
 		}
 		
 		public function setDamageDelegate(e:Event) {

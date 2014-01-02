@@ -6,7 +6,6 @@
 	import flash.display.MovieClip;
 	import flash.events.Event;
 	import flash.geom.Point;
-	import flash.geom.Rectangle;
 	import spells.Fireball;
 	import utilities.*;
 	
@@ -77,7 +76,7 @@
 		public function checkIfDead(e:Event) {
 			
 			if (this.HealthPercentage == 0) {
-				this.gotoAndStop(Actions.DEATH + Utilities.ANIMATION_SEPERATOR + this.direction);
+				this.gotoAndStop(Actions.DEATH + Strings.ANIMATION_SEPERATOR + this.direction);
 				super.death_animation.delegate = this;
 				this.blood.yRange = 100;
 				removeEventListener(Event.ENTER_FRAME, loop, false);
@@ -134,7 +133,7 @@
 			} else if (!this.rootRef.collidesWithEnvironment(new Point(next.x, this.y))) {
 				this.x = next.x;
 			}
-			this.gotoAndPlay(this.Action + Utilities.ANIMATION_SEPERATOR + this.direction);
+			this.gotoAndPlay(this.Action + Strings.ANIMATION_SEPERATOR + this.direction);
 			if (this.light != null) {
 				this.light.scaleX = this.HealthPercentage + 0.4;
 				this.light.scaleY = this.HealthPercentage + 0.4;

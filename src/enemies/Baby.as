@@ -74,7 +74,7 @@
 		override public function walk(e:Event):void {
 			super.walk(e);
 			this.setAttackBoxDelegate(this);
-			this.gotoAndStop("baby" + Utilities.ANIMATION_SEPERATOR + Actions.WALK + Utilities.ANIMATION_SEPERATOR + this.direction);
+			this.gotoAndStop("baby" + Strings.ANIMATION_SEPERATOR + Actions.WALK + Strings.ANIMATION_SEPERATOR + this.direction);
 		}
 		
 		private function setAttackTriggerDelegate() {
@@ -87,7 +87,7 @@
 		
 		public function attackBoxTriggeredByPlayer(box:AttackBox) {
 			this.speed = new Point(0, 0);
-			this.gotoAndStop(Actions.DEATH + Utilities.ANIMATION_SEPERATOR + this.direction);
+			this.gotoAndStop(Actions.DEATH + Strings.ANIMATION_SEPERATOR + this.direction);
 			this.death_animation.delegate = this;
 			
 			addEventListener(Event.ENTER_FRAME, setDamageDelegate, false, 0, true);

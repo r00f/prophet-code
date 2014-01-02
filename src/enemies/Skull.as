@@ -64,7 +64,7 @@
 		public function checkIfDead(e:Event) {
 			if (this.HealthPercentage == 0) {
 				speed = new Point();
-				this.gotoAndStop(Actions.DEATH + Utilities.ANIMATION_SEPERATOR + this.direction);
+				this.gotoAndStop(Actions.DEATH + Strings.ANIMATION_SEPERATOR + this.direction);
 				this.blood.yOffset = 0;
 				super.death_animation.delegate = this;
 				removeEventListener(Event.ENTER_FRAME, walk, false);
@@ -89,7 +89,7 @@
 			}
 			yCurveOffset += frameChange;
 			this.y += frameChange;
-			this.gotoAndStop("skull"+Utilities.ANIMATION_SEPERATOR+Actions.WALK+Utilities.ANIMATION_SEPERATOR + this.direction);
+			this.gotoAndStop("skull"+Strings.ANIMATION_SEPERATOR+Actions.WALK+Strings.ANIMATION_SEPERATOR + this.direction);
 		}
 	}
 }

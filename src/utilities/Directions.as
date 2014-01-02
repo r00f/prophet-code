@@ -90,7 +90,7 @@ package utilities {
 				vertical += Directions.strDOWN;
 			}
 			if (horizontal != "" && vertical != "") {
-				horizontal += Utilities.ANIMATION_SEPERATOR
+				horizontal += Strings.ANIMATION_SEPERATOR
 			}
 			return horizontal + vertical
 		}
