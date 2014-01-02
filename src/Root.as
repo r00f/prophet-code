@@ -87,7 +87,7 @@
 			return _attackPressed;
 		}
 		
-		public function movementPressed():Boolean {
+		public function get movementPressed():Boolean {
 			return _downPressed || _upPressed || _leftPressed || _rightPressed;
 		}
 		

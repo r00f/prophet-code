@@ -48,7 +48,7 @@
 		}
 		
 		private function updateDirection():void {
-			if (this.rootRef.movementPressed()) {
+			if (this.rootRef.movementPressed) {
 				direction.current = Directions._none;
 				if (this.rootRef.upPressed) {
 					direction.current += Directions._up;
@@ -65,7 +65,7 @@
 		}
 		
 		public function get Action():String {
-			if (this.rootRef.leftPressed || this.rootRef.upPressed || this.rootRef.rightPressed || this.rootRef.downPressed) {
+			if (this.rootRef.movementPressed) {
 				return Actions.WALK;
 			} else if (this.rootRef.attackPressed) {
 				return Actions.HIT;
@@ -112,7 +112,7 @@
 				cooldown = 20;
 			}
 			cooldown--;
-			if (this.rootRef.movementPressed()) {
+			if (this.rootRef.movementPressed) {
 				if (this.direction.isLeft) {
 					change.x -= speed;
 				} else if (this.direction.isRight) {
