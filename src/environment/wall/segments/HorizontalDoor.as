@@ -22,8 +22,14 @@
 		public function HorizontalDoor() {
 			super();
 			this.gotoAndStop(HorizontalDoor.LABEL_CLOSED);
-			addEventListener(Event.ENTER_FRAME, loop, false, 0, true);
+		}
 		
+		override public function init(e:Event) 
+		{
+			super.init(e);
+			if (this.rootRef != null) {
+				addEventListener(Event.ENTER_FRAME, loop, false, 0, true);
+			}
 		}
 		
 		public function loop(e:Event):void {

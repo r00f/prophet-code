@@ -20,11 +20,15 @@ package enemies.base
 		
 		public function Mover() 
 		{
-			super();			
+			super();
+		}
+		
+		override public function init(e:Event) 
+		{
+			super.init(e);
 			this.fixedPoint = new Point(int(this.x), int(this.y));
 			direction = new Directions();
 			this.speed = new Point();
-			
 		}
 		public function walk(e:Event):void {				
 			var next:Point = this.point;

@@ -24,8 +24,15 @@ package basics.entities 	{
 		
 		public function Entity() {
 			super();
-			this.rootRef = root as Root;
-			addEventListener(Event.ENTER_FRAME, moveLightToDarkness, false, 0, true);
+			addEventListener(Event.ENTER_FRAME, init, false, 0, true);
+		}
+		
+		public function init(e:Event) {
+			if (this.root != null) {
+				this.rootRef = root as Root;
+				addEventListener(Event.ENTER_FRAME, moveLightToDarkness, false, 0, true);
+				removeEventListener(Event.ENTER_FRAME, init, false);
+			}
 		}
 		
 		public function get point():Point {

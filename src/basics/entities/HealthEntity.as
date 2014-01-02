@@ -5,6 +5,7 @@ package basics.entities {
 	import utilities.Actions;
 	import utilities.interfaces.ILastFrameTrigger;
 	import utilities.LastFrameTrigger;
+	
 	/**
 	 * Implements health with heal and applyDamage functions.
 	 * - MaxHealth is only seen by subclasses
@@ -14,23 +15,26 @@ package basics.entities {
 	 */
 	public class HealthEntity extends Entity implements ILastFrameTrigger {
 		
-		[Inspectable(defaultValue = 100, name = "Maximum Health", type = "Number", variable = "maxHealth")]
+		[Inspectable(defaultValue=100,name="Maximum Health",type="Number",variable="maxHealth")]
 		public var maxHealth:Number = 100;
 		
 		private var _currentHealth:Number;
 		public var death_animation:LastFrameTrigger;
 		
-		[Inspectable(defaultValue=20, name="Despawn Time [s]", type="Number", variable="despawnTime")]
+		[Inspectable(defaultValue=20,name="Despawn Time [s]",type="Number",variable="despawnTime")]
 		public var despawnTime:Number = 20; // Seconds
 		
-		
 		private var deadTime:Date;
-		
 		
 		public var blood:BloodConfig;
 		
 		public function HealthEntity() {
 			super();
+		
+		}
+		
+		override public function init(e:Event) {
+			super.init(e);
 			this.blood = new BloodConfig();
 			_currentHealth = maxHealth;
 		}
@@ -80,7 +84,7 @@ package basics.entities {
 		}
 		
 		protected function die():void {
-			
+		
 		}
 		
 		private function set currentHealth(value:Number):void {
@@ -92,7 +96,6 @@ package basics.entities {
 			}
 			_currentHealth = value;
 		}
-
 	
 	}
 

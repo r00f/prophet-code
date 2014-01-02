@@ -30,24 +30,28 @@ package spells {
 		
 		public function Fireball(direction:Directions, pos:Point,damage:Number = 50, speed:Number = 3.5) {
 			super();
-			this.point = pos;
-			this.direction = direction;
-			this.speed = speed*100/24;
-			this.spellDamage = damage;
-			this.gotoAndStop(this.direction);
-			this.enemiesHit = new Object();
-			
-			this.start = this.point;
-			
-			maxDistancePixel = this.moveDistance * 100;
-			maxDistanceSquared = Math.pow(maxDistancePixel, 2);
-			addEventListener(Event.ENTER_FRAME, move, false, 0, true);
+		}
+		
+		override public function init(e:Event) 
+		{
+			super.init(e);
+			if (this.rootRef != null) {
+				this.point = pos;
+				this.direction = direction;
+				this.speed = speed*100/24;
+				this.spellDamage = damage;
+				this.gotoAndStop(this.direction);
+				this.enemiesHit = new Object();
+				
+				this.start = this.point;
+				
+				maxDistancePixel = this.moveDistance * 100;
+				maxDistanceSquared = Math.pow(maxDistancePixel, 2);
+				addEventListener(Event.ENTER_FRAME, move, false, 0, true);
+			}
 		}
 		
 		public function move(e:Event) {
-			if (this.rootRef == null) {
-				this.rootRef = root as Root;
-			}
 			var next:Point = this.point;
 			if (this.direction.isLeft) {
 				next.x -= this.speed;

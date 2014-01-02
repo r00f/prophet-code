@@ -20,7 +20,7 @@
 	 */
 	public class Baby extends Mover implements IAttackTrigger {
 		private var nextAction:String = "idle";
-
+		
 		private var damageAmount:int;
 		public var AttackTriggerLeft:AttackBox;
 		public var AttackTriggerRight:AttackBox;
@@ -30,14 +30,20 @@
 		
 		public function Baby() {
 			super();
-			Wait = Random.random(25);
-			this.blood.xRange = 100;
-			this.speed.x = Random.random(6) + 2;
-			this.speed.y = 0;
-			this.damageAmount = 1 / this.speed.x * 100;
-			this.direction = Directions.RIGHT;
-			addEventListener(Event.ENTER_FRAME, wait, false, 0, true);
-			this.despawnTime = 1;
+		}
+		
+		override public function init(e:Event) {
+			super.init(e);
+			if (this.rootRef != null) {
+				Wait = Random.random(25);
+				this.blood.xRange = 100;
+				this.speed.x = Random.random(6) + 2;
+				this.speed.y = 0;
+				this.damageAmount = 1 / this.speed.x * 100;
+				this.direction = Directions.RIGHT;
+				addEventListener(Event.ENTER_FRAME, wait, false, 0, true);
+				this.despawnTime = 1;
+			}
 		}
 		
 		override public function damageAppliedToPlayer(box:DamageBox, player:Player):void {
