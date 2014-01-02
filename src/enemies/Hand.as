@@ -21,14 +21,15 @@
 		public var AttackTriggerUp:AttackBox;
 		public var AttackTriggerDown:AttackBox;
 		
-		private var damageAmount:int;
+		[Inspectable(defaultValue=2, name="Base Damage", type="Number", variable="damageAmount")]
+		public var damageAmount:int;
 		
 		private var idle:Boolean = false;
 		
 		public function Hand() {
 			super();
 			this.blood.yRange = 120;
-			this.damageAmount = 2;
+			this.damageAmount;
 			this.gotoAndStop(Actions.INTRO);
 			this.setLastFrameTriggerDelegate(this);
 		}

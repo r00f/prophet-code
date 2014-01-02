@@ -14,11 +14,14 @@
 	import utilities.interfaces.ILastFrameTrigger;
 	
 	public class Skull extends Mover implements IDamageTrigger {		
-		private var damageAmount:Number;
+		
+		[Inspectable(defaultValue=5, name="Base Damage", type="Number", variable="damageAmount")]
+		public var damageAmount:Number;
 		public var damage_box:DamageBox;  
 		
 		public var AttackTriggerLeft:AttackBox;
 		public var AttackTriggerRight:AttackBox;
+		public var walk_animation:MovieClip;
 
 		
 		private var Wait;
@@ -30,10 +33,9 @@
 			this.blood.yOffset = -100;
 			this.blood.xRange = 50;
 			Wait = Random.random(25);
-			this.damageAmount = 5;
 			speed.x= Random.random(6) + 2;
 			speed.y = 0;
-			this.limit.y = 120;
+			this.limit.y = 145;
 			this.direction = Directions.RIGHT;
 			addEventListener(Event.ENTER_FRAME, wait, false, 0, true);
 			addEventListener(Event.ENTER_FRAME, checkIfDead, false, 0, true);
@@ -61,7 +63,9 @@
 		public function wait(e:Event) {
 			if (Wait > 0) {
 				Wait--;
+				this.walk_animation.stop();
 			} else {
+				this.walk_animation.play();
 				removeEventListener(Event.ENTER_FRAME, wait, false)
 				addEventListener(Event.ENTER_FRAME, walk, false, 0, true);
 			}
