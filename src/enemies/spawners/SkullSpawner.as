@@ -21,7 +21,6 @@ package enemies.spawners {
 		public function SkullSpawner() {
 			super();
 			this.spawnRect = spawn_area.getRect(this.root)
-			trace(spawnRect);
 			addEventListener(Event.EXIT_FRAME, wait, false, 0, true);
 		}
 		
