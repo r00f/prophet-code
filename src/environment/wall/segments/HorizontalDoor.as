@@ -9,9 +9,6 @@
 	 */
 	public dynamic class HorizontalDoor extends BaseSegment {
 		public var DoorTrigger:InteractionBox;
-		public var hitbox2:CollisionBox;
-		public var hitbox3:CollisionBox;
-		public var hitbox4:CollisionBox;
 		
 		private static const LABEL_OPEN:String = "open";
 		private static const LABEL_CLOSED:String = "closed";

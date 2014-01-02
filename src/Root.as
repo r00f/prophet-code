@@ -53,7 +53,7 @@
 			if (player != null) {
 				this.scrollRect = new Rectangle(this.player.x - scrollRectWidth / 2, this.player.y - scrollRectHeight / 2, scrollRectWidth, scrollRectHeight);
 			}
-			healthbar = new HealthBar(300, 1000, 1, 1);
+			healthbar = new HealthBar(new Point(300, 1000), new Point(1, 1));
 			stage.addChild(healthbar);
 			keyPresses = new KeyObject(this.stage);
 			this.darkness = this.world.darkness;
