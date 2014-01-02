@@ -27,21 +27,22 @@
 		
 		private var damageAmount:int;
 		
-		public var intro_animation:LastFrameTrigger;
-		public var hit_left_animation:LastFrameTrigger;
-		public var hit_right_animation:LastFrameTrigger;
-		public var hit_up_animation:LastFrameTrigger;
-		public var hit_down_animation:LastFrameTrigger;
-		
+		private var idle:Boolean = false;
 		
 		public function Hand() {
 			super();
 			this.blood.yRange = 120;
 			this.damageAmount = 2;
-			addEventListener(Event.ENTER_FRAME, setDelegateIfNotSet, false, 0, true);	
 			this.gotoAndStop(Actions.INTRO);
-			this.intro_animation.delegate = this;
+			this.setLastFrameTriggerDelegate(this);
 		}
+		
+		override protected function die():void {
+			super.die();
+			this.gotoAndStop(Actions.DEATH);
+		}
+		
+		/** IDamageBoxTrigger **/
 		
 		override public function damageAppliedToPlayer(box:DamageBox, player:Player):void {
 			player.applyDamage(this.damageAmount);
@@ -54,55 +55,47 @@
 				enemy.heal(10);
 			}
 		}
-		override public function damagePlayerHitbox(box:DamageBox):String  {
+		
+		override public function damagePlayerHitbox(box:DamageBox):String {
 			return Player.HITBOX_FEET;
 		}
 		
-		public function setDelegateIfNotSet(e:Event) {
-			if (this.rootRef.keyPresses.isDown(KeyCodes.J)) {
-				this.gotoAndStop(Actions.DEATH);
-			}
-			Utilities.setAttackBoxDelegate(AttackTriggerLeft, this);
-			Utilities.setAttackBoxDelegate(AttackTriggerRight, this);
-			Utilities.setAttackBoxDelegate(AttackTriggerUp, this);
-			Utilities.setAttackBoxDelegate(AttackTriggerDown, this);
-			Utilities.setLastFrameTriggerDelegate(death_animation, this);
-			Utilities.setLastFrameTriggerDelegate(hit_left_animation, this);
-			Utilities.setLastFrameTriggerDelegate(hit_right_animation, this);
-			Utilities.setLastFrameTriggerDelegate(hit_up_animation, this);
-			Utilities.setLastFrameTriggerDelegate(hit_down_animation, this);
-		}
-		
+		/** ILastFrameTrigger **/
 		
 		override public function lastFrameEnded(mv:MovieClip) {
 			super.lastFrameEnded(mv);
 			if (mv != death_animation) {
 				this.gotoAndStop(Actions.IDLE);
+				this.setAttackBoxDelegate(this);
+				removeEventListener(Event.ENTER_FRAME, setDamageDelegate, false);
+				this.idle = true;
 			}
 		}
 		
-		override protected function die():void 
-		{
-			super.die();
-			this.gotoAndStop(Actions.DEATH);
+		/** IAttackTrigger **/
+		
+		public function attackBoxTriggeredByPlayer(box:AttackBox) {
+			if (!this.idle) {
+				return; // We are not idle, e.g. intro or hitanimation
+			}
+			this.idle = false;
+			var direction:Directions = new Directions();
+			if (box == AttackTriggerLeft) {
+				direction = Directions.LEFT;
+			} else if (box == AttackTriggerRight) {
+				direction = Directions.RIGHT;
+			} else if (box == AttackTriggerUp) {
+				direction = Directions.UP;
+			} else if (box == AttackTriggerDown) {
+				direction = Directions.DOWN;
+			}
+			this.gotoAndStop(Actions.HIT + Utilities.ANIMATION_SEPERATOR + direction);
+			addEventListener(Event.ENTER_FRAME, setDamageDelegate, false, 0, true);
+			this.setLastFrameTriggerDelegate(this);
 		}
 		
 		public function setDamageDelegate(e:Event) {
 			this.setDamageBoxDelegate(this);
-		}
-		public function attackBoxTriggeredByPlayer(box:AttackBox) {
-			var direction:Directions = new Directions();
-			if (box == AttackTriggerLeft) {
-				direction = Directions.LEFT;
-			} else if  (box == AttackTriggerRight) {
-				direction = Directions.RIGHT;
-			} else if  (box == AttackTriggerUp) {
-				direction = Directions.UP;				
-			} else if  (box == AttackTriggerDown) {
-				direction = Directions.DOWN;				
-			}
-			this.gotoAndStop(Actions.HIT + Utilities.ANIMATION_SEPERATOR + direction);
-			addEventListener(Event.ENTER_FRAME, setDamageDelegate, false, 0, true);
 		}
 	}
 
