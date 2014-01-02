@@ -28,11 +28,11 @@ package basics.entities 	{
 			addEventListener(Event.ENTER_FRAME, moveLightToDarkness, false, 0, true);
 		}
 		
-		protected function get point():Point {
+		public function get point():Point {
 			return new Point(this.x, this.y);
 		}
 		
-		protected function set point(p:Point):void {
+		public function set point(p:Point):void {
 			this.x = p.x;
 			this.y = p.y;
 		}

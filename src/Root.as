@@ -1,5 +1,6 @@
 ﻿package {
 	
+	import basics.entities.Entity;
 	import flash.display.StageDisplayState;
 	import flash.display.StageScaleMode;
 	import flash.display.StageQuality;
@@ -63,6 +64,12 @@
 
 		public function get Enemies() :Vector.<Enemy>{
 			return this.world.Enemies;
+		}
+		
+		
+		public function addEntity(entity:Entity) {
+			this.world.addChild(entity);
+			this.world.addChild(world.darkness);
 		}
 		
 		// Keys

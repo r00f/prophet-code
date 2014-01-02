@@ -15,13 +15,15 @@ package basics.entities {
 	public class HealthEntity extends Entity implements ILastFrameTrigger {
 		
 		[Inspectable(defaultValue = 100, name = "Maximum Health", type = "Number", variable = "maxHealth")]
-		public var maxHealth:Number;
+		public var maxHealth:Number = 100;
 		
 		private var _currentHealth:Number;
 		public var death_animation:LastFrameTrigger;
 		
 		[Inspectable(defaultValue=20, name="Despawn Time [s]", type="Number", variable="despawnTime")]
-		public var despawnTime:Number; // Seconds
+		public var despawnTime:Number = 20; // Seconds
+		
+		
 		private var deadTime:Date;
 		
 		

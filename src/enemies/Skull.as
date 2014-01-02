@@ -16,7 +16,7 @@
 	public class Skull extends Mover implements IDamageTrigger {		
 		
 		[Inspectable(defaultValue=5, name="Base Damage", type="Number", variable="damageAmount")]
-		public var damageAmount:Number;
+		public var damageAmount:Number = 5;
 		public var damage_box:DamageBox;  
 		
 		public var AttackTriggerLeft:AttackBox;
@@ -26,8 +26,9 @@
 		
 		private var Wait;
 		
-		public function Skull() {
+		public function Skull(root:Root) {
 			super();
+			this.rootRef = root;
 			this.blood.yRange = 50;
 			this.blood.yOffset = -100;
 			this.blood.xRange = 50;
@@ -52,6 +53,11 @@
 			if (enemy is Baby) {
 				enemy.applyDamage(1);
 			} 
+		}
+		
+		override public function set point(p:Point):void {
+			super.point = p;
+			this.fixedPoint = p;
 		}
 		
 		public function wait(e:Event) {
