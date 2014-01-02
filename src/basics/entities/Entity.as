@@ -7,6 +7,7 @@ package basics.entities 	{
 	import flash.display.DisplayObject;
 	import flash.display.MovieClip;
 	import flash.events.Event;
+	import flash.geom.Point;
 	import utilities.interfaces.IAttackTrigger;
 	import utilities.interfaces.IDamageTrigger;
 	
@@ -23,6 +24,10 @@ package basics.entities 	{
 			super();
 			this.rootRef = root as Root;
 			addEventListener(Event.ENTER_FRAME, moveLightToDarkness, false, 0, true);
+		}
+		
+		protected function get point():Point {
+			return new Point(this.x, this.y);
 		}
 		
 		protected function get Lights():Vector.<Light> {

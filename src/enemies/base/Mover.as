@@ -1,5 +1,6 @@
 package enemies.base 
 {
+	import flash.display.Shape;
 	import flash.events.Event;
 	import flash.geom.Point;
 	import utilities.Directions;
@@ -26,7 +27,7 @@ package enemies.base
 			
 		}
 		public function walk(e:Event):void {				
-			var next:Point = new Point(this.x, this.y);
+			var next:Point = this.point;
 			if (this.direction.isLeft) {
 				next.x -= this.speed.x
 			} else if (this.direction.isRight) {
@@ -37,7 +38,7 @@ package enemies.base
 			} else if (this.direction.isDown) {
 				next.y += this.speed.y;
 			}
-			if (this.outsideAnyLimit(next.x, next.y) || this.rootRef.collidesWithEnvironment(this.x + speed.x, this.y + speed.y) || this.rootRef.collidesWithEnvironment(this.x + speed.x + this.width * 2 / 3, this.y + speed.y)) {
+			if (this.outsideAnyLimit(next) ||  this.rootRef.collidesWithEnvironment( next.add(new Point(-this.width / 2, 0))) || this.rootRef.collidesWithEnvironment(next.add(new Point(this.width / 2, 0)))) {
 				this.direction.reverse();
 			} else {
 				this.x = next.x;
@@ -45,8 +46,8 @@ package enemies.base
 			}
 			}
 		
-		private function outsideAnyLimit(x:Number, y:Number) {
-			return this.outsideLimit(x,this.fixedPoint.x, this.limit.x) || this.outsideLimit(y,this.fixedPoint.y, this.limit.y);
+		private function outsideAnyLimit(position:Point) {
+			return this.outsideLimit(position.x,this.fixedPoint.x, this.limit.x) || this.outsideLimit(position.y,this.fixedPoint.y, this.limit.y);
 		}
 		
 		private function outsideLimit(value:Number, fix:Number, limit:Number) {
