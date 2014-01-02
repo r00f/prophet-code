@@ -49,12 +49,16 @@ package {
 			function customSort(childClip:DisplayObject, childClip2:DisplayObject):int {
 				if (childClip is Entity && childClip2 is Entity) {
 					var door:HorizontalDoor;
+					var player:Player;
 					if (childClip is HorizontalDoor && childClip2 is Player) {
 						door = childClip as HorizontalDoor;
-						return (door.isDoorOpen && door.y + 25 > childClip2.y) ? 1 : -1;
+						player = childClip2 as Player;
 					} else if (childClip is Player && childClip2 is HorizontalDoor) {
 						door = childClip2 as HorizontalDoor;
-						return (door.isDoorOpen && door.y + 25 > childClip.y) ? -1 : 1;
+						player = childClip as Player;
+					}
+					if (door != null && door.isDoorOpen) {
+						return  (door.y + 25 > player.y) ? -1 : 1;
 					}
 					if (childClip.y < childClip2.y) {
 						return -1;
