@@ -17,8 +17,8 @@ package enemies.spawners {
 		private var spawnRect:Rectangle;
 		
 		
-		[Inspectable(defaultValue=5)]
-		public var spawn:Number = 5;
+		[Inspectable(defaultValue=5, name="No. Spawns")]
+		public var spawn:Number;
 		
 		private var Wait = 2 * 24;
 		
