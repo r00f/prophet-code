@@ -11,6 +11,7 @@
 	import flash.display.DisplayObject;
 	import flash.display.MovieClip;
 	import flash.events.Event;
+	import flash.events.KeyboardEvent;
 	import flash.events.TimerEvent;
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
@@ -51,8 +52,6 @@
 		
 		private var paused:Boolean = false;
 		
-		private var pauseTimer:Timer;
-		
 		
 		[Inspectable(defaultValue = 10, name = "Easing", type = "Number", variable = "easing")]
 		public  var easing:Number = 10;
@@ -63,9 +62,7 @@
 			stage.quality = StageQuality.MEDIUM;
 			stage.scaleMode = StageScaleMode.NO_SCALE;
 			
-			this.pauseTimer = new Timer(1000 / 30);
-			this.pauseTimer.addEventListener(TimerEvent.TIMER, pause, false, 0, true);
-			this.pauseTimer.start();
+			stage.addEventListener(KeyboardEvent.KEY_DOWN, pause);
 			
 			healthbar = new HealthBar(new Point(300, 1000), new Point(1, 1));
 			stage.addChild(healthbar);
@@ -88,19 +85,10 @@
 		public function get Enemies() :Vector.<Enemy>{
 			return this.world.Enemies;
 		}
-		var timerJustChanged:Boolean = false;
-		var waitTime:int = 0;
-		public function pause(e:Event) {
-			if (!timerJustChanged && keyPresses.isDown(KeyCodes.Pause)) {
-				trace("timer changing");
-				this.paused = !this.paused;
-				this.timerJustChanged = true;
-				this.stage.frameRate = (paused) ? 0 : 30;
-				this.waitTime = 5;
-			} else if (waitTime <= 0) {
-				timerJustChanged = false;
-			} else {
-				waitTime--;
+		public function pause(e:KeyboardEvent) {
+			if (e.keyCode == KeyCodes.Pause) {
+					this.paused = !this.paused;
+					this.stage.frameRate = (paused) ? 0 : 30;
 			}
 		}
 		
