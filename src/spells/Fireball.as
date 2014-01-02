@@ -39,7 +39,7 @@ package spells {
 			this.gotoAndStop(this.direction);
 			this.enemiesHit = new Object();
 			
-			this.start.x = new Point(this.x, this.y);
+			this.start = this.point;
 			
 			maxDistancePixel = this.moveDistance * 100;
 			maxDistanceSquared = Math.pow(maxDistancePixel, 2);
@@ -50,7 +50,7 @@ package spells {
 			if (this.rootRef == null) {
 				this.rootRef = root as Root;
 			}
-			var next:Point = new Point(this.x, this.y);
+			var next:Point = this.point;
 			if (this.direction.isLeft) {
 				next.x -= this.speed;
 			} else if (this.direction.isRight) {
@@ -61,7 +61,7 @@ package spells {
 			} else if (this.direction.isDown) {
 				next.y += this.speed;
 			}
-			if (this.rootRef.collidesWithEnvironment(next) || travelledTooFar(next)) ) {
+			if (this.rootRef.collidesWithEnvironment(next) || travelledTooFar(next) ) {
 				this.gotoAndPlay("explode");
 				this.explosion.delegate = this;
 			} else {
