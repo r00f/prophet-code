@@ -1,5 +1,6 @@
 ﻿package {
 	
+	import basics.entities.Entity;
 	import flash.display.StageDisplayState;
 	import flash.display.StageScaleMode;
 	import flash.display.StageQuality;
@@ -68,6 +69,7 @@
 		
 		public function addEnemy(enemy:Enemy) {
 			this.world.addChild(enemy);
+			this.world.addChild(world.darkness);
 		}
 		
 		// Keys
