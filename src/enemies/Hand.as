@@ -22,7 +22,7 @@
 		public var AttackTriggerDown:AttackBox;
 		
 		[Inspectable(defaultValue=2, name="Base Damage", type="Number", variable="damageAmount")]
-		private var damageAmount:int;
+		public var damageAmount:int;
 		
 		private var idle:Boolean = false;
 		
