@@ -8,6 +8,7 @@
 	import enemies.base.Mover;
 	import flash.display.MovieClip;
 	import flash.events.Event;
+	import flash.geom.Point;
 	import utilities.*;
 	import utilities.interfaces.IAttackTrigger;
 	import utilities.interfaces.ILastFrameTrigger;
@@ -32,10 +33,9 @@
 			super();
 			Wait = Random.random(25);
 			this.blood.xRange = 100;
-			this.speed = Random.random(6) + 2;
-			this.damageAmount = 1 / this.speed * 100;
-			xspeed = this.speed;
-			yspeed = 0;
+			this.speed.x = Random.random(6) + 2;
+			this.speed.y = 0;
+			this.damageAmount = 1 / this.speed.x * 100;
 			this.direction = Directions.RIGHT;
 			addEventListener(Event.ENTER_FRAME, wait, false, 0, true);
 			this.despawnTime = 1;
@@ -86,8 +86,7 @@
 		}
 		
 		public function attackBoxTriggeredByPlayer(box:AttackBox) {
-			xspeed = 0;
-			yspeed = 0;
+			this.speed = new Point(0, 0);
 			this.gotoAndStop(Actions.DEATH + Utilities.ANIMATION_SEPERATOR + this.direction);
 			this.death_animation.delegate = this;
 			

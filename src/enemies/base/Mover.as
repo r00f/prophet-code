@@ -1,58 +1,57 @@
 package enemies.base 
 {
 	import flash.events.Event;
+	import flash.geom.Point;
 	import utilities.Directions;
 	/**
 	 * ...
 	 * @author Gabriel
 	 */
 	public class Mover extends Enemy 
-	{
-		protected var HorizontalLimit:Number = 100;
-		protected var VerticalLimit:Number = 50;
+	{		
+		protected var limit:Point = new Point(100, 50);
 		
-		protected var speed:Number
 		protected var xspeed:Number;
 		protected var yspeed:Number;
 		
-		protected var FixPositionX:Number;
-		protected var FixPositionY:Number;
+		protected var speed:Point;
+		
+		protected var fixedPoint:Point;
 		
 		protected var direction:Directions;
 		
 		public function Mover() 
 		{
-			super();
-			this.FixPositionX = int(this.x);
-			this.FixPositionY = int(this.y);
+			super();			
+			this.fixedPoint = new Point(int(this.x), int(this.y));
 			direction = new Directions();
+			this.speed = new Point();
 			
 		}
-		public function walk(e:Event):void {			
-			var nextx:Number = this.x;
-			var nexty:Number = this.y;
+		public function walk(e:Event):void {				
+			var next:Point = new Point(this.x, this.y);
 			if (this.direction.isLeft) {
-				nextx -= this.speed;
+				next.x -= this.speed.x
 			} else if (this.direction.isRight) {
-				nextx += this.speed;
+				next.x += this.speed.x;
 			}
 			if (this.direction.isUp) {
-				nexty -= this.speed;
+				next.y -= this.speed.y;
 			} else if (this.direction.isDown) {
-				nexty += this.speed;
+				next.y += this.speed.y;
 			}
-			if (this.outsideAnyLimit(nextx, nexty) || this.rootRef.collidesWithEnvironment(this.x + xspeed, this.y + yspeed) || this.rootRef.collidesWithEnvironment(this.x + xspeed + this.width * 2 / 3, this.y + yspeed)) {
-				xspeed = -xspeed;
-				yspeed = -yspeed;
+			if (this.outsideAnyLimit(next.x, next.y) || this.rootRef.collidesWithEnvironment(this.x + speed.x, this.y + speed.y) || this.rootRef.collidesWithEnvironment(this.x + speed.x + this.width * 2 / 3, this.y + speed.y)) {
+				xspeed = -speed.x;
+				yspeed = -speed.y;
 				this.direction.reverse();
 			} else {
-				this.x = nextx;
-				this.y = nexty;
+				this.x = next.x;
+				this.y = next.y;
 			}
 			}
 		
 		private function outsideAnyLimit(x:Number, y:Number) {
-			return this.outsideLimit(x,FixPositionX, HorizontalLimit) || this.outsideLimit(y,FixPositionY, VerticalLimit);
+			return this.outsideLimit(x,this.fixedPoint.x, this.limit.x) || this.outsideLimit(y,this.fixedPoint.y, this.limit.y);
 		}
 		
 		private function outsideLimit(value:Number, fix:Number, limit:Number) {
