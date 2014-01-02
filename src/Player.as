@@ -5,6 +5,7 @@
 	import basics.Light;
 	import flash.display.MovieClip;
 	import flash.events.Event;
+	import flash.geom.Point;
 	import flash.geom.Rectangle;
 	import spells.Fireball;
 	import utilities.*;
@@ -86,22 +87,21 @@
 		private var cooldown = 20;
 		
 		private function shootFireball() {
-			var yFireballOffset:int = 60;
-			var xFireballOffset:int;
-				
+			var fireballOffset:Point = new Point(0,-60);
+			
 			if (this.direction.isLeft) {
-					xFireballOffset = 80;
-				} else if (this.direction.isRight) {
-					xFireballOffset = -80;
-				}
-				
-				if (this.direction.isUp) {
-					yFireballOffset = 100;
-				} else if (this.direction.isDown) {
-					yFireballOffset = 0;
-				}
-				
-			this.rootRef.world.addChild(new Fireball(this.direction.copy, x - xFireballOffset, y - yFireballOffset));
+				fireballOffset.x = -80;
+			} else if (this.direction.isRight) {
+				fireballOffset.x = 80;
+			}
+			
+			if (this.direction.isUp) {
+				fireballOffset.y = -80;
+			} else if (this.direction.isDown) {
+				fireballOffset.y = 0;
+			}
+			
+			this.rootRef.world.addChild(new Fireball(this.direction.copy, x + fireballOffset.x, y + fireballOffset.y));
 		}
 		
 		public function loop(e:Event):void {
