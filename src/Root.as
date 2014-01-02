@@ -41,7 +41,7 @@
 		
 		private var timesToSort:Number = 3;
 		
-		private var easing:Number = 20;
+		private var easing:Number = 10;
 		
 		public function Root() {
 			super();
@@ -52,7 +52,7 @@
 			if (player != null) {
 				this.scrollRect = new Rectangle(this.player.x - scrollRectWidth / 2, this.player.y - scrollRectHeight / 2, scrollRectWidth, scrollRectHeight);
 			}
-			healthbar = new HealthBar(100, 100, 0.5, 0.5);
+			healthbar = new HealthBar(300, 1000, 1, 1);
 			stage.addChild(healthbar);
 			keyPresses = new KeyObject(this.stage);
 			this.darkness = this.world.darkness;

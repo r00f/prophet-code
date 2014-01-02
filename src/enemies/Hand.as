@@ -36,6 +36,7 @@
 		
 		public function Hand() {
 			super();
+			this.blood.yRange = 120;
 			this.damageAmount = 2;
 			addEventListener(Event.ENTER_FRAME, setDelegateIfNotSet, false, 0, true);	
 			this.gotoAndStop(Actions.INTRO);
