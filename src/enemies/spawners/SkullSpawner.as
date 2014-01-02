@@ -24,9 +24,17 @@ package enemies.spawners {
 		
 		public function SkullSpawner() {
 			super();
-			this.spawnRect = spawn_area.getRect(this.root)
-			addEventListener(Event.EXIT_FRAME, wait, false, 0, true);
-			addEventListener(Event.ENTER_FRAME, debugLoop, false, 0, true);
+		}
+		
+		override public function init(e:Event) 
+		{
+			super.init(e);
+			if (this.rootRef != null) {
+				this.spawnRect = spawn_area.getRect(this.root)
+				Wait = 2 * 24;
+				addEventListener(Event.EXIT_FRAME, wait, false, 0, true);
+				addEventListener(Event.ENTER_FRAME, debugLoop, false, 0, true);
+			}
 		}
 		
 		public function wait(e:Event) {

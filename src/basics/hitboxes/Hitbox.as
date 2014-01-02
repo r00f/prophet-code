@@ -13,21 +13,27 @@
 		
 		public function Hitbox() {
 			super();
-			this.rootRef = root as Root;
-			this.setVisibility()
-			addEventListener(Event.ENTER_FRAME, debugLoop, false, 0, true);
-			addEventListener(Event.ENTER_FRAME, setRootRef, false, 0, true);
+			addEventListener(Event.ENTER_FRAME, init, false, 0, true);
+			addEventListener(Event.REMOVED_FROM_STAGE, cleanup, false);
 		}
+		
+		public function cleanup(e:Event) {
+		}
+		
+		public function init(e:Event) {
+			if (this.root != null) {
+				this.rootRef = root as Root;
+				this.setVisibility()
+				addEventListener(Event.ENTER_FRAME, debugLoop, false, 0, true);
+				removeEventListener(Event.ENTER_FRAME, init, false);
+			}
+		}
+		
+		
+		
 		
 		public function debugLoop(e:Event) {
 			setVisibility();
-		}
-		
-		public function setRootRef(e:Event) {
-			if (this.rootRef == null && this.root != null) {
-				this.rootRef = root as Root;
-				removeEventListener(Event.ENTER_FRAME, setRootRef, false);
-			}
 		}
 		
 		private function setVisibility() {

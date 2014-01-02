@@ -83,6 +83,9 @@ package spells {
 		
 		public function lastFrameEnded(mv:MovieClip) {
 			removeEventListener(Event.ENTER_FRAME, move, false);
+			if (this.parent == null) {
+				return;
+			}
 			this.parent.removeChild(this);
 		}
 		

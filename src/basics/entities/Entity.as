@@ -25,6 +25,13 @@ package basics.entities 	{
 		public function Entity() {
 			super();
 			addEventListener(Event.ENTER_FRAME, init, false, 0, true);
+			addEventListener(Event.REMOVED_FROM_STAGE, cleanup, false);
+		}
+		
+		public function cleanup(e:Event) {
+			for (var i:int = 0; i < this.lights.length; i++) {
+				rootRef.darkness.removeChild(this.lights[i]);
+			}
 		}
 		
 		public function init(e:Event) {
@@ -123,14 +130,6 @@ package basics.entities 	{
 					this.lights.push(light);
 				}
 				removeEventListener(Event.ENTER_FRAME, moveLightToDarkness, false);
-				addEventListener(Event.REMOVED_FROM_STAGE, removeLight, false, 0, true);
-			}
-		}
-		
-		private function removeLight(e:Event) {
-			var rootRef:Root = root as Root;
-			for (var i:int = 0; i < this.lights.length; i++) {
-				rootRef.darkness.removeChild(this.lights[i]);
 			}
 		}
 	}

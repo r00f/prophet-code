@@ -10,10 +10,24 @@
 		
 		public var delegate:IDamageTrigger;
 		
+		private var cleaned:Boolean = false;
+		
 		public function DamageBox() {
 			super();
+		}
+		
+		override public function init(e:Event) {
+			super.init(e);
 			addEventListener(Event.ENTER_FRAME, checkForEnemies, false, 0, true);
 			addEventListener(Event.ENTER_FRAME, checkForPlayer, false, 0, true);
+		}
+		
+		override public function cleanup(e:Event) {
+			super.cleanup(e);
+			this.delegate = null;
+			removeEventListener(Event.ENTER_FRAME, checkForPlayer, false);
+			removeEventListener(Event.ENTER_FRAME, checkForEnemies, false);
+			cleaned = true;
 		}
 		
 		public function checkForPlayer(e:Event) {

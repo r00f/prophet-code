@@ -14,7 +14,17 @@
 		
 		public function AttackBox() {
 			super()
+		}
+		
+		override public function init(e:Event) {
+			super.init(e);
 			addEventListener(Event.ENTER_FRAME, checkForPlayer, false, 0, true);
+		}
+		
+		override public function cleanup(e:Event) {
+			super.cleanup(e);
+			this.delegate = null;
+			removeEventListener(Event.ENTER_FRAME, checkForPlayer, false);
 		}
 		
 		public function checkForPlayer(e:Event) {

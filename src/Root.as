@@ -1,6 +1,7 @@
 ﻿package {
 	
 	import basics.entities.Entity;
+	import enemies.Skull;
 	import flash.display.StageDisplayState;
 	import flash.display.StageScaleMode;
 	import flash.display.StageQuality;
@@ -79,23 +80,8 @@
 			this.world.addChild(world.darkness);
 		}
 		
-		private function removeAllChildren(obj:MovieClip) {
-			for (var i:int = 0; i < obj.numChildren; i++) 
-			{
-				var boj:DisplayObject = world.getChildAt(i);
-				//if (boj is MovieClip) {
-					//this.removeAllChildren(boj as MovieClip);
-				//}
-				obj.removeChild(boj);
-			}
-		}
-		
 		public function changeWorldTo(name:String) {
-			//world.parent.removeChild(world);
-			
-			this.removeAllChildren(world);
-			this.world = null;
-			this.player = null;
+			world.parent.removeChild(world);
 			this.world = new Level2();
 			this.addChild(world);
 			addEventListener(Event.ENTER_FRAME, init, false, 0, true);

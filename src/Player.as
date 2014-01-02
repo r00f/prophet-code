@@ -41,6 +41,15 @@
 		}
 		
 		
+		override public function cleanup(e:Event) 
+		{
+			super.cleanup(e);
+			
+			removeEventListener(Event.ENTER_FRAME, loop, false);
+			removeEventListener(Event.ENTER_FRAME, checkIfDead, false);
+		}
+		
+		
 		override public function init(e:Event) {
 			super.init(e);
 			if (this.rootRef != null) {
