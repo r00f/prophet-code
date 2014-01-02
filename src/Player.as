@@ -18,7 +18,8 @@
 		public static var HITBOX_FEET:String = "feet_hit";
 		
 		[Inspectable(defaultValue=8, name="Base Speed", type="Number", variable="speed")]
-		public var speed:Number;
+		public var speed:Number = 8;
+		
 		public var animations:MovieClip;
 		public var feet_hit:BodyBox;
 		public var body_hit:BodyBox;
@@ -26,10 +27,10 @@
 		
 		
 		[Inspectable(defaultValue = 30, name = "Fireball Base Damage", type = "Number", variable = "fireballDamage")]
-		public var fireballDamage:Number;		
+		public var fireballDamage:Number = 30;		
 		
 		[Inspectable(defaultValue = 3.5, name = "Fireball Speed [m/s]", type = "Number", variable = "fireballSpeed")]
-		public var fireballSpeed:Number;
+		public var fireballSpeed:Number = 3.5;
 		
 		
 		public var offsetx:Number;

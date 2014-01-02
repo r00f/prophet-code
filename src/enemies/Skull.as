@@ -16,7 +16,7 @@
 	public class Skull extends Mover implements IDamageTrigger {		
 		
 		[Inspectable(defaultValue=5, name="Base Damage", type="Number", variable="damageAmount")]
-		public var damageAmount:Number;
+		public var damageAmount:Number = 5;
 		public var damage_box:DamageBox;  
 		
 		public var AttackTriggerLeft:AttackBox;
