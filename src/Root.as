@@ -16,6 +16,8 @@
 	import interfaces.HealthBar;
 	import utilities.*;
 	import vendor.KeyObject;
+	import flash.utils.getDefinitionByName
+	
 	
 	[SWF(width="1920",height="1080")] // Override document window size with SWF Metadata Tags [SWF(width='400', height='300', backgroundColor='#ffffff', frameRate='30')]
 	
@@ -82,7 +84,8 @@
 		
 		public function changeWorldTo(name:String) {
 			world.parent.removeChild(world);
-			this.world = new Level2();
+			var type:Class = getDefinitionByName(name) as Class;
+			this.world = new type();
 			this.addChild(world);
 			this.player = null;
 			addEventListener(Event.ENTER_FRAME, init, false, 0, true);
@@ -123,7 +126,7 @@
 			}
 			
 			if (keyPresses.isDown(KeyCodes.g)) {
-				this.changeWorldTo("bla");
+				this.changeWorldTo("Level2");
 				
 			}
 		}
