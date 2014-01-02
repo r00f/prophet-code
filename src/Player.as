@@ -17,12 +17,11 @@
 		public static var HITBOX_BODY:String = "body_hit";
 		public static var HITBOX_FEET:String = "feet_hit";
 		
-		private var speed:Number = int(200/24);
+		private var speed:Number = int(200 / 24);
 		public var animations:MovieClip;
 		public var feet_hit:BodyBox;
-		public var body_hit:BodyBox;		
+		public var body_hit:BodyBox;
 		private var direction:Directions;
-
 		
 		public var offsetx:Number;
 		public var offsety:Number;
@@ -35,7 +34,7 @@
 			this.offsety = this.y + 80;
 			this.direction = Directions.DOWN;
 			addEventListener(Event.ENTER_FRAME, loop, false, 0, true);
-			addEventListener(Event.ENTER_FRAME, checkIfDead, false, 0, true);		
+			addEventListener(Event.ENTER_FRAME, checkIfDead, false, 0, true);
 		}
 		
 		public function get light():Light {
@@ -87,7 +86,22 @@
 		private var cooldown = 20;
 		
 		private function shootFireball() {
-			this.rootRef.world.addChild(new Fireball(this.direction.copy, x,y-20));
+			var yFireballOffset:int = 60;
+			var xFireballOffset:int;
+				
+			if (this.direction.isLeft) {
+					xFireballOffset = 50;
+				} else if (this.direction.isRight) {
+					xFireballOffset = -50;
+				}
+				
+				if (this.direction.isUp) {
+					yFireballOffset = 100;
+				} else if (this.direction.isDown) {
+					yFireballOffset = -yFireballOffset;
+				}
+				
+			this.rootRef.world.addChild(new Fireball(this.direction.copy, x - xFireballOffset, y - yFireballOffset));
 		}
 		
 		public function loop(e:Event):void {
@@ -113,7 +127,7 @@
 				}
 			}
 			
-		if (!this.rootRef.collidesWithEnvironment(this.x + xchange, this.y + ychange)) {
+			if (!this.rootRef.collidesWithEnvironment(this.x + xchange, this.y + ychange)) {
 				this.x += xchange;
 				this.y += ychange;
 			} else if (!this.rootRef.collidesWithEnvironment(this.x, this.y + ychange)) {

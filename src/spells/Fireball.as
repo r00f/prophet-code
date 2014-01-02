@@ -20,11 +20,11 @@ package spells {
 		private var direction:Directions = Directions.LEFT;
 		private var speed;
 		
-		private var startx:Number;
-		private var starty:Number;
+		private var startx:int;
+		private var starty:int;
 		
-		private var maxDistanceSquared:Number;
-		private var maxDistancePixel:Number;
+		private var maxDistanceSquared:int;
+		private var maxDistancePixel:int;
 		
 		public var explosion:LastFrameTrigger;
 		
