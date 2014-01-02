@@ -72,6 +72,16 @@
 			this.world.addChild(world.darkness);
 		}
 		
+		
+		
+		public function changeWorldTo(name:String) {
+			//world.parent.removeChild(world);
+			this.world = null;
+			this.world = new Level2();
+			this.addChild(world);
+			trace(this.player);
+		}
+		
 		// Keys
 		
 		public function get downPressed():Boolean {
@@ -104,6 +114,11 @@
 			if (player != null) {
 				healthbar.currentHealth = player.HealthPercentage;
 				scaleAndSetPlayerPosition();
+			}
+			
+			if (keyPresses.isDown(KeyCodes.g)) {
+				this.changeWorldTo("bla");
+				
 			}
 		}
 		
