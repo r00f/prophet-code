@@ -17,11 +17,20 @@
 		public static var HITBOX_BODY:String = "body_hit";
 		public static var HITBOX_FEET:String = "feet_hit";
 		
-		private var speed:Number = int(200 / 24);
+		[Inspectable(defaultValue=8, name="Base Speed", type="Number", variable="speed")]
+		public var speed:Number;
 		public var animations:MovieClip;
 		public var feet_hit:BodyBox;
 		public var body_hit:BodyBox;
 		private var direction:Directions;
+		
+		
+		[Inspectable(defaultValue = 30, name = "Fireball Base Damage", type = "Number", variable = "fireballDamage")]
+		public var fireballDamage:Number;		
+		
+		[Inspectable(defaultValue = 3.5, name = "Fireball Speed [m/s]", type = "Number", variable = "fireballSpeed")]
+		public var fireballSpeed:Number;
+		
 		
 		public var offsetx:Number;
 		public var offsety:Number;
@@ -100,7 +109,7 @@
 				fireballOffset.y = 0;
 			}
 			
-			this.rootRef.world.addChild(new Fireball(this.direction.copy, this.point.add(fireballOffset) ));
+			this.rootRef.world.addChild(new Fireball(this.direction.copy, this.point.add(fireballOffset),fireballDamage,fireballSpeed ));
 		}
 		
 		public function loop(e:Event):void {

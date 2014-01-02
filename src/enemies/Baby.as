@@ -20,11 +20,10 @@
 	 */
 	public class Baby extends Mover implements IAttackTrigger {
 		private var nextAction:String = "idle";
+
 		private var damageAmount:int;
 		public var AttackTriggerLeft:AttackBox;
 		public var AttackTriggerRight:AttackBox;
-		
-
 		private var playerHit:Boolean = false;
 		
 		private var Wait;
