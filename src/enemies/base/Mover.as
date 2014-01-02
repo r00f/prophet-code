@@ -11,9 +11,6 @@ package enemies.base
 	{		
 		protected var limit:Point = new Point(100, 50);
 		
-		protected var xspeed:Number;
-		protected var yspeed:Number;
-		
 		protected var speed:Point;
 		
 		protected var fixedPoint:Point;
@@ -41,8 +38,6 @@ package enemies.base
 				next.y += this.speed.y;
 			}
 			if (this.outsideAnyLimit(next.x, next.y) || this.rootRef.collidesWithEnvironment(this.x + speed.x, this.y + speed.y) || this.rootRef.collidesWithEnvironment(this.x + speed.x + this.width * 2 / 3, this.y + speed.y)) {
-				xspeed = -speed.x;
-				yspeed = -speed.y;
 				this.direction.reverse();
 			} else {
 				this.x = next.x;
