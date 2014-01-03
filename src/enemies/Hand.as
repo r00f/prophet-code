@@ -28,12 +28,12 @@
 		
 		public function Hand() {
 			super();
-			this.blood.yRange = 120;
 			this.gotoAndStop(Actions.INTRO);
 		}
 		
 		override public function init(e:Event) {
 			super.init(e);
+			this.blood.yRange = 120;
 			this.setLastFrameTriggerDelegate(this);
 		}
 		

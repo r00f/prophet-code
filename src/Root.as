@@ -101,11 +101,9 @@
 					} else {
 						this.stage.dispatchEvent(new Event(Root.EVENT_RESUMED));
 						addEventListener(Event.ENTER_FRAME, loop, false, 0, true);
-						
 					}
 					
 			}
-			trace(this.stage.frameRate);
 		}
 		
 		public function addEntity(entity:Entity) {

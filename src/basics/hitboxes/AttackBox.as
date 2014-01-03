@@ -38,7 +38,7 @@
 		}
 		
 		public function checkForPlayer(e:Event) {
-			if (this.delegate != null && this.root != null) {
+			if (this.delegate != null && this.rootRef != null) {
 				if (this.hitTestObject(super.rootRef.player.feet_hit)) {
 					this.delegate.attackBoxTriggeredByPlayer(this);
 				}

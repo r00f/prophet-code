@@ -48,12 +48,14 @@
 		
 		override public function pause(e:Event) {
 			super.pause(e);
+			stop();
 			removeEventListener(Event.ENTER_FRAME, wait, false);
 			removeEventListener(Event.ENTER_FRAME, walk, false);
 		}
 		
 		override public function resume(e:Event) {
 			super.resume(e);
+			this.gotoAndPlay(this.currentFrame);
 			addEventListener(Event.ENTER_FRAME, wait, false, 0, true);
 		}
 		
@@ -91,10 +93,6 @@
 			super.walk(e);
 			this.setAttackBoxDelegate(this);
 			this.gotoAndStop("baby" + Strings.ANIMATION_SEPERATOR + Actions.WALK + Strings.ANIMATION_SEPERATOR + this.direction);
-		}
-		
-		private function setAttackTriggerDelegate() {
-			this.setAttackBoxDelegate(this);
 		}
 		
 		public function setDamageDelegate(e:Event) {
