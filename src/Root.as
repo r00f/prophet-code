@@ -1,6 +1,7 @@
 ﻿package {
 	
 	import basics.entities.Entity;
+	import basics.entities.HealthEntity;
 	import enemies.Skull;
 	import flash.display.StageDisplayState;
 	import flash.display.StageScaleMode;
@@ -52,6 +53,11 @@
 		
 		private var paused:Boolean = false;
 		
+		public static const EVENT_STARTED:String = "GameStarted";
+		public static const EVENT_PAUSED:String = "GamePaused";
+		public static const EVENT_RESUMED:String = "GameResumed";
+		public static const EVENT_STOPPED:String = "GameStopped";
+		
 		
 		[Inspectable(defaultValue = 10, name = "Easing", type = "Number", variable = "easing")]
 		public  var easing:Number = 10;
@@ -74,6 +80,7 @@
 		public function init(e:Event) {
 			if (this.world != null) {
 				this.darkness = this.world.darkness;
+				this.stage.dispatchEvent(new Event(Root.EVENT_STARTED));
 			}
 			if (this.player != null) {
 				this.scrollRect = new Rectangle(this.player.x - scrollRectWidth / 2, this.player.y - scrollRectHeight / 2, scrollRectWidth, scrollRectHeight);
@@ -88,13 +95,22 @@
 		public function pause(e:KeyboardEvent) {
 			if (e.keyCode == KeyCodes.Pause) {
 					this.paused = !this.paused;
-					this.stage.frameRate = (paused) ? 0 : 30;
+					if (this.paused) {
+						this.stage.dispatchEvent(new Event(Root.EVENT_PAUSED));
+						removeEventListener(Event.ENTER_FRAME, loop, false);
+					} else {
+						this.stage.dispatchEvent(new Event(Root.EVENT_RESUMED));
+						addEventListener(Event.ENTER_FRAME, loop, false, 0, true);
+						
+					}
+					
 			}
+			trace(this.stage.frameRate);
 		}
 		
 		public function addEntity(entity:Entity) {
-			this.world.addChild(entity);
-			this.world.addChild(world.darkness);
+			this.world.addChildAt(entity, this.world.numChildren - 1);
+			entity.stage.dispatchEvent(new Event(Root.EVENT_STARTED));
 		}
 		
 		public function changeWorldTo(name:String) {
