@@ -46,6 +46,17 @@
 			}
 		}
 		
+		override public function pause(e:Event) {
+			super.pause(e);
+			removeEventListener(Event.ENTER_FRAME, wait, false);
+			removeEventListener(Event.ENTER_FRAME, walk, false);
+		}
+		
+		override public function resume(e:Event) {
+			super.resume(e);
+			addEventListener(Event.ENTER_FRAME, wait, false, 0, true);
+		}
+		
 		override public function damageAppliedToPlayer(box:DamageBox, player:Player):void {
 			if (!this.playerHit) {
 				player.applyDamage(this.damageAmount);

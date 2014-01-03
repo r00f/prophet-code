@@ -21,7 +21,7 @@
 		public var AttackTriggerUp:AttackBox;
 		public var AttackTriggerDown:AttackBox;
 		
-		[Inspectable(defaultValue=2, name="Base Damage", type="Number", variable="damageAmount")]
+		[Inspectable(defaultValue=2,name="Base Damage",type="Number",variable="damageAmount")]
 		public var damageAmount:int = 2;
 		
 		private var idle:Boolean = false;
@@ -29,8 +29,11 @@
 		public function Hand() {
 			super();
 			this.blood.yRange = 120;
-			this.damageAmount;
 			this.gotoAndStop(Actions.INTRO);
+		}
+		
+		override public function init(e:Event) {
+			super.init(e);
 			this.setLastFrameTriggerDelegate(this);
 		}
 		

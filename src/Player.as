@@ -17,7 +17,7 @@
 		public static var HITBOX_BODY:String = "body_hit";
 		public static var HITBOX_FEET:String = "feet_hit";
 		
-		[Inspectable(defaultValue=8, name="Base Speed", type="Number", variable="speed")]
+		[Inspectable(defaultValue=8,name="Base Speed",type="Number",variable="speed")]
 		public var speed:Number = 8;
 		
 		public var animations:MovieClip;
@@ -25,13 +25,11 @@
 		public var body_hit:BodyBox;
 		private var direction:Directions;
 		
+		[Inspectable(defaultValue=30,name="Fireball Base Damage",type="Number",variable="fireballDamage")]
+		public var fireballDamage:Number = 30;
 		
-		[Inspectable(defaultValue = 30, name = "Fireball Base Damage", type = "Number", variable = "fireballDamage")]
-		public var fireballDamage:Number = 30;		
-		
-		[Inspectable(defaultValue = 3.5, name = "Fireball Speed [m/s]", type = "Number", variable = "fireballSpeed")]
+		[Inspectable(defaultValue=3.5,name="Fireball Speed [m/s]",type="Number",variable="fireballSpeed")]
 		public var fireballSpeed:Number = 3.5;
-		
 		
 		public var offsetx:Number;
 		public var offsety:Number;
@@ -40,15 +38,28 @@
 			super();
 		}
 		
-		
-		override public function cleanup(e:Event) 
-		{
+		override public function cleanup(e:Event) {
 			super.cleanup(e);
 			
 			removeEventListener(Event.ENTER_FRAME, loop, false);
 			removeEventListener(Event.ENTER_FRAME, checkIfDead, false);
 		}
 		
+		override public function pause(e:Event) {
+			super.pause(e); 
+			//Uncomment to pause player too
+			removeEventListener(Event.ENTER_FRAME, loop, false);
+			removeEventListener(Event.ENTER_FRAME, checkIfDead, false);
+			stop();
+		}
+		
+		override public function resume(e:Event) {
+			super.resume(e);
+			// Uncomment to resume player too (if pausing is uncommented)
+			addEventListener(Event.ENTER_FRAME, loop, false, 0, true);
+			addEventListener(Event.ENTER_FRAME, checkIfDead, false, 0, true);
+			this.gotoAndStop(this.currentFrame);
+		}
 		
 		override public function init(e:Event) {
 			super.init(e);
@@ -112,7 +123,7 @@
 		private var cooldown = 20;
 		
 		private function shootFireball() {
-			var fireballOffset:Point = new Point(0,-60);
+			var fireballOffset:Point = new Point(0, -60);
 			
 			if (this.direction.isLeft) {
 				fireballOffset.x = -80;
@@ -126,7 +137,7 @@
 				fireballOffset.y = 0;
 			}
 			
-			this.rootRef.world.addChild(new Fireball(this.direction.copy, this.point.add(fireballOffset),fireballDamage,fireballSpeed ));
+			this.rootRef.addEntity(new Fireball(this.direction.copy, this.point.add(fireballOffset), fireballDamage, fireballSpeed));
 		}
 		
 		public function loop(e:Event):void {
@@ -151,7 +162,7 @@
 				}
 			}
 			
-			var next:Point =this.point.add(change);
+			var next:Point = this.point.add(change);
 			if (!this.rootRef.collidesWithEnvironment(next)) {
 				this.point = next;
 			} else if (!this.rootRef.collidesWithEnvironment(new Point(this.x, next.y))) {

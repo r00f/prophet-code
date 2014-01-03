@@ -51,6 +51,20 @@ package spells {
 			}
 		}
 		
+		override public function pause(e:Event) 
+		{
+			super.pause(e);
+			stop();
+			removeEventListener(Event.ENTER_FRAME, move, false);
+		}
+		
+		override public function resume(e:Event) 
+		{
+			super.resume(e);
+			this.gotoAndStop(this.currentFrame);
+			addEventListener(Event.ENTER_FRAME, move, false, 0, true);
+		}
+		
 		public function move(e:Event) {
 			var next:Point = this.point;
 			if (this.direction.isLeft) {

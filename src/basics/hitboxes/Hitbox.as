@@ -13,11 +13,31 @@
 		
 		public function Hitbox() {
 			super();
-			addEventListener(Event.ENTER_FRAME, init, false, 0, true);
 			addEventListener(Event.REMOVED_FROM_STAGE, cleanup, false);
+			
+			addEventListener(Event.ADDED_TO_STAGE, setListeners, false, 0, true);
+			
+		}
+		
+		public function setListeners(e:Event) {
+			if (this.stage != null) {
+				stage.addEventListener(Root.EVENT_STARTED, init, false);
+				stage.addEventListener(Root.EVENT_PAUSED, pause, false);
+				stage.addEventListener(Root.EVENT_RESUMED, resume, false);
+				removeEventListener(Event.ADDED_TO_STAGE, setListeners, false);
+			}
+			
 		}
 		
 		public function cleanup(e:Event) {
+		}
+		
+		public function pause(e:Event) {
+			removeEventListener(Event.ENTER_FRAME, debugLoop, false);
+		}
+		
+		public function resume(e:Event) {
+			addEventListener(Event.ENTER_FRAME, debugLoop, false, 0, true);
 		}
 		
 		public function init(e:Event) {
@@ -25,7 +45,7 @@
 				this.rootRef = root as Root;
 				this.setVisibility()
 				addEventListener(Event.ENTER_FRAME, debugLoop, false, 0, true);
-				removeEventListener(Event.ENTER_FRAME, init, false);
+				stage.removeEventListener(Root.EVENT_STARTED, init, false);
 			}
 		}
 		
@@ -38,7 +58,7 @@
 		
 		private function setVisibility() {
 			if (this.rootRef != null) {
-				this.alpha = rootRef.shouldHitboxBeVisible ? 1 : 0;
+				this.visible = rootRef.shouldHitboxBeVisible;
 			}
 		}
 	

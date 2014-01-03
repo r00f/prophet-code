@@ -1,4 +1,4 @@
-package basics.entities 	{
+package basics.entities {
 	import basics.hitboxes.AttackBox;
 	import basics.hitboxes.CollisionBox;
 	import basics.hitboxes.DamageBox;
@@ -7,6 +7,7 @@ package basics.entities 	{
 	import flash.display.DisplayObject;
 	import flash.display.MovieClip;
 	import flash.events.Event;
+	import flash.geom.PerspectiveProjection;
 	import flash.geom.Point;
 	import utilities.interfaces.IAttackTrigger;
 	import utilities.interfaces.IDamageTrigger;
@@ -24,8 +25,40 @@ package basics.entities 	{
 		
 		public function Entity() {
 			super();
-			addEventListener(Event.ENTER_FRAME, init, false, 0, true);
-			addEventListener(Event.REMOVED_FROM_STAGE, cleanup, false);
+			addEventListener(Event.REMOVED_FROM_STAGE, cleanup, false, 0, true);
+			
+			addEventListener(Event.ADDED_TO_STAGE, setListeners, false, 0, true);
+		
+		}
+		
+		public function setListeners(e:Event) {
+			if (this.stage != null) {
+				stage.addEventListener(Root.EVENT_STARTED, init, false);
+				stage.addEventListener(Root.EVENT_PAUSED, pause, false);
+				stage.addEventListener(Root.EVENT_RESUMED, resume, false);
+				removeEventListener(Event.ADDED_TO_STAGE, setListeners, false);
+			}
+		
+		}
+		
+		public function pause(e:Event) {
+			for (var i:int = 0; i < numChildren; i++) {
+				var obj:DisplayObject = getChildAt(i);
+				if (obj is MovieClip) {
+					var mc:MovieClip = obj as MovieClip;
+					mc.stop();
+				}
+			}
+		}
+		
+		public function resume(e:Event) {
+			for (var i:int = 0; i < numChildren; i++) {
+				var obj:DisplayObject = getChildAt(i);
+				if (obj is MovieClip) {
+					var mc:MovieClip = obj as MovieClip;
+					mc.gotoAndPlay(mc.currentFrame);
+				}
+			}
 		}
 		
 		public function cleanup(e:Event) {
@@ -38,7 +71,7 @@ package basics.entities 	{
 			if (this.root != null) {
 				this.rootRef = root as Root;
 				addEventListener(Event.ENTER_FRAME, moveLightToDarkness, false, 0, true);
-				removeEventListener(Event.ENTER_FRAME, init, false);
+				stage.removeEventListener(Root.EVENT_STARTED, init, false);
 			}
 		}
 		
@@ -56,33 +89,33 @@ package basics.entities 	{
 		}
 		
 		public function get CollisionBoxes():Vector.<CollisionBox> {
-			return Vector.<CollisionBox>(this.getBoxesOfTypeInClip(CollisionBox,this));
+			return Vector.<CollisionBox>(this.getBoxesOfTypeInClip(CollisionBox, this));
 		}
 		
 		public function get DamageBoxes():Vector.<DamageBox> {
-			return Vector.<DamageBox>(this.getBoxesOfTypeInClip(DamageBox,this));
+			return Vector.<DamageBox>(this.getBoxesOfTypeInClip(DamageBox, this));
 		}
 		
 		public function get AttackBoxes():Vector.<AttackBox> {
-			return Vector.<AttackBox>(this.getBoxesOfTypeInClip(AttackBox,this));
+			return Vector.<AttackBox>(this.getBoxesOfTypeInClip(AttackBox, this));
 		}
 		
 		protected function setAttackBoxDelegate(delegate:IAttackTrigger) {
 			this.AttackBoxes.forEach(function(box:AttackBox, idx, test) {
 					box.delegate = delegate;
-			});
+				});
 		}
 		
 		protected function setDamageBoxDelegate(delegate:IDamageTrigger) {
 			this.DamageBoxes.forEach(function(box:DamageBox, idx, mv) {
-				box.delegate = delegate;
-			});
+					box.delegate = delegate;
+				});
 		}
 		
 		protected function setLastFrameTriggerDelegate(delegate:ILastFrameTrigger) {
 			this.LastFrameTriggers.forEach(function(clip:LastFrameTrigger, idx, test) {
 					clip.delegate = delegate;
-			});
+				});
 		}
 		
 		private function getBoxesOfTypeInClip(type:Class, movieClip:MovieClip):Vector.<Hitbox> {
@@ -90,9 +123,9 @@ package basics.entities 	{
 			for (var i:int = 0; i < movieClip.numChildren; i++) {
 				var obj:DisplayObject = movieClip.getChildAt(i);
 				if (obj is MovieClip) {
-					 this.getBoxesOfTypeInClip(type, obj as MovieClip).forEach(function(box:Hitbox, idx, mv) {
-						 results.push(box);
-					 });
+					this.getBoxesOfTypeInClip(type, obj as MovieClip).forEach(function(box:Hitbox, idx, mv) {
+							results.push(box);
+						});
 				}
 				if (obj is type) {
 					results.push(obj);
@@ -114,7 +147,7 @@ package basics.entities 	{
 		
 		private function moveLightToDarkness(e:Event) {
 			var rootRef:Root = root as Root;
-			if (rootRef.darkness != null) {
+			if (rootRef != null && rootRef.darkness != null) {
 				var removed:Vector.<Light> = new Vector.<Light>();
 				for (var i:int = 0; i < this.numChildren; i++) {
 					var child:DisplayObject = this.getChildAt(i);

@@ -16,6 +16,16 @@
 			super()
 		}
 		
+		override public function pause(e:Event) {
+			super.pause(e);
+			removeEventListener(Event.ENTER_FRAME, checkForPlayer, false);
+		}
+		
+		override public function resume(e:Event) {
+			super.resume(e);
+			addEventListener(Event.ENTER_FRAME, checkForPlayer, false, 0, true);
+		}
+		
 		override public function init(e:Event) {
 			super.init(e);
 			addEventListener(Event.ENTER_FRAME, checkForPlayer, false, 0, true);
