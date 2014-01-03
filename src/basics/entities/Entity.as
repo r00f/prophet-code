@@ -9,6 +9,7 @@ package basics.entities {
 	import flash.events.Event;
 	import flash.geom.PerspectiveProjection;
 	import flash.geom.Point;
+	import utilities.BaseClip;
 	import utilities.interfaces.IAttackTrigger;
 	import utilities.interfaces.IDamageTrigger;
 	import utilities.interfaces.ILastFrameTrigger;
@@ -18,7 +19,7 @@ package basics.entities {
 	 * ...
 	 * @author Gabriel
 	 */
-	public class Entity extends MovieClip {
+	public class Entity extends BaseClip {
 		private var lights:Vector.<Light> = new Vector.<Light>();
 		
 		protected var rootRef:Root;
@@ -26,40 +27,28 @@ package basics.entities {
 		public function Entity() {
 			super();
 			addEventListener(Event.REMOVED_FROM_STAGE, cleanup, false, 0, true);
-			
-			addEventListener(Event.ADDED_TO_STAGE, setListeners, false, 0, true);
-		
 		}
 		
-		public function setListeners(e:Event) {
-			if (this.stage != null) {
-				stage.addEventListener(Root.EVENT_STARTED, init, false);
-				stage.addEventListener(Root.EVENT_PAUSED, pause, false);
-				stage.addEventListener(Root.EVENT_RESUMED, resume, false);
-				removeEventListener(Event.ADDED_TO_STAGE, setListeners, false);
-			}
 		
-		}
-		
-		public function pause(e:Event) {
-			for (var i:int = 0; i < numChildren; i++) {
-				var obj:DisplayObject = getChildAt(i);
-				if (obj is MovieClip) {
-					var mc:MovieClip = obj as MovieClip;
-					mc.stop();
-				}
-			}
-		}
-		
-		public function resume(e:Event) {
-			for (var i:int = 0; i < numChildren; i++) {
-				var obj:DisplayObject = getChildAt(i);
-				if (obj is MovieClip) {
-					var mc:MovieClip = obj as MovieClip;
-					mc.gotoAndPlay(mc.currentFrame);
-				}
-			}
-		}
+		//public function pause(e:Event) {
+			//for (var i:int = 0; i < numChildren; i++) {
+				//var obj:DisplayObject = getChildAt(i);
+				//if (obj is MovieClip) {
+					//var mc:MovieClip = obj as MovieClip;
+					//mc.stop();
+				//}
+			//}
+		//}
+		//
+		//public function resume(e:Event) {
+			//for (var i:int = 0; i < numChildren; i++) {
+				//var obj:DisplayObject = getChildAt(i);
+				//if (obj is MovieClip) {
+					//var mc:MovieClip = obj as MovieClip;
+					//mc.gotoAndPlay(mc.currentFrame);
+				//}
+			//}
+		//}
 		
 		public function cleanup(e:Event) {
 			for (var i:int = 0; i < this.lights.length; i++) {
@@ -67,7 +56,8 @@ package basics.entities {
 			}
 		}
 		
-		public function init(e:Event) {
+		override public function init(e:Event) {
+			super.init(e);
 			if (this.root != null) {
 				this.rootRef = root as Root;
 				addEventListener(Event.ENTER_FRAME, moveLightToDarkness, false, 0, true);

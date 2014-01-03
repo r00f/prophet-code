@@ -19,8 +19,7 @@
 		
 		[Inspectable(defaultValue=8,name="Base Speed",type="Number",variable="speed")]
 		public var speed:Number = 8;
-		
-		public var animations:MovieClip;
+	
 		public var feet_hit:BodyBox;
 		public var body_hit:BodyBox;
 		private var direction:Directions;
@@ -50,7 +49,6 @@
 			//Uncomment to pause player too
 			removeEventListener(Event.ENTER_FRAME, loop, false);
 			removeEventListener(Event.ENTER_FRAME, checkIfDead, false);
-			stop();
 		}
 		
 		override public function resume(e:Event) {
@@ -58,7 +56,6 @@
 			// Uncomment to resume player too (if pausing is uncommented)
 			addEventListener(Event.ENTER_FRAME, loop, false, 0, true);
 			addEventListener(Event.ENTER_FRAME, checkIfDead, false, 0, true);
-			this.gotoAndStop(this.currentFrame);
 		}
 		
 		override public function init(e:Event) {
@@ -84,18 +81,20 @@
 		}
 		
 		private function updateDirection():void {
-			if (this.rootRef.movementPressed) {
-				direction.current = Directions._none;
-				if (this.rootRef.upPressed) {
-					direction.current += Directions._up;
-				} else if (this.rootRef.downPressed) {
-					direction.current += Directions._down;
-				}
-				
-				if (this.rootRef.leftPressed) {
-					direction.current += Directions._left;
-				} else if (this.rootRef.rightPressed) {
-					direction.current += Directions._right;
+			if (this.rootRef != null) {
+				if (this.rootRef.movementPressed) {
+					direction.current = Directions._none;
+					if (this.rootRef.upPressed) {
+						direction.current += Directions._up;
+					} else if (this.rootRef.downPressed) {
+						direction.current += Directions._down;
+					}
+					
+					if (this.rootRef.leftPressed) {
+						direction.current += Directions._left;
+					} else if (this.rootRef.rightPressed) {
+						direction.current += Directions._right;
+					}
 				}
 			}
 		}

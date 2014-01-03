@@ -1,49 +1,44 @@
 ﻿package basics.hitboxes {
 	import flash.display.MovieClip;
 	import flash.events.Event;
+	import utilities.BaseClip;
 	import vendor.KeyObject;
 	import utilities.KeyCodes;
 	
 	/**
 	 * Sets itself to the visibility which root dictates with rootref.shouldHitboxBeVisible.
 	 */
-	public class Hitbox extends MovieClip {
+	public class Hitbox extends BaseClip {
 		
 		protected var rootRef:Root;
 		
 		public function Hitbox() {
 			super();
-			addEventListener(Event.REMOVED_FROM_STAGE, cleanup, false);
-			addEventListener(Event.ADDED_TO_STAGE, setListeners, false, 0, true);
-			stage.addEventListener(Event.ENTER_FRAME, init, false);
+			addEventListener(Event.REMOVED_FROM_STAGE, cleanup, false); 
+			addEventListener(Event.ENTER_FRAME, init, false);
 			this.visible = false;
 			
-		}
-		
-		
-		
-		public function setListeners(e:Event) {
-			if (this.stage != null) {
-				stage.addEventListener(Root.EVENT_PAUSED, pause, false);
-				stage.addEventListener(Root.EVENT_RESUMED, resume, false);
-				removeEventListener(Event.ADDED_TO_STAGE, setListeners, false);
-			}
 		}
 		
 		public function cleanup(e:Event) {
 		}
 		
-		public function pause(e:Event) {
+		override public function pause(e:Event) {
+			super.pause(e),
 			removeEventListener(Event.ENTER_FRAME, debugLoop, false);
 		}
 		
-		public function resume(e:Event) {
+		override public function resume(e:Event) {
+			super.resume(e);
 			if (this.root != null) {
 				addEventListener(Event.ENTER_FRAME, debugLoop, false, 0, true);
 			}
 		}
 		
-		public function init(e:Event) {
+		override public function init(e:Event) {
+			if (e.type == Root.EVENT_STARTED) {
+				return;
+			}
 			if (this.root != null) {
 				this.rootRef = root as Root;
 				this.setVisibility()

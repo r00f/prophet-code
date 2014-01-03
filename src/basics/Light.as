@@ -4,12 +4,13 @@ package basics {
 	import flash.events.Event;
 	import flash.display.BlendMode;
 	import flash.geom.Point;
+	import utilities.BaseClip;
 	
 	/**
 	 * ...
 	 * @author Gabriel
 	 */
-	public class Light extends MovieClip {
+	public class Light extends BaseClip {
 		
 		private var _entity:Entity;
 		private var intrinsic_offset:Point;
@@ -20,24 +21,7 @@ package basics {
 			this.entity = entity;
 			this.intrinsic_offset = new Point(x, y);
 			this.blendMode = BlendMode.ALPHA;
-			addEventListener(Event.ADDED_TO_STAGE, setListeners, false, 0, true);
 		
-		}
-		
-		public function setListeners(e:Event) {
-			if (this.stage != null) {
-				stage.addEventListener(Root.EVENT_PAUSED, pause, false);
-				stage.addEventListener(Root.EVENT_RESUMED, resume, false);
-				removeEventListener(Event.ADDED_TO_STAGE, setListeners, false);
-			}
-		}
-		
-		public function pause(e:Event) {
-			this.stop();
-		}
-		
-		public function resume(e:Event) {
-			this.gotoAndPlay(this.currentFrame);
 		}
 		
 		public function set entity(entity:Entity) {

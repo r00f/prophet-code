@@ -6,6 +6,7 @@
 	import basics.Light;
 	import enemies.base.Enemy;
 	import enemies.base.Mover;
+	import flash.display.DisplayObject;
 	import flash.display.MovieClip;
 	import flash.events.Event;
 	import flash.geom.Point;
@@ -48,14 +49,27 @@
 		
 		override public function pause(e:Event) {
 			super.pause(e);
-			stop();
+			//stop();
 			removeEventListener(Event.ENTER_FRAME, wait, false);
 			removeEventListener(Event.ENTER_FRAME, walk, false);
 		}
 		
 		override public function resume(e:Event) {
-			super.resume(e);
-			this.gotoAndPlay(this.currentFrame);
+			//super.resume(e);
+			//this.gotoAndPlay(this.currentFrame);
+			//for (var i:int = 0; i < numChildren; i++) {
+				//var obj:DisplayObject = getChildAt(i);
+				//if (obj is MovieClip) {
+					//var mc:MovieClip = obj as MovieClip;
+					//for (var j:int = 0; j < mc.numChildren; j++) {
+						//if (mc.getChildAt(j) is MovieClip) {
+							//var mc2:MovieClip = mc.getChildAt(j) as MovieClip;
+							//mc2.gotoAndPlay(mc2.currentFrame);
+						//}
+					//}
+					//
+				//}
+			//}
 			addEventListener(Event.ENTER_FRAME, wait, false, 0, true);
 		}
 		

@@ -31,6 +31,18 @@
 			this.gotoAndStop(Actions.INTRO);
 		}
 		
+		
+		override public function pause(e:Event) 
+		{
+			//super.pause(e);
+		}
+		
+		override public function resume(e:Event) 
+		{
+			this.setAttackBoxDelegate(this);
+			//super.resume(e);
+		}
+		
 		override public function init(e:Event) {
 			super.init(e);
 			this.blood.yRange = 120;
@@ -64,12 +76,15 @@
 		/** ILastFrameTrigger **/
 		
 		override public function lastFrameEnded(mv:MovieClip) {
-			super.lastFrameEnded(mv);
 			if (mv != death_animation) {
-				this.gotoAndStop(Actions.IDLE);
+				//if (this.currentFrameLabel != Actions.IDLE) {
+					this.gotoAndStop(Actions.IDLE);
+				//}
 				this.setAttackBoxDelegate(this);
 				removeEventListener(Event.ENTER_FRAME, setDamageDelegate, false);
 				this.idle = true;
+			} else {
+				super.lastFrameEnded(mv);
 			}
 		}
 		
