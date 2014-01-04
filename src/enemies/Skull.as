@@ -23,8 +23,6 @@
 		public var AttackTriggerRight:AttackBox;
 		public var walk_animation:MovieClip;
 		
-		private var Wait;
-		
 		public function Skull(root:Root) {
 			super();
 			this.rootRef = root;
@@ -35,7 +33,6 @@
 			this.blood.yRange = 50;
 			this.blood.yOffset = -100;
 			this.blood.xRange = 50;
-			Wait = Random.random(25);
 			speed.x = Random.random(6) + 2;
 			speed.y = 0;
 			this.limit.y = 145;
@@ -45,7 +42,6 @@
 		
 		override public function pause(e:Event) {
 			super.pause(e);
-			removeEventListener(Event.ENTER_FRAME, checkIfDead, false);
 			removeEventListener(Event.ENTER_FRAME, setDamageDelegate, false);
 		}
 		
@@ -70,7 +66,7 @@
 			this.fixedPoint = p;
 		}
 		
-		public function wait(e:Event) {
+		override public function wait(e:Event) {
 			super.wait(e);
 			if (this.walk_animation != null) {
 				this.walk_animation.stop();
@@ -83,8 +79,6 @@
 			this.gotoAndStop(Actions.DEATH + Strings.ANIMATION_SEPERATOR + this.direction);
 			this.blood.yOffset = 0;
 			super.death_animation.delegate = this;
-			removeEventListener(Event.ENTER_FRAME, walk, false);
-			removeEventListener(Event.ENTER_FRAME, wait, false);
 		}
 		
 		public function setDamageDelegate(e:Event) {

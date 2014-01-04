@@ -3,6 +3,7 @@ package enemies.base {
 	import flash.events.Event;
 	import flash.geom.Point;
 	import utilities.Directions;
+	import utilities.Random;
 	
 	/**
 	 * ...
@@ -17,7 +18,7 @@ package enemies.base {
 		
 		protected var direction:Directions;
 		
-		protected var wait:int = 0;
+		protected var waitFrames:int = 0;
 		
 		protected var moving:Boolean = false;
 		
@@ -27,6 +28,7 @@ package enemies.base {
 		
 		override public function init() {
 			super.init();
+			this.waitFrames = Random.random(25);
 			this.fixedPoint = new Point(int(this.x), int(this.y));
 			direction = new Directions();
 			this.speed = new Point();
@@ -41,14 +43,14 @@ package enemies.base {
 		
 		override public function resume(e:Event) {
 			super.resume(e);
-			if (!this.dead) {  {
+			if (!this.dead) { 
 				addEventListener(Event.ENTER_FRAME, this.moving ? walk : wait, false, 0, true);
 			}
 		}
 		
 		public function wait(e:Event) {
-			if (this.wait > 0) {
-				this.wait--;
+			if (this.waitFrames > 0) {
+				this.waitFrames--;
 			} else {
 				removeEventListener(Event.ENTER_FRAME, wait, false)
 				addEventListener(Event.ENTER_FRAME, walk, false, 0, true);
