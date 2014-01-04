@@ -23,9 +23,11 @@
 		public var AttackTriggerRight:AttackBox;
 		public var walk_animation:MovieClip;
 		
-		public function Skull(root:Root) {
+		public function Skull(root:Root = null) {
 			super();
-			this.rootRef = root;
+			if (this.rootRef != null) {
+				this.rootRef = root;
+			}
 		}
 		
 		override public function init() {

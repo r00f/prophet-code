@@ -21,6 +21,14 @@ package enemies.base {
 			addEventListener(Event.ENTER_FRAME, death, false, 0, true);
 		}
 		
+		override public function pause(e:Event) {
+			// We do not pass it up to HealthEntity, the containerclip which the enemy-class is on does not need to be paused, each frame contains just an animation.
+		}
+		
+		override public function resume(e:Event) {
+			// We do not pass it up to HealthEntity, the containerclip which the enemy-class is on does not need to be paused, each frame contains just an animation.
+		}
+		
 		public function death(e:Event):void {
 			if (root != null) {
 				if ((this.root as Root).keyPresses.isDown(KeyCodes.J)) {
@@ -35,7 +43,7 @@ package enemies.base {
 		public function damageAppliedToEnemy(box:DamageBox, enemy:Enemy):void {
 		}
 		
-		public function damagePlayerHitbox(box:DamageBox):String  {
+		public function damagePlayerHitbox(box:DamageBox):String {
 			return Player.HITBOX_BODY;
 		}
 	
