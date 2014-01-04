@@ -54,7 +54,7 @@
 		
 		override public function resume(e:Event) {
 			if (!this.attacking) {
-				addEventListener(Event.ENTER_FRAME, wait, false, 0, true);
+				super.resume(e);
 			} else {
 				addEventListener(Event.ENTER_FRAME, setDamageDelegate, false, 0, true);
 			}
@@ -73,16 +73,6 @@
 			} else if (enemy is Skull) {
 				enemy.heal(10);
 			}
-		}
-		
-		public function wait(e:Event) {
-			if (Wait > 0) {
-				Wait--;
-			} else {
-				removeEventListener(Event.ENTER_FRAME, wait, false)
-				addEventListener(Event.ENTER_FRAME, walk, false, 0, true);
-			}
-		
 		}
 		
 		override protected function die():void {
