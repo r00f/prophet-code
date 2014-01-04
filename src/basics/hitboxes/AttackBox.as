@@ -26,8 +26,8 @@
 			addEventListener(Event.ENTER_FRAME, checkForPlayer, false, 0, true);
 		}
 		
-		override public function init(e:Event) {
-			super.init(e);
+		override public function init() {
+			super.init();
 			addEventListener(Event.ENTER_FRAME, checkForPlayer, false, 0, true);
 		}
 		

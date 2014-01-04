@@ -21,8 +21,7 @@ package basics.entities {
 	 */
 	public class Entity extends BaseClip {
 		private var lights:Vector.<Light> = new Vector.<Light>();
-		
-		protected var rootRef:Root;
+
 		
 		public function Entity() {
 			super();
@@ -50,18 +49,15 @@ package basics.entities {
 			//}
 		//}
 		
+		override public function init() 
+		{
+			super.init();
+			addEventListener(Event.ENTER_FRAME, moveLightToDarkness, false, 0, true);
+		}
+		
 		public function cleanup(e:Event) {
 			for (var i:int = 0; i < this.lights.length; i++) {
 				rootRef.darkness.removeChild(this.lights[i]);
-			}
-		}
-		
-		override public function init(e:Event) {
-			super.init(e);
-			if (this.root != null) {
-				this.rootRef = root as Root;
-				addEventListener(Event.ENTER_FRAME, moveLightToDarkness, false, 0, true);
-				stage.removeEventListener(Root.EVENT_STARTED, init, false);
 			}
 		}
 		

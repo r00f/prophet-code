@@ -18,8 +18,7 @@ package enemies.spawners {
 		
 		private var spawned:Boolean = false;
 		
-		
-		[Inspectable(defaultValue=5, name="No. Spawns")]
+		[Inspectable(defaultValue=5,name="No. Spawns")]
 		public var spawn:Number = 5;
 		
 		private var Wait = 2 * 24;
@@ -41,16 +40,12 @@ package enemies.spawners {
 			}
 		}
 		
-		override public function init(e:Event) 
-		{
-			super.init(e);
-			if (this.rootRef != null) {
-				this.spawnRect = spawn_area.getRect(this.root)
-				Wait = 2 * 24;
-				stage.removeEventListener(Root.EVENT_STARTED, init, false);
-				addEventListener(Event.EXIT_FRAME, wait, false, 0, true);
-				addEventListener(Event.ENTER_FRAME, debugLoop, false, 0, true);
-			}
+		override public function init() {
+			super.init();
+			this.spawnRect = spawn_area.getRect(this.root)
+			Wait = 2 * 24;
+			addEventListener(Event.EXIT_FRAME, wait, false, 0, true);
+			addEventListener(Event.ENTER_FRAME, debugLoop, false, 0, true);
 		}
 		
 		public function wait(e:Event) {
@@ -77,11 +72,12 @@ package enemies.spawners {
 				this.rootRef.addEntity(skull);
 			}
 		}
-			public function debugLoop(e:Event) {
+		
+		public function debugLoop(e:Event) {
 			setVisibility();
 		}
 		
-				private function setVisibility() {
+		private function setVisibility() {
 			if (this.rootRef != null) {
 				this.alpha = rootRef.shouldHitboxBeVisible ? 1 : 0;
 			}

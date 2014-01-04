@@ -43,8 +43,8 @@
 			//super.resume(e);
 		}
 		
-		override public function init(e:Event) {
-			super.init(e);
+		override public function init() {
+			super.init();
 			this.blood.yRange = 120;
 			this.setLastFrameTriggerDelegate(this);
 		}

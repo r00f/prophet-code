@@ -53,11 +53,8 @@
 		
 		private var paused:Boolean = false;
 		
-		public static const EVENT_STARTED:String = "GameStarted";
 		public static const EVENT_PAUSED:String = "GamePaused";
 		public static const EVENT_RESUMED:String = "GameResumed";
-		public static const EVENT_STOPPED:String = "GameStopped";
-		
 		
 		[Inspectable(defaultValue = 10, name = "Easing", type = "Number", variable = "easing")]
 		public  var easing:Number = 10;
@@ -80,7 +77,7 @@
 		public function init(e:Event) {
 			if (this.world != null) {
 				this.darkness = this.world.darkness;
-				this.stage.dispatchEvent(new Event(Root.EVENT_STARTED));
+				this.dispatchEvent(new Event(Root.EVENT_STARTED));
 			}
 			if (this.player != null) {
 				this.scrollRect = new Rectangle(this.player.x - scrollRectWidth / 2, this.player.y - scrollRectHeight / 2, scrollRectWidth, scrollRectHeight);
@@ -96,10 +93,10 @@
 			if (e.keyCode == KeyCodes.Pause) {
 					this.paused = !this.paused;
 					if (this.paused) {
-						this.stage.dispatchEvent(new Event(Root.EVENT_PAUSED));
+						this.dispatchEvent(new Event(Root.EVENT_PAUSED));
 						removeEventListener(Event.ENTER_FRAME, loop, false);
 					} else {
-						this.stage.dispatchEvent(new Event(Root.EVENT_RESUMED));
+						this.dispatchEvent(new Event(Root.EVENT_RESUMED));
 						addEventListener(Event.ENTER_FRAME, loop, false, 0, true);
 					}
 					
@@ -108,7 +105,7 @@
 		
 		public function addEntity(entity:Entity) {
 			this.world.addChildAt(entity, this.world.numChildren - 1);
-			entity.stage.dispatchEvent(new Event(Root.EVENT_STARTED));
+			this.dispatchEvent(new Event(Root.EVENT_STARTED));
 		}
 		
 		public function changeWorldTo(name:String) {

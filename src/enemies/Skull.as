@@ -30,8 +30,8 @@
 			this.rootRef = root;
 		}
 		
-		override public function init(e:Event) {
-			super.init(e);
+		override public function init() {
+			super.init();
 			this.blood.yRange = 50;
 			this.blood.yOffset = -100;
 			this.blood.xRange = 50;

@@ -29,48 +29,35 @@
 		
 		private var Wait;
 		
+		private var attacking:Boolean = false;
+		
 		public function Baby() {
 			super();
 		}
 		
-		override public function init(e:Event) {
-			super.init(e);
-			if (this.rootRef != null) {
-				Wait = Random.random(25);
-				this.blood.xRange = 100;
-				this.speed.x = Random.random(6) + 2;
-				this.speed.y = 0;
-				this.damageAmount = 1 / this.speed.x * 100;
-				this.direction = Directions.RIGHT;
-				addEventListener(Event.ENTER_FRAME, wait, false, 0, true);
-				this.despawnTime = 1;
-			}
+		override public function init() {
+			super.init();
+			Wait = Random.random(25);
+			this.blood.xRange = 100;
+			this.speed.x = Random.random(6) + 2;
+			this.speed.y = 0;
+			this.damageAmount = 1 / this.speed.x * 100;
+			this.direction = Directions.RIGHT;
+			addEventListener(Event.ENTER_FRAME, wait, false, 0, true);
+			this.despawnTime = 1;
 		}
 		
 		override public function pause(e:Event) {
-			super.pause(e);
-			//stop();
 			removeEventListener(Event.ENTER_FRAME, wait, false);
 			removeEventListener(Event.ENTER_FRAME, walk, false);
 		}
 		
 		override public function resume(e:Event) {
-			//super.resume(e);
-			//this.gotoAndPlay(this.currentFrame);
-			//for (var i:int = 0; i < numChildren; i++) {
-				//var obj:DisplayObject = getChildAt(i);
-				//if (obj is MovieClip) {
-					//var mc:MovieClip = obj as MovieClip;
-					//for (var j:int = 0; j < mc.numChildren; j++) {
-						//if (mc.getChildAt(j) is MovieClip) {
-							//var mc2:MovieClip = mc.getChildAt(j) as MovieClip;
-							//mc2.gotoAndPlay(mc2.currentFrame);
-						//}
-					//}
-					//
-				//}
-			//}
-			addEventListener(Event.ENTER_FRAME, wait, false, 0, true);
+			if (!this.attacking) {
+				addEventListener(Event.ENTER_FRAME, wait, false, 0, true);
+			} else {
+				addEventListener(Event.ENTER_FRAME, setDamageDelegate, false, 0, true);
+			}
 		}
 		
 		override public function damageAppliedToPlayer(box:DamageBox, player:Player):void {
@@ -117,6 +104,7 @@
 			this.speed = new Point(0, 0);
 			this.gotoAndStop(Actions.DEATH + Strings.ANIMATION_SEPERATOR + this.direction);
 			this.death_animation.delegate = this;
+			this.attacking = true;
 			
 			addEventListener(Event.ENTER_FRAME, setDamageDelegate, false, 0, true);
 			removeEventListener(Event.ENTER_FRAME, walk, false);

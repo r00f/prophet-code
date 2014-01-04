@@ -23,9 +23,9 @@ package enemies.base
 			super();
 		}
 		
-		override public function init(e:Event) 
+		override public function init() 
 		{
-			super.init(e);
+			super.init();
 			this.fixedPoint = new Point(int(this.x), int(this.y));
 			direction = new Directions();
 			this.speed = new Point();

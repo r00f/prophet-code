@@ -14,8 +14,8 @@
 			super();
 		}
 		
-		override public function init(e:Event) {
-			super.init(e);
+		override public function init() {
+			super.init();
 			addEventListener(Event.ENTER_FRAME, checkForEnemies, false, 0, true);
 			addEventListener(Event.ENTER_FRAME, checkForPlayer, false, 0, true);
 		}

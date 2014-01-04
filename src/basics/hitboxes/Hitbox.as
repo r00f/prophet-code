@@ -10,12 +10,9 @@
 	 */
 	public class Hitbox extends BaseClip {
 		
-		protected var rootRef:Root;
-		
 		public function Hitbox() {
 			super();
 			addEventListener(Event.REMOVED_FROM_STAGE, cleanup, false); 
-			addEventListener(Event.ENTER_FRAME, init, false);
 			this.visible = false;
 			
 		}
@@ -35,16 +32,10 @@
 			}
 		}
 		
-		override public function init(e:Event) {
-			if (e.type == Root.EVENT_STARTED) {
-				return;
-			}
-			if (this.root != null) {
-				this.rootRef = root as Root;
-				this.setVisibility()
-				addEventListener(Event.ENTER_FRAME, debugLoop, false, 0, true);
-				stage.removeEventListener(Event.ENTER_FRAME, init, false);
-			}
+		override public function init() {
+			super.init();
+			this.setVisibility()
+			addEventListener(Event.ENTER_FRAME, debugLoop, false, 0, true);
 		}
 		
 		

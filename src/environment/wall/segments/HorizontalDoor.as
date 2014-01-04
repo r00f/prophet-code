@@ -29,11 +29,9 @@
 			removeEventListener(Event.ENTER_FRAME, loop, false);
 		}
 		
-		override public function init(e:Event) {
-			super.init(e);
-			if (this.rootRef != null) {
-				addEventListener(Event.ENTER_FRAME, loop, false, 0, true);
-			}
+		override public function init() {
+			super.init();
+			addEventListener(Event.ENTER_FRAME, loop, false, 0, true);
 		}
 		
 		public function loop(e:Event):void {

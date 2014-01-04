@@ -58,17 +58,16 @@
 			addEventListener(Event.ENTER_FRAME, checkIfDead, false, 0, true);
 		}
 		
-		override public function init(e:Event) {
-			super.init(e);
-			if (this.rootRef != null) {
-				this.blood.yRange = 180;
-				this.rootRef.player = this;
-				this.offsetx = this.x + 50;
-				this.offsety = this.y + 80;
-				this.direction = Directions.DOWN;
-				addEventListener(Event.ENTER_FRAME, loop, false, 0, true);
-				addEventListener(Event.ENTER_FRAME, checkIfDead, false, 0, true);
-			}
+
+		override public function init() {
+			super.init();
+			this.blood.yRange = 180;
+			this.rootRef.player = this;
+			this.offsetx = this.x + 50;
+			this.offsety = this.y + 80;
+			this.direction = Directions.DOWN;
+			addEventListener(Event.ENTER_FRAME, loop, false, 0, true);
+			addEventListener(Event.ENTER_FRAME, checkIfDead, false, 0, true);
 		}
 		
 		public function get light():Light {
