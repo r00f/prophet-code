@@ -14,6 +14,7 @@
 		private static const LABEL_CLOSED:String = "closed";
 		
 		private var doorOpening:Boolean = false;
+		private var open:Boolean = false;
 		
 		public function get isDoorOpen():Boolean {
 			return this.currentFrame >= 8;
@@ -22,6 +23,17 @@
 		public function HorizontalDoor() {
 			super();
 			this.gotoAndStop(HorizontalDoor.LABEL_CLOSED);
+		}
+		
+		override public function resume(e:Event) {
+			super.resume(e);
+			if (this.open) {
+				this.gotoAndStop(this.currentFrame);
+			} else if (!doorOpening) {
+				this.gotoAndStop(LABEL_CLOSED);
+			} else {
+				this.gotoAndPlay(this.currentFrame);
+			}
 		}
 		
 		override public function cleanup(e:Event) {
@@ -43,6 +55,7 @@
 			
 			if (this.currentFrame == this.totalFrames && this.doorOpening) {
 				stop();
+				this.open = true;
 			}
 		}
 	}
