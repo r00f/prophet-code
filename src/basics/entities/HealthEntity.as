@@ -2,6 +2,8 @@ package basics.entities {
 	import basics.Blood.BloodConfig;
 	import flash.display.MovieClip;
 	import flash.events.Event;
+	import flash.events.TimerEvent;
+	import flash.utils.Timer;
 	import utilities.Actions;
 	import utilities.interfaces.ILastFrameTrigger;
 	import utilities.LastFrameTrigger;
@@ -24,13 +26,14 @@ package basics.entities {
 		[Inspectable(defaultValue=20,name="Despawn Time [s]",type="Number",variable="despawnTime")]
 		public var despawnTime:Number = 20; // Seconds
 		
-		private var deadTime:Date;
+		private var deathTimer:Timer;
 		
 		public var blood:BloodConfig;
 		
 		public function HealthEntity() {
 			super();
-		
+			this.deathTimer = new Timer(despawnTime * 1000);
+			this.deathTimer.addEventListener(TimerEvent.TIMER, deathTrigger, false, 0, true);
 		}
 	
 		override public function init() {
@@ -40,22 +43,14 @@ package basics.entities {
 		}
 		
 		public function deathTrigger(e:Event) {
-			if (this.deadTime != null) {
-				var t:Date = new Date();
-				if (t.valueOf() - this.deadTime.valueOf() > this.despawnTime * 1000) {
-					removeEventListener(Event.EXIT_FRAME, deathTrigger, false);
-					this.parent.removeChild(this);
-				}
-				if (this.death_animation.currentLabel != Actions.IDLE) {
-					this.death_animation.gotoAndPlay(Actions.IDLE);
-				}
-			}
+			removeEventListener(Event.EXIT_FRAME, deathTrigger, false);
+			this.parent.removeChild(this);
 		}
 		
 		public function lastFrameEnded(mv:MovieClip) {
 			if (mv == death_animation && this.deadTime == null) {
 				addEventListener(Event.EXIT_FRAME, deathTrigger, false, 0, true);
-				this.deadTime = new Date();
+				this.deathTimer.start();
 			}
 		}
 		

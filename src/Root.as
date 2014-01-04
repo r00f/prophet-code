@@ -77,7 +77,6 @@
 		public function init(e:Event) {
 			if (this.world != null) {
 				this.darkness = this.world.darkness;
-				this.dispatchEvent(new Event(Root.EVENT_STARTED));
 			}
 			if (this.player != null) {
 				this.scrollRect = new Rectangle(this.player.x - scrollRectWidth / 2, this.player.y - scrollRectHeight / 2, scrollRectWidth, scrollRectHeight);
@@ -105,7 +104,6 @@
 		
 		public function addEntity(entity:Entity) {
 			this.world.addChildAt(entity, this.world.numChildren - 1);
-			this.dispatchEvent(new Event(Root.EVENT_STARTED));
 		}
 		
 		public function changeWorldTo(name:String) {
