@@ -26,7 +26,7 @@
 		public function Skull(rootVar:Root = null) {
 			super();
 			if (this.rootRef != null && rootVar != null) {
-				this.rootRef = root;
+				this.rootRef = rootVar;
 			}
 		}
 		
