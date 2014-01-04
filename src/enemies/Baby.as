@@ -85,7 +85,6 @@
 		}
 		
 		public function attackBoxTriggeredByPlayer(box:AttackBox) {
-			trace("attackbox triggered");
 			if (!this.dead) {
 				this.die();
 			}
