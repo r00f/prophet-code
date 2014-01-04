@@ -6,6 +6,7 @@ package basics.entities {
 	import flash.utils.Timer;
 	import utilities.Actions;
 	import utilities.interfaces.ILastFrameTrigger;
+	import utilities.interfaces.PausingTimer;
 	import utilities.LastFrameTrigger;
 	
 	/**
@@ -30,27 +31,33 @@ package basics.entities {
 		
 		public var blood:BloodConfig;
 		
+		protected var dead:Boolean = false;
+		
 		public function HealthEntity() {
 			super();
-			this.deathTimer = new Timer(despawnTime * 1000);
-			this.deathTimer.addEventListener(TimerEvent.TIMER, deathTrigger, false, 0, true);
 		}
 	
 		override public function init() {
 			super.init();
+			this.deathTimer = new PausingTimer(despawnTime * 1000, this.rootRef);
+			this.deathTimer.addEventListener(TimerEvent.TIMER, deathTrigger, false, 0, true);
 			this.blood = new BloodConfig();
 			_currentHealth = maxHealth;
 		}
 		
 		public function deathTrigger(e:Event) {
-			removeEventListener(Event.EXIT_FRAME, deathTrigger, false);
 			this.parent.removeChild(this);
+			this.deathTimer.removeEventListener(TimerEvent.TIMER, deathTrigger, false);
 		}
 		
 		public function lastFrameEnded(mv:MovieClip) {
-			if (mv == death_animation && this.deadTime == null) {
-				addEventListener(Event.EXIT_FRAME, deathTrigger, false, 0, true);
-				this.deathTimer.start();
+			if (mv == death_animation) {
+				if (!this.deathTimer.running) {
+					this.deathTimer.start();
+				}
+				if (this.deathTimer.running) {
+					this.death_animation.gotoAndPlay(Actions.IDLE);
+				}
 			}
 		}
 		
@@ -78,8 +85,11 @@ package basics.entities {
 			this.currentHealth = _currentHealth + amount;
 		}
 		
+		/**
+		 * Called when the health is reduced to 0
+		 */
 		protected function die():void {
-		
+			this.dead = true;
 		}
 		
 		private function set currentHealth(value:Number):void {
