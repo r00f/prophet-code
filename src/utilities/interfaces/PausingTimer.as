@@ -35,7 +35,8 @@ package utilities.interfaces {
 		
 		public function resume(e:Event) {
 			if (this.pausedAt != null) {
-				this.delay = this.delay - (this.pausedAt.valueOf() - this.startedAt.valueOf())
+				var nextDelay:Number = this.delay - (this.pausedAt.valueOf() - this.startedAt.valueOf());
+				this.delay = nextDelay <= 0 ? 0 : nextDelay;
 				this.start();
 			}
 		}
