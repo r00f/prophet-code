@@ -6,8 +6,10 @@
 	import basics.Light;
 	import enemies.base.Enemy;
 	import enemies.base.Mover;
+	import flash.display.DisplayObject;
 	import flash.display.MovieClip;
 	import flash.events.Event;
+	import flash.geom.Point;
 	import utilities.*;
 	import utilities.interfaces.IAttackTrigger;
 	import utilities.interfaces.ILastFrameTrigger;
@@ -17,38 +19,45 @@
 	 * Controls the baby animation.
 	 * Implements IAttackTrigger to let the attackbox trigger the attack into the correct direction.
 	 */
-	public class Baby extends Mover implements IAttackTrigger, IDamageTrigger {
+	public class Baby extends Mover implements IAttackTrigger {
 		private var nextAction:String = "idle";
-		private var damageAmount:Number;
+		
+		private var damageAmount:int;
 		public var AttackTriggerLeft:AttackBox;
 		public var AttackTriggerRight:AttackBox;
-		
-
 		private var playerHit:Boolean = false;
 		
-		private var Wait;
+		private var attacking:Boolean = false;
 		
 		public function Baby() {
 			super();
-			Wait = Random.random(25);
-
-			this.speed = Random.random(6) + 2;
-			this.damageAmount = 1/this.speed * 100;
-			xspeed = this.speed;
-			yspeed = 0;
+		}
+		
+		override public function init() {
+			super.init();
+			this.blood.xRange = 100;
+			this.speed.x = Random.random(6) + 2;
+			this.speed.y = 0;
+			this.damageAmount = 1 / this.speed.x * 100;
 			this.direction = Directions.RIGHT;
-			addEventListener(Event.ENTER_FRAME, wait, false, 0, true);
 			this.despawnTime = 1;
 		}
 		
-		public function damageAppliedToPlayer(box:DamageBox, player:Player) {
+		override public function resume(e:Event) {
+			super.resume(e);
+			if (!this.moving) {
+				addEventListener(Event.ENTER_FRAME, setDamageDelegate, false, 0, true);
+			}
+		}
+		
+		override public function damageAppliedToPlayer(box:DamageBox, player:Player):void {
 			if (!this.playerHit) {
 				player.applyDamage(this.damageAmount);
 				playerHit = true;
 			}
 		}
 		
-		public function damageAppliedToEnemy(box:DamageBox, enemy:Enemy) {
+		override public function damageAppliedToEnemy(box:DamageBox, enemy:Enemy):void {
 			if (enemy is Baby) {
 				enemy.applyDamage(1);
 			} else if (enemy is Skull) {
@@ -56,31 +65,19 @@
 			}
 		}
 		
-		public function wait(e:Event) {
-			if (Wait > 0) {
-				Wait--;
-			} else {
-				removeEventListener(Event.ENTER_FRAME, wait, false)
-				addEventListener(Event.ENTER_FRAME, walk, false, 0, true);
-			}
-			
+		override protected function die():void {
+			super.die();
+			this.speed = new Point(0, 0);
+			this.gotoAndStop(Actions.DEATH + Strings.ANIMATION_SEPERATOR + this.direction);
+			this.death_animation.delegate = this;
+			this.moving = false;
+			addEventListener(Event.ENTER_FRAME, setDamageDelegate, false, 0, true);
 		}
 		
 		override public function walk(e:Event):void {
 			super.walk(e);
 			this.setAttackBoxDelegate(this);
-			
-			if (this.HealthPercentage == 0) {
-				this.attackBoxTriggeredByPlayer(null);
-				
-				removeEventListener(Event.ENTER_FRAME, walk, false);
-				return;
-			}
-			this.gotoAndStop("baby"+Utilities.ANIMATION_SEPERATOR + Actions.WALK +Utilities.ANIMATION_SEPERATOR + this.direction);
-		}
-		
-		private function setAttackTriggerDelegate() {
-			this.setAttackBoxDelegate(this);
+			this.gotoAndStop("baby" + Strings.ANIMATION_SEPERATOR + Actions.WALK + Strings.ANIMATION_SEPERATOR + this.direction);
 		}
 		
 		public function setDamageDelegate(e:Event) {
@@ -88,14 +85,9 @@
 		}
 		
 		public function attackBoxTriggeredByPlayer(box:AttackBox) {
-			xspeed = 0;
-			yspeed = 0;
-			this.gotoAndStop(Actions.DEATH + Utilities.ANIMATION_SEPERATOR + this.direction);
-			this.death_animation.delegate = this;
-			
-			addEventListener(Event.ENTER_FRAME, setDamageDelegate, false, 0, true);
-			removeEventListener(Event.ENTER_FRAME, walk, false);
-			removeEventListener(Event.ENTER_FRAME, wait, false);
+			if (!this.dead) {
+				this.die();
+			}
 		}
 	}
 }

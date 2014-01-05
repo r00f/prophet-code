@@ -2,9 +2,13 @@ package basics.entities {
 	import basics.Blood.BloodConfig;
 	import flash.display.MovieClip;
 	import flash.events.Event;
+	import flash.events.TimerEvent;
+	import flash.utils.Timer;
 	import utilities.Actions;
 	import utilities.interfaces.ILastFrameTrigger;
+	import utilities.interfaces.PausingTimer;
 	import utilities.LastFrameTrigger;
+	
 	/**
 	 * Implements health with heal and applyDamage functions.
 	 * - MaxHealth is only seen by subclasses
@@ -13,38 +17,47 @@ package basics.entities {
 	 * @author Gabriel
 	 */
 	public class HealthEntity extends Entity implements ILastFrameTrigger {
-		protected var maxHealth:Number = 100;
+		
+		[Inspectable(defaultValue=100,name="Maximum Health",type="Number",variable="maxHealth")]
+		public var maxHealth:Number = 100;
+		
 		private var _currentHealth:Number;
 		public var death_animation:LastFrameTrigger;
-		public var despawnTime:Number = 20; // Seconds
-		private var deadTime:Date;
 		
+		[Inspectable(defaultValue=20,name="Despawn Time [s]",type="Number",variable="despawnTime")]
+		public var despawnTime:Number = 20; // Seconds
+		
+		private var deathTimer:Timer;
 		
 		public var blood:BloodConfig;
 		
+		protected var dead:Boolean = false;
+		
 		public function HealthEntity() {
 			super();
+		}
+	
+		override public function init() {
+			super.init();
+			this.deathTimer = new PausingTimer(despawnTime * 1000, this.rootRef);
+			this.deathTimer.addEventListener(TimerEvent.TIMER, deathTrigger, false, 0, true);
 			this.blood = new BloodConfig();
 			_currentHealth = maxHealth;
 		}
 		
 		public function deathTrigger(e:Event) {
-			if (this.deadTime != null) {
-				var t:Date = new Date();
-				if (t.valueOf() - this.deadTime.valueOf() > this.despawnTime * 1000) {
-					removeEventListener(Event.EXIT_FRAME, deathTrigger, false);
-					this.parent.removeChild(this);
-				}
-				if (this.death_animation.currentLabel != Actions.IDLE) {
-					this.death_animation.gotoAndPlay(Actions.IDLE);
-				}
-			}
+			this.parent.removeChild(this);
+			this.deathTimer.removeEventListener(TimerEvent.TIMER, deathTrigger, false);
 		}
 		
 		public function lastFrameEnded(mv:MovieClip) {
-			if (mv == death_animation && this.deadTime == null) {
-				addEventListener(Event.EXIT_FRAME, deathTrigger, false, 0, true);
-				this.deadTime = new Date();
+			if (mv == death_animation) {
+				if (!this.deathTimer.running) {
+					this.deathTimer.start();
+				}
+				if (this.deathTimer.running) {
+					this.death_animation.gotoAndPlay(Actions.IDLE);
+				}
 			}
 		}
 		
@@ -72,15 +85,22 @@ package basics.entities {
 			this.currentHealth = _currentHealth + amount;
 		}
 		
+		/**
+		 * Called when the health is reduced to 0
+		 */
+		protected function die():void {
+			this.dead = true;
+		}
+		
 		private function set currentHealth(value:Number):void {
 			if (value > this.maxHealth) {
 				value = this.maxHealth;
-			} else if (value < 0) {
+			} else if (value <= 0) {
 				value = 0;
+				this.die();
 			}
 			_currentHealth = value;
 		}
-
 	
 	}
 

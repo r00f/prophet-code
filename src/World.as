@@ -8,6 +8,7 @@ package {
 	import flash.display.DisplayObject;
 	import flash.display.MovieClip;
 	import flash.events.Event;
+	import flash.geom.Point;
 	
 	/**
 	 * ...
@@ -48,12 +49,16 @@ package {
 			function customSort(childClip:DisplayObject, childClip2:DisplayObject):int {
 				if (childClip is Entity && childClip2 is Entity) {
 					var door:HorizontalDoor;
+					var player:Player;
 					if (childClip is HorizontalDoor && childClip2 is Player) {
 						door = childClip as HorizontalDoor;
-						return (door.isDoorOpen && door.y + 25 > childClip2.y) ? 1 : -1;
+						player = childClip2 as Player;
 					} else if (childClip is Player && childClip2 is HorizontalDoor) {
 						door = childClip2 as HorizontalDoor;
-						return (door.isDoorOpen && door.y + 25 > childClip.y) ? -1 : 1;
+						player = childClip as Player;
+					}
+					if (door != null && door.isDoorOpen) {
+						return  (door.y + 25 > player.y) ? -1 : 1;
 					}
 					if (childClip.y < childClip2.y) {
 						return -1;
@@ -80,13 +85,13 @@ package {
 			this.addChild(this.darkness);
 		}
 		
-		public function collidesWithEnvironment(x_next:Number, y_next:Number):Boolean {
+		public function collidesWithEnvironment(next:Point):Boolean {
 			for (var i = 0; i < this.numChildren; i++) {
 				var childClip:MovieClip = getChildAt(i) as MovieClip;
 				if (childClip is Environment) {
 					var env:Environment = childClip as Environment;
 					for each (var hitbox:CollisionBox in env.CollisionBoxes) {
-						if (hitbox.hitTestPoint(x_next, y_next, false)) {
+						if (hitbox.hitTestPoint(next.x, next.y, false)) {
 							return true;
 						}
 					}

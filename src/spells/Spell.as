@@ -23,7 +23,7 @@ package spells {
 		 * @param	box The box that triggered
 		 * @param	enemy the enemy that triggered the box
 		 */
-		public function damageAppliedToEnemy(box:DamageBox, enemy:Enemy) {
+		public function damageAppliedToEnemy(box:DamageBox, enemy:Enemy):void {
 		}
 		
 		/**
@@ -31,7 +31,11 @@ package spells {
 		 * @param	box The box that triggered
 		 * @param	enemy the player that triggered the box
 		 */
-		public function damageAppliedToPlayer(box:DamageBox, player:Player) {
+		public function damageAppliedToPlayer(box:DamageBox, player:Player):void {
+		}
+		
+		public function damagePlayerHitbox(box:DamageBox):String {
+			return Player.HITBOX_BODY;
 		}
 		
 		
