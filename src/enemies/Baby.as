@@ -6,6 +6,7 @@
 	import basics.Light;
 	import enemies.base.Enemy;
 	import enemies.base.Mover;
+	import flash.display.DisplayObject;
 	import flash.display.MovieClip;
 	import flash.events.Event;
 	import flash.geom.Point;
@@ -20,24 +21,33 @@
 	 */
 	public class Baby extends Mover implements IAttackTrigger {
 		private var nextAction:String = "idle";
-
+		
 		private var damageAmount:int;
 		public var AttackTriggerLeft:AttackBox;
 		public var AttackTriggerRight:AttackBox;
 		private var playerHit:Boolean = false;
 		
-		private var Wait;
+		private var attacking:Boolean = false;
 		
 		public function Baby() {
 			super();
-			Wait = Random.random(25);
+		}
+		
+		override public function init() {
+			super.init();
 			this.blood.xRange = 100;
 			this.speed.x = Random.random(6) + 2;
 			this.speed.y = 0;
 			this.damageAmount = 1 / this.speed.x * 100;
 			this.direction = Directions.RIGHT;
-			addEventListener(Event.ENTER_FRAME, wait, false, 0, true);
 			this.despawnTime = 1;
+		}
+		
+		override public function resume(e:Event) {
+			super.resume(e);
+			if (!this.moving) {
+				addEventListener(Event.ENTER_FRAME, setDamageDelegate, false, 0, true);
+			}
 		}
 		
 		override public function damageAppliedToPlayer(box:DamageBox, player:Player):void {
@@ -55,19 +65,13 @@
 			}
 		}
 		
-		public function wait(e:Event) {
-			if (Wait > 0) {
-				Wait--;
-			} else {
-				removeEventListener(Event.ENTER_FRAME, wait, false)
-				addEventListener(Event.ENTER_FRAME, walk, false, 0, true);
-			}
-		
-		}
-		
 		override protected function die():void {
-			this.attackBoxTriggeredByPlayer(null);
-			removeEventListener(Event.ENTER_FRAME, walk, false);
+			super.die();
+			this.speed = new Point(0, 0);
+			this.gotoAndStop(Actions.DEATH + Strings.ANIMATION_SEPERATOR + this.direction);
+			this.death_animation.delegate = this;
+			this.moving = false;
+			addEventListener(Event.ENTER_FRAME, setDamageDelegate, false, 0, true);
 		}
 		
 		override public function walk(e:Event):void {
@@ -76,22 +80,14 @@
 			this.gotoAndStop("baby" + Strings.ANIMATION_SEPERATOR + Actions.WALK + Strings.ANIMATION_SEPERATOR + this.direction);
 		}
 		
-		private function setAttackTriggerDelegate() {
-			this.setAttackBoxDelegate(this);
-		}
-		
 		public function setDamageDelegate(e:Event) {
 			this.setDamageBoxDelegate(this);
 		}
 		
 		public function attackBoxTriggeredByPlayer(box:AttackBox) {
-			this.speed = new Point(0, 0);
-			this.gotoAndStop(Actions.DEATH + Strings.ANIMATION_SEPERATOR + this.direction);
-			this.death_animation.delegate = this;
-			
-			addEventListener(Event.ENTER_FRAME, setDamageDelegate, false, 0, true);
-			removeEventListener(Event.ENTER_FRAME, walk, false);
-			removeEventListener(Event.ENTER_FRAME, wait, false);
+			if (!this.dead) {
+				this.die();
+			}
 		}
 	}
 }

@@ -5,7 +5,7 @@
 	import flash.events.Event;
 	
 	/**
-	 * Horizontal Door has a lot more hitboxes than the basesegment and can be opened. 
+	 * Horizontal Door has a lot more hitboxes than the basesegment and can be opened.
 	 */
 	public dynamic class HorizontalDoor extends BaseSegment {
 		public var DoorTrigger:InteractionBox;
@@ -14,6 +14,7 @@
 		private static const LABEL_CLOSED:String = "closed";
 		
 		private var doorOpening:Boolean = false;
+		private var open:Boolean = false;
 		
 		public function get isDoorOpen():Boolean {
 			return this.currentFrame >= 8;
@@ -22,8 +23,27 @@
 		public function HorizontalDoor() {
 			super();
 			this.gotoAndStop(HorizontalDoor.LABEL_CLOSED);
-			addEventListener(Event.ENTER_FRAME, loop, false, 0, true);
+		}
 		
+		override public function resume(e:Event) {
+			super.resume(e);
+			if (this.open) {
+				this.gotoAndStop(this.currentFrame);
+			} else if (!doorOpening) {
+				this.gotoAndStop(LABEL_CLOSED);
+			} else {
+				this.gotoAndPlay(this.currentFrame);
+			}
+		}
+		
+		override public function cleanup(e:Event) {
+			super.cleanup(e);
+			removeEventListener(Event.ENTER_FRAME, loop, false);
+		}
+		
+		override public function init() {
+			super.init();
+			addEventListener(Event.ENTER_FRAME, loop, false, 0, true);
 		}
 		
 		public function loop(e:Event):void {
@@ -35,6 +55,7 @@
 			
 			if (this.currentFrame == this.totalFrames && this.doorOpening) {
 				stop();
+				this.open = true;
 			}
 		}
 	}

@@ -21,16 +21,24 @@
 		public var AttackTriggerUp:AttackBox;
 		public var AttackTriggerDown:AttackBox;
 		
-		[Inspectable(defaultValue=2, name="Base Damage", type="Number", variable="damageAmount")]
+		[Inspectable(defaultValue=2,name="Base Damage",type="Number",variable="damageAmount")]
 		public var damageAmount:int = 2;
 		
 		private var idle:Boolean = false;
 		
 		public function Hand() {
 			super();
-			this.blood.yRange = 120;
-			this.damageAmount;
 			this.gotoAndStop(Actions.INTRO);
+		}
+		
+		override public function resume(e:Event) {
+			super.resume(e);
+			this.setAttackBoxDelegate(this);
+		}
+		
+		override public function init() {
+			super.init();
+			this.blood.yRange = 120;
 			this.setLastFrameTriggerDelegate(this);
 		}
 		
@@ -61,12 +69,15 @@
 		/** ILastFrameTrigger **/
 		
 		override public function lastFrameEnded(mv:MovieClip) {
-			super.lastFrameEnded(mv);
 			if (mv != death_animation) {
+				//if (this.currentFrameLabel != Actions.IDLE) {
 				this.gotoAndStop(Actions.IDLE);
+				//}
 				this.setAttackBoxDelegate(this);
 				removeEventListener(Event.ENTER_FRAME, setDamageDelegate, false);
 				this.idle = true;
+			} else {
+				super.lastFrameEnded(mv);
 			}
 		}
 		

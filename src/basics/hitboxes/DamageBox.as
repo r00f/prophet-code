@@ -12,8 +12,31 @@
 		
 		public function DamageBox() {
 			super();
+		}
+		
+		override public function init() {
+			super.init();
 			addEventListener(Event.ENTER_FRAME, checkForEnemies, false, 0, true);
 			addEventListener(Event.ENTER_FRAME, checkForPlayer, false, 0, true);
+		}
+		
+		override public function pause(e:Event) {
+			super.pause(e);
+			removeEventListener(Event.ENTER_FRAME, checkForPlayer, false);
+			removeEventListener(Event.ENTER_FRAME, checkForEnemies, false);
+		}
+		
+		override public function resume(e:Event) {
+			super.resume(e);
+			addEventListener(Event.ENTER_FRAME, checkForPlayer, false, 0, true);
+			addEventListener(Event.ENTER_FRAME, checkForPlayer, false, 0, true);
+		}
+		
+		override public function cleanup(e:Event) {
+			super.cleanup(e);
+			this.delegate = null;
+			removeEventListener(Event.ENTER_FRAME, checkForPlayer, false);
+			removeEventListener(Event.ENTER_FRAME, checkForEnemies, false);
 		}
 		
 		public function checkForPlayer(e:Event) {

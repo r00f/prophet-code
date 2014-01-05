@@ -1,6 +1,8 @@
 ﻿package {
 	
 	import basics.entities.Entity;
+	import basics.entities.HealthEntity;
+	import enemies.Skull;
 	import flash.display.StageDisplayState;
 	import flash.display.StageScaleMode;
 	import flash.display.StageQuality;
@@ -10,11 +12,16 @@
 	import flash.display.DisplayObject;
 	import flash.display.MovieClip;
 	import flash.events.Event;
+	import flash.events.KeyboardEvent;
+	import flash.events.TimerEvent;
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
+	import flash.utils.Timer;
 	import interfaces.HealthBar;
 	import utilities.*;
 	import vendor.KeyObject;
+	import flash.utils.getDefinitionByName
+	
 	
 	[SWF(width="1920",height="1080")] // Override document window size with SWF Metadata Tags [SWF(width='400', height='300', backgroundColor='#ffffff', frameRate='30')]
 	
@@ -43,33 +50,69 @@
 		
 		private var timesToSort:Number = 3;
 		
-		private var easing:Number = 10;
+		
+		private var paused:Boolean = false;
+		
+		public static const EVENT_PAUSED:String = "GamePaused";
+		public static const EVENT_RESUMED:String = "GameResumed";
+		
+		[Inspectable(defaultValue = 10, name = "Easing", type = "Number", variable = "easing")]
+		public  var easing:Number = 10;
 		
 		public function Root() {
 			super();
 			stage.displayState = StageDisplayState.FULL_SCREEN;
 			stage.quality = StageQuality.MEDIUM;
 			stage.scaleMode = StageScaleMode.NO_SCALE;
-			StageQuality.LOW;
-			if (player != null) {
-				this.scrollRect = new Rectangle(this.player.x - scrollRectWidth / 2, this.player.y - scrollRectHeight / 2, scrollRectWidth, scrollRectHeight);
-			}
+			
+			stage.addEventListener(KeyboardEvent.KEY_DOWN, pause);
+			
 			healthbar = new HealthBar(new Point(300, 1000), new Point(1, 1));
 			stage.addChild(healthbar);
 			keyPresses = new KeyObject(this.stage);
-			this.darkness = this.world.darkness;
-			addEventListener(Event.ENTER_FRAME, loop, false, 0, true);		
 			stage.addChild(new BasicInfo());
+			addEventListener(Event.ENTER_FRAME, init, false, 0, true);
+		}
+		
+		public function init(e:Event) {
+			if (this.world != null) {
+				this.darkness = this.world.darkness;
+			}
+			if (this.player != null) {
+				this.scrollRect = new Rectangle(this.player.x - scrollRectWidth / 2, this.player.y - scrollRectHeight / 2, scrollRectWidth, scrollRectHeight);
+				addEventListener(Event.ENTER_FRAME, loop, false, 0, true);
+				removeEventListener(Event.ENTER_FRAME, init, false);
+			}
 		}
 
 		public function get Enemies() :Vector.<Enemy>{
 			return this.world.Enemies;
 		}
-		
+		public function pause(e:KeyboardEvent) {
+			if (e.keyCode == KeyCodes.Pause) {
+					this.paused = !this.paused;
+					if (this.paused) {
+						this.dispatchEvent(new Event(Root.EVENT_PAUSED));
+						removeEventListener(Event.ENTER_FRAME, loop, false);
+					} else {
+						this.dispatchEvent(new Event(Root.EVENT_RESUMED));
+						addEventListener(Event.ENTER_FRAME, loop, false, 0, true);
+					}
+					
+			}
+		}
 		
 		public function addEntity(entity:Entity) {
-			this.world.addChild(entity);
-			this.world.addChild(world.darkness);
+			this.world.addChildAt(entity, this.world.numChildren - 1);
+		}
+		
+		public function changeWorldTo(name:String) {
+			world.parent.removeChild(world);
+			var type:Class = getDefinitionByName(name) as Class;
+			this.world = new type();
+			this.addChild(world);
+			this.player = null;
+			addEventListener(Event.ENTER_FRAME, init, false, 0, true);
 		}
 		
 		// Keys
@@ -105,6 +148,12 @@
 				healthbar.currentHealth = player.HealthPercentage;
 				scaleAndSetPlayerPosition();
 			}
+			
+			if (keyPresses.isDown(KeyCodes.g)) {
+				this.changeWorldTo("Level2");
+			}
+			
+
 		}
 		
 		

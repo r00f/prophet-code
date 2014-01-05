@@ -16,15 +16,34 @@ package enemies.spawners {
 		
 		private var spawnRect:Rectangle;
 		
+		private var spawned:Boolean = false;
 		
-		[Inspectable(defaultValue=5, name="No. Spawns")]
+		[Inspectable(defaultValue=5,name="No. Spawns")]
 		public var spawn:Number = 5;
 		
 		private var Wait = 2 * 24;
 		
 		public function SkullSpawner() {
 			super();
+		}
+		
+		override public function pause(e:Event) {
+			removeEventListener(Event.EXIT_FRAME, wait, false)
+			removeEventListener(Event.EXIT_FRAME, loop);
+		}
+		
+		override public function resume(e:Event) {
+			if (Wait > 0) {
+				addEventListener(Event.ENTER_FRAME, debugLoop, false, 0, true);
+			} else if (!spawned) {
+				addEventListener(Event.EXIT_FRAME, loop, false, 0, true);
+			}
+		}
+		
+		override public function init() {
+			super.init();
 			this.spawnRect = spawn_area.getRect(this.root)
+			Wait = 2 * 24;
 			addEventListener(Event.EXIT_FRAME, wait, false, 0, true);
 			addEventListener(Event.ENTER_FRAME, debugLoop, false, 0, true);
 		}
@@ -42,6 +61,7 @@ package enemies.spawners {
 			for (var i:int = 0; i < spawn; i++) {
 				spawnEnemyAtPosition(new Point(spawnRect.x + Math.random() * spawnRect.width, spawnRect.y + Math.random() * spawnRect.height));
 			}
+			this.spawned = true;
 			removeEventListener(Event.EXIT_FRAME, loop);
 		}
 		
@@ -52,11 +72,12 @@ package enemies.spawners {
 				this.rootRef.addEntity(skull);
 			}
 		}
-			public function debugLoop(e:Event) {
+		
+		public function debugLoop(e:Event) {
 			setVisibility();
 		}
 		
-				private function setVisibility() {
+		private function setVisibility() {
 			if (this.rootRef != null) {
 				this.alpha = rootRef.shouldHitboxBeVisible ? 1 : 0;
 			}

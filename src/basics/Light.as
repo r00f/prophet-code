@@ -4,14 +4,15 @@ package basics {
 	import flash.events.Event;
 	import flash.display.BlendMode;
 	import flash.geom.Point;
+	import utilities.BaseClip;
 	
 	/**
 	 * ...
 	 * @author Gabriel
 	 */
-	public class Light extends MovieClip {
+	public class Light extends BaseClip {
 		
-		private var _entity:Entity;		
+		private var _entity:Entity;
 		private var intrinsic_offset:Point;
 		
 		public function Light(entity:Entity = null) {
@@ -20,6 +21,7 @@ package basics {
 			this.entity = entity;
 			this.intrinsic_offset = new Point(x, y);
 			this.blendMode = BlendMode.ALPHA;
+		
 		}
 		
 		public function set entity(entity:Entity) {
