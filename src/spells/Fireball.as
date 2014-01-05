@@ -27,7 +27,7 @@ package spells {
 		
 		public var explosion:LastFrameTrigger;
 		
-		public function Fireball(direction:Directions, pos:Point, damage:Number = 50, speed:Number = 3.5) {
+		public function Fireball(direction:Directions, pos:Point, damage:Number = 50, speed:Number = 3.5, manacost:Number = 25) {
 			super();
 			this.point = pos;
 			this.direction = direction;

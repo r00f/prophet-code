@@ -18,6 +18,7 @@
 	import flash.geom.Rectangle;
 	import flash.utils.Timer;
 	import interfaces.HealthBar;
+	import interfaces.ManaBar;
 	import utilities.*;
 	import vendor.KeyObject;
 	import flash.utils.getDefinitionByName
@@ -31,6 +32,7 @@
 	public class Root extends MovieClip {
 		
 		var healthbar:HealthBar;
+		var manabar:ManaBar;
 		
 		public var keyPresses:KeyObject;
 		private var _leftPressed:Boolean = false; //keeps track of whether the left arrow key is pressed
@@ -68,7 +70,10 @@
 			stage.addEventListener(KeyboardEvent.KEY_DOWN, pause);
 			
 			healthbar = new HealthBar(new Point(300, 1000), new Point(1, 1));
+			manabar = new ManaBar(new Point(300, 800), new Point(1, 1));
 			stage.addChild(healthbar);
+			stage.addChild(manabar);
+			
 			keyPresses = new KeyObject(this.stage);
 			stage.addChild(new BasicInfo());
 			addEventListener(Event.ENTER_FRAME, init, false, 0, true);
@@ -144,8 +149,10 @@
 		public function loop(e:Event):void {
 			
 			this.checkKeypresses();
+			
 			if (player != null) {
 				healthbar.currentHealth = player.HealthPercentage;
+				manabar.currentMana = player.ManaPercentage;
 				scaleAndSetPlayerPosition();
 			}
 			

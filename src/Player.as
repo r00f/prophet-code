@@ -1,6 +1,7 @@
 ﻿package {
 	
 	import basics.entities.HealthEntity;
+	import basics.entities.ManaEntity;
 	import basics.hitboxes.BodyBox;
 	import basics.Light;
 	import flash.display.MovieClip;
@@ -12,7 +13,7 @@
 	/**
 	 * The player class controls the player movieclip. The Player is controlled by the keyboard.
 	 */
-	public class Player extends HealthEntity {
+	public class Player extends ManaEntity {
 		
 		public static var HITBOX_BODY:String = "body_hit";
 		public static var HITBOX_FEET:String = "feet_hit";
