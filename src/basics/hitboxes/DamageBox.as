@@ -40,8 +40,8 @@
 		}
 		
 		public function checkForPlayer(e:Event) {
-			if (this.delegate != null && this.rootRef != null) {
-				if (this.hitTestObject(super.rootRef.player[delegate.damagePlayerHitbox(this)])) {
+			if (this.delegate != null && this.rootRef != null && this.rootRef.player != null) {
+				if (this.hitTestObject(this.rootRef.player[delegate.damagePlayerHitbox(this)])) {
 					this.delegate.damageAppliedToPlayer(this, super.rootRef.player);
 				}
 			}

@@ -109,9 +109,9 @@
 		public function changeWorldTo(name:String) {
 			world.parent.removeChild(world);
 			var type:Class = getDefinitionByName(name) as Class;
+			this.player = null;
 			this.world = new type();
 			this.addChild(world);
-			this.player = null;
 			addEventListener(Event.ENTER_FRAME, init, false, 0, true);
 		}
 		

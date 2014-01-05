@@ -28,27 +28,6 @@ package basics.entities {
 			addEventListener(Event.REMOVED_FROM_STAGE, cleanup, false, 0, true);
 		}
 		
-		
-		//public function pause(e:Event) {
-			//for (var i:int = 0; i < numChildren; i++) {
-				//var obj:DisplayObject = getChildAt(i);
-				//if (obj is MovieClip) {
-					//var mc:MovieClip = obj as MovieClip;
-					//mc.stop();
-				//}
-			//}
-		//}
-		//
-		//public function resume(e:Event) {
-			//for (var i:int = 0; i < numChildren; i++) {
-				//var obj:DisplayObject = getChildAt(i);
-				//if (obj is MovieClip) {
-					//var mc:MovieClip = obj as MovieClip;
-					//mc.gotoAndPlay(mc.currentFrame);
-				//}
-			//}
-		//}
-		
 		override public function init() 
 		{
 			super.init();
@@ -132,7 +111,6 @@ package basics.entities {
 		}
 		
 		private function moveLightToDarkness(e:Event) {
-			var rootRef:Root = root as Root;
 			if (rootRef != null && rootRef.darkness != null) {
 				var removed:Vector.<Light> = new Vector.<Light>();
 				for (var i:int = 0; i < this.numChildren; i++) {
