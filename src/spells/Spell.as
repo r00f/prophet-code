@@ -1,5 +1,6 @@
 package spells {
 	import basics.entities.Entity;
+	import basics.entities.ManaEntity;
 	import basics.hitboxes.DamageBox;
 	import enemies.base.Enemy;
 	import flash.events.Event;
@@ -11,7 +12,7 @@ package spells {
 	 */
 	public class Spell extends Entity implements IDamageTrigger {
 		
-		protected var manaCost:Number;
+		public var manaCost:Number;
 		
 		public function Spell() {
 			super();
@@ -32,6 +33,10 @@ package spells {
 		 * @param	enemy the player that triggered the box
 		 */
 		public function damageAppliedToPlayer(box:DamageBox, player:Player):void {
+		}
+		
+		public function useMana(mana:Number) {
+			mana = manaCost;
 		}
 		
 		public function damagePlayerHitbox(box:DamageBox):String {
