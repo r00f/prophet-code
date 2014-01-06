@@ -1,4 +1,5 @@
 package spells {
+	import basics.entities.ManaEntity;
 	import basics.hitboxes.DamageBox;
 	import enemies.base.Enemy;
 	import flash.display.MovieClip;
@@ -25,10 +26,14 @@ package spells {
 		private var maxDistanceSquared:int;
 		private var maxDistancePixel:int;
 		
-		public var explosion:LastFrameTrigger;
+		private var entity:ManaEntity;
 		
-		public function Fireball(direction:Directions, pos:Point, damage:Number = 50, speed:Number = 3.5, manacost:Number = 25) {
+		public var explosion:LastFrameTrigger;
+		public var fireballManaCost = 25;
+		
+		public function Fireball(direction:Directions, pos:Point, entity:ManaEntity,  damage:Number = 50, speed:Number = 3.5, manacost:Number = 25) {
 			super();
+			entity.useMana(fireballManaCost);
 			this.point = pos;
 			this.direction = direction;
 			this.speed = speed * 100 / 24;

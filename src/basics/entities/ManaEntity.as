@@ -9,7 +9,6 @@ package basics.entities {
 	public class ManaEntity extends HealthEntity {
 		public var maxMana:Number = 100;
 		public var _currentMana:Number;
-		public var manaCost:Number;
 			
 		public function ManaEntity() {
 			super();

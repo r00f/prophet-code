@@ -20,7 +20,7 @@
 		
 		[Inspectable(defaultValue=8,name="Base Speed",type="Number",variable="speed")]
 		public var speed:Number = 8;
-	
+		
 		public var feet_hit:BodyBox;
 		public var body_hit:BodyBox;
 		private var direction:Directions;
@@ -30,6 +30,8 @@
 		
 		[Inspectable(defaultValue=3.5,name="Fireball Speed [m/s]",type="Number",variable="fireballSpeed")]
 		public var fireballSpeed:Number = 3.5;
+		
+		public var manaRegen = 10/30;
 		
 		public var offsetx:Number;
 		public var offsety:Number;
@@ -46,7 +48,7 @@
 		}
 		
 		override public function pause(e:Event) {
-			super.pause(e); 
+			super.pause(e);
 			//Uncomment to pause player too
 			removeEventListener(Event.ENTER_FRAME, loop, false);
 			removeEventListener(Event.ENTER_FRAME, checkIfDead, false);
@@ -59,7 +61,6 @@
 			addEventListener(Event.ENTER_FRAME, checkIfDead, false, 0, true);
 		}
 		
-
 		override public function init() {
 			super.init();
 			this.blood.yRange = 180;
@@ -123,23 +124,25 @@
 		
 		private function shootFireball() {
 			var fireballOffset:Point = new Point(0, -60);
-			
-			if (this.direction.isLeft) {
-				fireballOffset.x = -80;
-			} else if (this.direction.isRight) {
-				fireballOffset.x = 80;
+			if (_currentMana > 25) {
+				if (this.direction.isLeft) {
+					fireballOffset.x = -80;
+				} else if (this.direction.isRight) {
+					fireballOffset.x = 80;
+				}
+				
+				if (this.direction.isUp) {
+					fireballOffset.y = -80;
+				} else if (this.direction.isDown) {
+					fireballOffset.y = 0;
+				}
+				
+				this.rootRef.addEntity(new Fireball(this.direction.copy, this.point.add(fireballOffset),this , fireballDamage, fireballSpeed));
 			}
-			
-			if (this.direction.isUp) {
-				fireballOffset.y = -80;
-			} else if (this.direction.isDown) {
-				fireballOffset.y = 0;
-			}
-			
-			this.rootRef.addEntity(new Fireball(this.direction.copy, this.point.add(fireballOffset), fireballDamage, fireballSpeed));
 		}
 		
 		public function loop(e:Event):void {
+			super.regen(manaRegen);
 			this.updateDirection();
 			var change:Point = new Point();
 			if (this.rootRef.keyPresses.isDown(KeyCodes.Control) && cooldown <= 0) {
