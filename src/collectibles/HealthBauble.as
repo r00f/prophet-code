@@ -18,15 +18,20 @@ package collectibles {
 		
 		public function loop2(e:Event) {
 			if (this.hitTestObject(rootRef.player.feet_hit)) {
-				if (this.waitFrames > 0) {
-					rootRef.player.healthRegen = this.healAmount;
-					this.waitFrames--;
-				} else {
-					rootRef.player.healthRegen = 0;
-					parent.removeChild(this);
-					removeEventListener(Event.ENTER_FRAME, loop2, false)
-				}
-				
+				addEventListener(Event.ENTER_FRAME, wait, false, 0, false);
+			}
+		
+		}
+		
+		public function wait(e:Event) {
+			
+			if (this.waitFrames > 0) {
+				rootRef.player.healthRegen = this.healAmount;
+				this.waitFrames--;
+			} else {
+				rootRef.player.healthRegen = 0;
+				parent.removeChild(this);
+				removeEventListener(Event.ENTER_FRAME, wait, false)
 			}
 		
 		}
