@@ -28,6 +28,8 @@ package collectibles {
 		public function wait(e:Event) {
 			if (this.waitFrames > 0) {
 				rootRef.player.manaRegen = this.regenAmount;
+				this.scaleX -= 0.1;
+				this.scaleY -= 0.1;
 				this.waitFrames--;
 			} else if (parent != null) {
 				rootRef.player.manaRegen = 0;

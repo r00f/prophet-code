@@ -27,6 +27,8 @@ package collectibles {
 			
 			if (this.waitFrames > 0) {
 				rootRef.player.healthRegen = this.healAmount;
+				this.scaleX -= 0.1;
+				this.scaleY -= 0.1;
 				this.waitFrames--;
 			} else {
 				rootRef.player.healthRegen = 0;
