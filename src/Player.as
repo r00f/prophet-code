@@ -31,7 +31,8 @@
 		[Inspectable(defaultValue=3.5,name="Fireball Speed [m/s]",type="Number",variable="fireballSpeed")]
 		public var fireballSpeed:Number = 3.5;
 		
-		public var manaRegen = 10/30;
+		private var manaRegen = 0.3;
+		//private var healthRegen = 0.3;
 		
 		public var offsetx:Number;
 		public var offsety:Number;
@@ -142,7 +143,8 @@
 		}
 		
 		public function loop(e:Event):void {
-			super.regen(manaRegen);
+			super.regenerate(manaRegen);
+			//super.heal(healthRegen);
 			this.updateDirection();
 			var change:Point = new Point();
 			if (this.rootRef.keyPresses.isDown(KeyCodes.Control) && cooldown <= 0) {

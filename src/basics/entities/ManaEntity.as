@@ -28,7 +28,7 @@ package basics.entities {
 			this.currentMana = _currentMana - mana;
 		}
 		
-		public function regen(amount:Number) {
+		public function regenerate(amount:Number) {
 			this.currentMana = _currentMana + amount;
 		}
 		

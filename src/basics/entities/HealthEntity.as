@@ -1,5 +1,6 @@
 package basics.entities {
 	import basics.Blood.BloodConfig;
+	import basics.regen.RegenerationConfig;
 	import flash.display.MovieClip;
 	import flash.events.Event;
 	import flash.events.TimerEvent;
@@ -30,6 +31,7 @@ package basics.entities {
 		private var deathTimer:Timer;
 		
 		public var blood:BloodConfig;
+		public var regen:RegenerationConfig;
 		
 		protected var dead:Boolean = false;
 		
@@ -42,6 +44,7 @@ package basics.entities {
 			this.deathTimer = new PausingTimer(despawnTime * 1000, this.rootRef);
 			this.deathTimer.addEventListener(TimerEvent.TIMER, deathTrigger, false, 0, true);
 			this.blood = new BloodConfig();
+			this.regen = new RegenerationConfig();
 			_currentHealth = maxHealth;
 		}
 		
@@ -83,6 +86,7 @@ package basics.entities {
 		 */
 		public function heal(amount:Number) {
 			this.currentHealth = _currentHealth + amount;
+			this.addChild(regen.Regen);
 		}
 		
 		/**
