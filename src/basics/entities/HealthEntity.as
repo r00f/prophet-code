@@ -86,7 +86,7 @@ package basics.entities {
 		 */
 		public function heal(amount:Number) {
 			this.currentHealth = _currentHealth + amount;
-			this.addChild(regen.Regen);
+			this.addChild(regen.HealthFX);
 		}
 		
 		/**

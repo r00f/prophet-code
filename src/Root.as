@@ -69,8 +69,8 @@
 			
 			stage.addEventListener(KeyboardEvent.KEY_DOWN, pause);
 			
-			healthbar = new HealthBar(new Point(300, 1000), new Point(1, 1));
-			manabar = new ManaBar(new Point(300, 800), new Point(1, 1));
+			healthbar = new HealthBar(new Point(300, 900), new Point(1, 1));
+			manabar = new ManaBar(new Point(300, 1000), new Point(1, 1));
 			stage.addChild(healthbar);
 			stage.addChild(manabar);
 			

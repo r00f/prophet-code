@@ -30,6 +30,7 @@ package basics.entities {
 		
 		public function regenerate(amount:Number) {
 			this.currentMana = _currentMana + amount;
+			this.addChild(regen.ManaFX);
 		}
 		
 		private function set currentMana(value:Number):void {
