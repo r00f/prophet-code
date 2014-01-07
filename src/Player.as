@@ -149,7 +149,7 @@
 			if (manaRegen != 0) {
 				super.regenerate(manaRegen);
 			}
-			if (healthRegen != 0) {
+			if (healthRegen != 0 && this.HealthPercentage != 0) {
 				super.heal(healthRegen);
 			}
 			this.updateDirection();
