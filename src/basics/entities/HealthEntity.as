@@ -9,6 +9,9 @@ package basics.entities {
 	import utilities.interfaces.ILastFrameTrigger;
 	import utilities.interfaces.PausingTimer;
 	import utilities.LastFrameTrigger;
+	import collectibles.ManaBauble;
+	import collectibles.HealthBauble;
+	import utilities.Random;
 	
 	/**
 	 * Implements health with heal and applyDamage functions.
@@ -38,7 +41,7 @@ package basics.entities {
 		public function HealthEntity() {
 			super();
 		}
-	
+		
 		override public function init() {
 			super.init();
 			this.deathTimer = new PausingTimer(despawnTime * 1000, this.rootRef);
@@ -76,8 +79,10 @@ package basics.entities {
 		 * @param	damage the amount of health subtracted.
 		 */
 		public function applyDamage(damage:Number) {
-			this.currentHealth = _currentHealth - damage;
-			this.addChild(blood.Splatter);
+			if (this.dead != true) {
+				this.currentHealth = _currentHealth - damage;
+				this.addChild(blood.Splatter);
+			}
 		}
 		
 		/**
@@ -96,12 +101,27 @@ package basics.entities {
 			this.dead = true;
 		}
 		
+		protected function drop():void {
+			var manaDice:Number = Random.random(6);
+			var healthDice:Number = Random.random(6);
+			
+			if (manaDice >= 3) {
+				var mana:ManaBauble = new ManaBauble();
+				this.addChild(mana);
+			}
+			if (healthDice >= 3) {
+				var health:HealthBauble = new HealthBauble();
+				this.addChild(health);
+			}
+		}
+		
 		private function set currentHealth(value:Number):void {
 			if (value > this.maxHealth) {
 				value = this.maxHealth;
 			} else if (value <= 0) {
 				value = 0;
 				this.die();
+				this.drop();
 			}
 			_currentHealth = value;
 		}
