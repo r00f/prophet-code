@@ -91,7 +91,9 @@ package basics.entities {
 		 */
 		public function heal(amount:Number) {
 			this.currentHealth = _currentHealth + amount;
+			if (amount >= 1) {
 			this.addChild(regen.HealthFX);
+			}
 		}
 		
 		/**

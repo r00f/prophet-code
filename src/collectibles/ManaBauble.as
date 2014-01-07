@@ -32,7 +32,7 @@ package collectibles {
 				this.scaleY -= 0.1;
 				this.waitFrames--;
 			} else if (parent != null) {
-				rootRef.player.manaRegen = 0;
+				rootRef.player.manaRegen = 0.1;
 				parent.removeChild(this);
 				removeEventListener(Event.ENTER_FRAME, loop2, false)
 			}

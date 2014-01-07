@@ -9,7 +9,7 @@ package basics.entities {
 	public class ManaEntity extends HealthEntity {
 		public var maxMana:Number = 100;
 		public var _currentMana:Number;
-			
+		
 		public function ManaEntity() {
 			super();
 		
@@ -30,7 +30,9 @@ package basics.entities {
 		
 		public function regenerate(amount:Number) {
 			this.currentMana = _currentMana + amount;
-			this.addChild(regen.ManaFX);
+			if (amount >= 1) {
+				this.addChild(regen.ManaFX);
+			}
 		}
 		
 		private function set currentMana(value:Number):void {

@@ -31,7 +31,7 @@ package collectibles {
 				this.scaleY -= 0.1;
 				this.waitFrames--;
 			} else {
-				rootRef.player.healthRegen = 0;
+				rootRef.player.healthRegen = 0.1;
 				parent.removeChild(this);
 				removeEventListener(Event.ENTER_FRAME, wait, false)
 			}

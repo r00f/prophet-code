@@ -31,8 +31,8 @@
 		[Inspectable(defaultValue=3.5,name="Fireball Speed [m/s]",type="Number",variable="fireballSpeed")]
 		public var fireballSpeed:Number = 3.5;
 		
-		public var manaRegen:Number = 0;
-		public var healthRegen:Number = 0;
+		public var manaRegen:Number = 0.1;
+		public var healthRegen:Number = 0.1;
 		
 		public var offsetx:Number;
 		public var offsety:Number;
