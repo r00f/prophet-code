@@ -12,6 +12,8 @@ package collectibles
 		public var regenAmount:Number = 2;
 		protected var waitFrames:int = 10;
 		
+		private var started:Boolean = false;
+		
 		public function Bauble() 
 		{
 			super();
@@ -23,10 +25,29 @@ package collectibles
 			addEventListener(Event.ENTER_FRAME, wait, false, 0, false);
 		}
 		
+		override public function pause(e:Event) 
+		{
+			super.pause(e);
+			removeEventListener(Event.ENTER_FRAME, regenerate, false)
+			removeEventListener(Event.ENTER_FRAME, wait, false);
+		}
+		
+		override public function resume(e:Event) 
+		{
+			super.resume(e);
+			if (this.started) {
+				addEventListener(Event.ENTER_FRAME, regenerate, false, 0, false);
+			} else {				
+				addEventListener(Event.ENTER_FRAME, wait, false, 0, false);
+			}
+		}
+		
 		public function wait(e:Event) {
 			if (this.hitTestObject(rootRef.player.feet_hit)) {
 				addEventListener(Event.ENTER_FRAME, regenerate, false, 0, false);
 				this.setRegeneration()
+				removeEventListener(Event.ENTER_FRAME, wait, false);
+				this.started = true;
 			}
 		}
 		
@@ -38,7 +59,7 @@ package collectibles
 			} else if (parent != null) {
 				this.resetRegeneration()
 				parent.removeChild(this);
-				removeEventListener(Event.ENTER_FRAME, loop2, false)
+				removeEventListener(Event.ENTER_FRAME, regenerate, false)
 			}
 		}
 		
