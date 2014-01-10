@@ -50,15 +50,18 @@ package {
 				if (childClip is Entity && childClip2 is Entity) {
 					var door:HorizontalDoor;
 					var player:Player;
+					var mult:int = 1;
 					if (childClip is HorizontalDoor && childClip2 is Player) {
 						door = childClip as HorizontalDoor;
 						player = childClip2 as Player;
+						mult = -1;
 					} else if (childClip is Player && childClip2 is HorizontalDoor) {
 						door = childClip2 as HorizontalDoor;
 						player = childClip as Player;
 					}
 					if (door != null && door.isDoorOpen) {
-						return  (door.y + 25 > player.y) ? -1 : 1;
+						var val:int = (door.y +25 > player.y) ? -1 : 1;
+						return  val*mult;
 					}
 					if (childClip.y < childClip2.y) {
 						return -1;

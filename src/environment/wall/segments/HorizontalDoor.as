@@ -17,7 +17,7 @@
 		private var open:Boolean = false;
 		
 		public function get isDoorOpen():Boolean {
-			return this.currentFrame >= 8;
+			return this.doorOpening;
 		}
 		
 		public function HorizontalDoor() {
