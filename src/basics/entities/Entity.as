@@ -22,6 +22,11 @@ package basics.entities {
 	public class Entity extends BaseClip {
 		private var lights:Vector.<Light> = new Vector.<Light>();
 		private var nextFrameKnockback:Point = new Point();
+		private var totalKnockback:Point = new Point();
+		
+		[Inspectable(defaultValue=4,name="Knockback Spread [Frames]",type="Number",variable="knockbackSpread")]
+		public var knockbackSpread:int = 4;
+		
 		
 		public function Entity() {
 			super();
@@ -55,8 +60,13 @@ package basics.entities {
 		}
 		
 		public function set point(p:Point):void {
-			var nextPoint:Point = this.findPointWithNoCollision(p, this.nextFrameKnockback);
-			nextFrameKnockback = new Point();
+			
+			var nextPoint:Point = this.findPointWithNoCollision(p, this.nextFrameKnockback); 
+			totalKnockback = totalKnockback.subtract(nextFrameKnockback);
+			if (totalKnockback.length <= 5) {
+				this.totalKnockback = new Point();
+				this.nextFrameKnockback = new Point();
+			}
 			this.x = nextPoint.x;
 			this.y = nextPoint.y;
 		}
@@ -144,7 +154,8 @@ package basics.entities {
 		
 		
 		public function knockback(knockback:Point) {
-			this.nextFrameKnockback = knockback;
+			this.totalKnockback = knockback;
+			this.nextFrameKnockback = new  Point(totalKnockback.x / this.knockbackSpread, totalKnockback.y / this.knockbackSpread)
 		}
 	}
 
