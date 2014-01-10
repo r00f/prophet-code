@@ -59,7 +59,7 @@ package enemies.spawners {
 		
 		public function loop(e:Event) {
 			for (var i:int = 0; i < spawn; i++) {
-				spawnEnemyAtPosition(new Point(spawnRect.x + Math.random() * spawnRect.width, spawnRect.y + Math.random() * spawnRect.height));
+				spawnEnemyAtPosition(new Point(spawnRect.x + Math.random() * (spawnRect.width - 10) + 10, spawnRect.y + Math.random() * (spawnRect.height-10) + 10));
 			}
 			this.spawned = true;
 			removeEventListener(Event.EXIT_FRAME, loop);

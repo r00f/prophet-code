@@ -65,7 +65,6 @@
 		
 		override public function set point(p:Point):void {
 			super.point = p;
-			this.fixedPoint = p;
 		}
 		
 		override public function wait(e:Event) {
