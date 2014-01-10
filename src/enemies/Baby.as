@@ -29,6 +29,8 @@
 		
 		private var attacking:Boolean = false;
 		
+		private var knockbackAmount:int;
+		
 		public function Baby() {
 			super();
 		}
@@ -39,6 +41,7 @@
 			this.speed.x = Random.random(6) + 2;
 			this.speed.y = 0;
 			this.damageAmount = 1 / this.speed.x * 100;
+			this.knockbackAmount = this.damageAmount*10;
 			this.direction = Directions.RIGHT;
 			this.despawnTime = 1;
 		}
@@ -53,6 +56,19 @@
 		override public function damageAppliedToPlayer(box:DamageBox, player:Player):void {
 			if (!this.playerHit) {
 				player.applyDamage(this.damageAmount);
+				var kb:Point = new Point();
+				if (this.direction.isLeft ) {
+					kb.x = -this.knockbackAmount;
+				} else if (this.direction.isRight) {
+				kb.x = this.knockbackAmount;
+				}
+				
+				if (this.direction.isUp) {
+					kb.y = -this.knockbackAmount;
+				} else if (this.direction.isDown) {
+				kb.y = this.knockbackAmount;
+				}
+				player.knockback(kb);
 				playerHit = true;
 			}
 		}
