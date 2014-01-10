@@ -58,12 +58,13 @@ package enemies.spawners {
 		}
 		
 		public function loop(e:Event) {
+			var inset:int = 100;
 			for (var i:int = 0; i < spawn; i++) {
-				spawnEnemyAtPosition(new Point(spawnRect.x + Math.random() * (spawnRect.width - 10) + 10, spawnRect.y + Math.random() * (spawnRect.height-10) + 10));
+				spawnEnemyAtPosition(new Point(spawnRect.x + Math.random() * (spawnRect.width - inset*2) + inset, spawnRect.y + Math.random() * (spawnRect.height-inset*2)+inset));
 			}
 			this.spawned = true;
 			removeEventListener(Event.EXIT_FRAME, loop);
-		}
+		}	
 		
 		private function spawnEnemyAtPosition(pos:Point) {
 			if (spawnRect.containsPoint(pos)) {
