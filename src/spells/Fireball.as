@@ -16,6 +16,7 @@ package spells {
 	public class Fireball extends Spell implements ILastFrameTrigger {
 		private var spellDamage:Number;
 		private var moveDistance:Number = 7.6; // in pseudo-meters, 1 pixel = 1cm, must be > 0
+		private var fireballManaCost = 10;
 		
 		private var enemiesHit:Object;
 		private var direction:Directions = Directions.LEFT;
@@ -29,7 +30,7 @@ package spells {
 		private var entity:ManaEntity;
 		
 		public var explosion:LastFrameTrigger;
-		public var fireballManaCost = 25;
+		
 		
 		public function Fireball(direction:Directions, pos:Point, entity:ManaEntity,  damage:Number = 50, speed:Number = 3.5, manacost:Number = 25) {
 			super();

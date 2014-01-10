@@ -31,7 +31,8 @@
 		[Inspectable(defaultValue=3.5,name="Fireball Speed [m/s]",type="Number",variable="fireballSpeed")]
 		public var fireballSpeed:Number = 3.5;
 		
-		public var manaRegen = 10/30;
+		public var manaRegen:Number = 0.1;
+		public var healthRegen:Number = 0.1;
 		
 		public var offsetx:Number;
 		public var offsety:Number;
@@ -64,6 +65,9 @@
 		override public function init() {
 			super.init();
 			this.blood.yRange = 180;
+			this.regen.yRange = 100;
+			this.regen.yOffset = -50;
+			this.regen.xRange = 50;
 			this.rootRef.player = this;
 			this.offsetx = this.x + 50;
 			this.offsety = this.y + 80;
@@ -137,12 +141,17 @@
 					fireballOffset.y = 0;
 				}
 				
-				this.rootRef.addEntity(new Fireball(this.direction.copy, this.point.add(fireballOffset),this , fireballDamage, fireballSpeed));
+				this.rootRef.addEntity(new Fireball(this.direction.copy, this.point.add(fireballOffset), this, fireballDamage, fireballSpeed));
 			}
 		}
 		
 		public function loop(e:Event):void {
-			super.regen(manaRegen);
+			if (manaRegen != 0) {
+				super.regenerate(manaRegen);
+			}
+			if (healthRegen != 0 && this.HealthPercentage != 0) {
+				super.heal(healthRegen);
+			}
 			this.updateDirection();
 			var change:Point = new Point();
 			if (this.rootRef.keyPresses.isDown(KeyCodes.Control) && cooldown <= 0) {
