@@ -79,8 +79,7 @@ package enemies.base {
 			if (this.outsideAnyLimit(next) || this.rootRef.collidesWithEnvironment(next.add(new Point(-this.width / 2, 0))) || this.rootRef.collidesWithEnvironment(next.add(new Point(this.width / 2, 0)))) {
 				this.direction.reverse();
 			} else {
-				this.x = next.x;
-				this.y = next.y;
+				this.point = next;
 			}
 		}
 		

@@ -5,6 +5,7 @@
 	import enemies.base.Enemy;
 	import flash.display.MovieClip;
 	import flash.events.Event;
+	import flash.geom.Point;
 	import utilities.Actions;
 	import utilities.Directions;
 	import utilities.interfaces.IAttackTrigger;
@@ -52,6 +53,7 @@
 		
 		override public function damageAppliedToPlayer(box:DamageBox, player:Player):void {
 			player.applyDamage(this.damageAmount);
+			player.knockback(new Point(150, 150));
 		}
 		
 		override public function damageAppliedToEnemy(box:DamageBox, enemy:Enemy):void {
