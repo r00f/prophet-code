@@ -29,7 +29,8 @@
 		
 		private var attacking:Boolean = false;
 		
-		private var knockbackAmount:int;
+		[Inspectable(defaultValue=150,name="Base Knockback",type="Number",variable="knockbackAmount")]
+		public var knockbackAmount:int = 150;
 		
 		public function Baby() {
 			super();
