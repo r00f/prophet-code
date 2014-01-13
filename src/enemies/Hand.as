@@ -5,6 +5,7 @@
 	import enemies.base.Enemy;
 	import flash.display.MovieClip;
 	import flash.events.Event;
+	import flash.geom.Point;
 	import utilities.Actions;
 	import utilities.Directions;
 	import utilities.interfaces.IAttackTrigger;
@@ -20,6 +21,12 @@
 		public var AttackTriggerRight:AttackBox;
 		public var AttackTriggerUp:AttackBox;
 		public var AttackTriggerDown:AttackBox;
+		
+		[Inspectable(defaultValue=150,name="Base Knockback",type="Number",variable="knockbackAmount")]
+		public var knockbackAmount:int = 150;
+		
+		private var currentAttackDirection:Directions;
+		
 		
 		[Inspectable(defaultValue=2,name="Base Damage",type="Number",variable="damageAmount")]
 		public var damageAmount:int = 2;
@@ -52,6 +59,17 @@
 		
 		override public function damageAppliedToPlayer(box:DamageBox, player:Player):void {
 			player.applyDamage(this.damageAmount);
+			var kb:Point = new Point();
+			if (currentAttackDirection.isLeft) {
+				kb.x = -knockbackAmount;
+			} else if (currentAttackDirection.isRight) {
+				kb.x = knockbackAmount;
+			} else if (currentAttackDirection.isUp) {
+				kb.y = -knockbackAmount;
+			} else if (currentAttackDirection.isDown) {
+				kb.y = knockbackAmount;
+			}
+			player.knockback(kb);
 		}
 		
 		override public function damageAppliedToEnemy(box:DamageBox, enemy:Enemy):void {
@@ -98,6 +116,7 @@
 			} else if (box == AttackTriggerDown) {
 				direction = Directions.DOWN;
 			}
+			this.currentAttackDirection = direction;
 			this.gotoAndStop(Actions.HIT + Strings.ANIMATION_SEPERATOR + direction);
 			this.setLastFrameTriggerDelegate(this);
 			addEventListener(Event.ENTER_FRAME, setDamageDelegate, false, 0, true);

@@ -21,7 +21,12 @@ package basics.entities {
 	 */
 	public class Entity extends BaseClip {
 		private var lights:Vector.<Light> = new Vector.<Light>();
-
+		private var nextFrameKnockback:Point = new Point();
+		private var totalKnockback:Point = new Point();
+		
+		[Inspectable(defaultValue=4,name="Knockback Spread [Frames]",type="Number",variable="knockbackSpread")]
+		public var knockbackSpread:int = 4;
+		
 		
 		public function Entity() {
 			super();
@@ -44,9 +49,26 @@ package basics.entities {
 			return new Point(this.x, this.y);
 		}
 		
+		
+		private function findPointWithNoCollision(p:Point, kb:Point ):Point {
+			if (this.rootRef != null) {
+				while (this.rootRef.collidesWithEnvironment(p.add(kb)))  {
+					kb = new Point(0.9 * kb.x, 0.9 * kb.y);
+				}
+			}
+			return p.add(kb);	
+		}
+		
 		public function set point(p:Point):void {
-			this.x = p.x;
-			this.y = p.y;
+			
+			var nextPoint:Point = this.findPointWithNoCollision(p, this.nextFrameKnockback); 
+			totalKnockback = totalKnockback.subtract(nextFrameKnockback);
+			if (totalKnockback.length <= 5) {
+				this.totalKnockback = new Point();
+				this.nextFrameKnockback = new Point();
+			}
+			this.x = nextPoint.x;
+			this.y = nextPoint.y;
 		}
 		
 		protected function get Lights():Vector.<Light> {
@@ -128,6 +150,12 @@ package basics.entities {
 				}
 				removeEventListener(Event.ENTER_FRAME, moveLightToDarkness, false);
 			}
+		}
+		
+		
+		public function knockback(knockback:Point) {
+			this.totalKnockback = knockback;
+			this.nextFrameKnockback = new  Point(totalKnockback.x / this.knockbackSpread, totalKnockback.y / this.knockbackSpread)
 		}
 	}
 

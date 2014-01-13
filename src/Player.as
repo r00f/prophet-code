@@ -177,9 +177,9 @@
 			if (!this.rootRef.collidesWithEnvironment(next)) {
 				this.point = next;
 			} else if (!this.rootRef.collidesWithEnvironment(new Point(this.x, next.y))) {
-				this.y = next.y
+				this.point = new Point(this.x, next.y);
 			} else if (!this.rootRef.collidesWithEnvironment(new Point(next.x, this.y))) {
-				this.x = next.x;
+				this.point = new Point(next.x, this.y);
 			}
 			this.gotoAndPlay(this.Action + Strings.ANIMATION_SEPERATOR + this.direction);
 			if (this.light != null) {
