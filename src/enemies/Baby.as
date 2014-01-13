@@ -41,7 +41,7 @@
 			this.blood.xRange = 100;
 			this.speed.x = Random.random(6) + 2;
 			this.speed.y = 0;
-			this.damageAmount = 1 / this.speed.x * 100;
+			this.damageAmount = 1 / this.speed.x * 200;
 			this.knockbackAmount = this.damageAmount*10;
 			this.direction = Directions.RIGHT;
 			this.despawnTime = 1;

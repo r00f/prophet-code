@@ -24,7 +24,7 @@
 	import flash.utils.getDefinitionByName
 	
 	
-	[SWF(width="1920",height="1080")] // Override document window size with SWF Metadata Tags [SWF(width='400', height='300', backgroundColor='#ffffff', frameRate='30')]
+	[SWF(width="1460",height="810")] // Override document window size with SWF Metadata Tags [SWF(width='400', height='300', backgroundColor='#ffffff', frameRate='30')]
 	
 	/**
 	 * This is the document class of the project. It also serves as a coordinator between player, enemies and environment.
@@ -41,8 +41,8 @@
 		private var _downPressed:Boolean = false; //...down key pressed
 		private var _attackPressed:Boolean = false; //...down key pressed
 		
-		public var scrollRectWidth:Number = 1920;
-		public var scrollRectHeight:Number = 1080;
+		public var scrollRectWidth:Number = 1460;
+		public var scrollRectHeight:Number = 810;
 		
 		public var player:Player;
 		
@@ -69,8 +69,8 @@
 			
 			stage.addEventListener(KeyboardEvent.KEY_DOWN, pause);
 			
-			healthbar = new HealthBar(new Point(300, 900), new Point(1, 1));
-			manabar = new ManaBar(new Point(300, 1000), new Point(1, 1));
+			healthbar = new HealthBar(new Point(200, 650), new Point(1, 1));
+			manabar = new ManaBar(new Point(200, 750), new Point(1, 1));
 			stage.addChild(healthbar);
 			stage.addChild(manabar);
 			

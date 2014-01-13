@@ -27,7 +27,7 @@ package collectibles {
 		override protected function resetRegeneration() 
 		{
 			super.resetRegeneration();
-			this.rootRef.player.healthRegen = 0.1;
+			this.rootRef.player.healthRegen = 0;
 		}
 	
 	}

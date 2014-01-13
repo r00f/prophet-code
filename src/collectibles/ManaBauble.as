@@ -29,7 +29,7 @@ package collectibles {
 		override protected function resetRegeneration() 
 		{
 			super.resetRegeneration();
-			this.rootRef.player.manaRegen = 0.1;
+			this.rootRef.player.manaRegen = 0;
 		}
 	
 	}
